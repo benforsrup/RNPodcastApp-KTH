@@ -39,7 +39,8 @@ class Player extends Component {
       timeSeconds:0,
       timePercentage:0,
       timeFormatted:"",
-      isPlaying: false
+      isPlaying: false, 
+      duration: 0
     }
   }
 
@@ -55,8 +56,7 @@ class Player extends Component {
     //   console.log('failed to load the sound', error);
     //   return;
     // }
-    // let formattedDuration = moment("2015-01-01").startOf('day').seconds(this.whoosh.getDuration()).format('H:mm:ss');
-    // this.setState({timeFormatted:"0:00:00 / " + formattedDuration })
+    
     // console.log('duration in seconds: ' + this.whoosh.getDuration() + 'number of channels: ' + this.whoosh.getNumberOfChannels());
     // this.setState({hasLoaded: true})
     // this.whoosh.setVolume(0.5);
@@ -71,18 +71,22 @@ class Player extends Component {
       artist: this.props.podcast.name
     }
 
-    console.log(track)
-
     TrackPlayer.setupPlayer().then(async () => {
       // Adds a track to the queue
-        await TrackPlayer.add(track);
+        TrackPlayer.add(track).then(() => {
+          this.setState({hasLoaded:true})
+          console.log("audio loaded")
+          
+          
+        });
         
+        //let formattedDuration = moment("2015-01-01").startOf('day').seconds(TrackPlayer.getDuration()).format('H:mm:ss');
+        //this.setState({timeFormatted:"0:00:00 / " + formattedDuration })
         // Starts playing it
-        this.setState({hasLoaded:true})
-        TrackPlayer.play();
+        
+        
 
       });
-
 
     this.scrollOffset = 0
     this.animation = new Animated.ValueXY({ x: 0, y:  40 })
@@ -91,36 +95,44 @@ class Player extends Component {
   _onPaus(){
     this.setState({isPlaying:false})
     clearInterval(this.timeInterval);
-    this.whoosh.pause()
+    //this.whoosh.pause()
+    TrackPlayer.pause();
   }
   _onPlay(){
     this.setState({isPlaying:true})
-    this.whoosh.play()
+    // this.whoosh.play()
+    TrackPlayer.play();
     this.timeInterval = setInterval(() => {this._updateTimeLine()}, 1000 )
+    
   }
 
   getFormattedTime(seconds){
     return moment("2015-01-01").startOf('day').seconds(seconds).format('H:mm:ss');
   }
   geFormattedDuration(){
-    return moment("2015-01-01").startOf('day').seconds(this.whoosh.getDuration()).format('H:mm:ss');
+    return moment("2015-01-01").startOf('day').seconds(this.state.duration).format('H:mm:ss');
   }
 
   _updateTimeLine(){
-    this.whoosh.getCurrentTime((seconds) => {
-      let formattedTime = moment("2015-01-01").startOf('day').seconds(seconds).format('H:mm:ss');
-      let formattedDuration = moment("2015-01-01").startOf('day').seconds(this.whoosh.getDuration()).format('H:mm:ss');
-      let angle  = (360*(seconds+1))/this.whoosh.getDuration()
-      let timePercentage = seconds*100/this.whoosh.getDuration()
+    TrackPlayer.getDuration().then((dur) => {
+      if(dur > 0){
+        this.setState({duration:dur})
+        
+      }
+    })
+    TrackPlayer.getPosition().then((seconds)=> { 
+      let formattedTime = moment("2015-01-01").startOf('day').seconds(seconds).format('H:mm:ss')
+      let formattedDuration = moment("2015-01-01").startOf('day').seconds(this.state.duration).format('H:mm:ss');
+      let angle = (360*(seconds+1))/this.state.duration
+      let timePercentage = seconds*100/this.state.duration
       this.props.actions.setCurrentTime(seconds)
-      
       this.setState({
-        angle: angle, 
+        angle: angle,
+        timeFormatted: formattedTime + " / " + formattedDuration,
         timeSeconds: Math.round(seconds), 
-        timeFormatted:formattedTime + " / " + formattedDuration,
         timePercentage: timePercentage
-       })
-    });
+      })
+    })
   }
 
   componentWillUnmount() {
@@ -146,22 +158,23 @@ class Player extends Component {
   }
 
   _updateTimeValue (value){
-      let time  = (value*this.whoosh.getDuration())/360  
+    console.log(value)
+      let time  = (value*this.state.duration)/360  
       let timePercentage = (value*100)/360
      
       this.setState({angle: value, duration: Math.round(time), timePercentage: timePercentage})
-      this.whoosh.setCurrentTime(time);
+      //TrackPlayer.seekTo(time);
   }
   _updateBottomTimeValue(value){
     console.log(value)
     let angle = (value/100)*360
-    let time = (value/100)*this.whoosh.getDuration()
+    let time = (value/100)*this.state.duration
     this.setState({
       angle: angle,
       duration: Math.round(time),
       timePercentage: value
     })
-    this.whoosh.setCurrentTime(time)
+    TrackPlayer.seekTo(time)
   }
 
  
@@ -198,27 +211,21 @@ class Player extends Component {
       outputRange: [1, 0, 0],
       extrapolate: "clamp"
     })
-
     animatedBackgroundColor = this.animation.y.interpolate({
       inputRange: [0, SCREEN_HEIGHT - 40],
       outputRange: ['white', 'gray'],
       extrapolate: "clamp"
     })
-
-
     animatedImageWidth = this.animation.y.interpolate({
       inputRange:[0, SCREEN_HEIGHT ],
       outputRange:[SCREEN_WIDTH+25, 20],
       extrapolate:"clamp"
     })
-
     animatedBottomTimelineHeight = this.animation.y.interpolate({
       inputRange:[0, SCREEN_HEIGHT],
       outputRange:[0, 40],
       extrapolate:"clamp"
     })
-
-
     const { commentList, podcast } = this.props
     const topComment = commentList.comments.filter(comment =>   comment.time + 10 > this.state.timeSeconds).slice(1)|| ""
     return (
@@ -257,7 +264,7 @@ class Player extends Component {
                       maximumValue={100}
                       thumbStyle={{width:15, height:15}}
                       value={this.state.timePercentage}
-                      onValueChange={(value)=>this._updateBottomTimeValue(value)}
+                      // onValueChange={(value)=>this._updateBottomTimeValue(value)}
                     />
                     <Text>{this.geFormattedDuration()}</Text>
                   </Animated.View>
@@ -313,7 +320,8 @@ class Player extends Component {
                 meterColor='#0cd' 
                 textColor='#fff'
                 value={this.state.angle} 
-                onValueChange={(value)=> {this._updateTimeValue(value)}}/>
+                // onValueChange={(value)=> {this._updateTimeValue(value)}}
+                />
 
              
                 

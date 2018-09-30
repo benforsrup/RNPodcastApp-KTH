@@ -42,11 +42,7 @@ export const goAuth = () => Navigation.setRoot({
         component:{
             id:"AuthScreen",
             name:"AuthScreen",
-            options:{
-                topBar:{
-                    visible:false
-                }
-            }        
+                    
         }
         
     }
@@ -78,7 +74,8 @@ export const goHome = () => Navigation.setRoot({
                                         enabled:false,
                                         visible:false
                                     }
-                                }
+                                },
+                                
                             },
                         },
                         component:{
@@ -105,14 +102,9 @@ export const goHome = () => Navigation.setRoot({
                                         visible:false
                                     }
                                 },
-                                
-                                
                                 topBar:{
                                     barStyle: 'default',
-                                    searchBar: true, // iOS 11+ native UISearchBar inside topBar
                                     blur:true,
-                                    searchBarPlaceholder: 'Search', // iOS 11+ SearchBar placeholder
-                                    searchBarHiddenWhenScrolling: true,
                                     title:{
                                         text:"Podcasts"
                                     },

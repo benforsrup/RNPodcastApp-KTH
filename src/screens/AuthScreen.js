@@ -23,9 +23,7 @@ class AuthScreen extends Component {
     render() {
     return (
         <View style={styles.container}>    
-        <NavigationBar
-  centerComponent={<Title>TITLE</Title>}
-/>  
+        
           <View style={styles.input}>
             <SocialIcon 
               title='Sign in with Google'
@@ -52,7 +50,6 @@ export default AuthScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection:'column',
     alignItems:'center',
     justifyContent: 'center'
   },
