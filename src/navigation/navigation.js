@@ -31,6 +31,27 @@ export const initHome = ()=> {
     })
 }
 
+export const initAuth = () => {
+    registerScreens(store)
+    goAuth()
+}
+
+
+export const goAuth = () => Navigation.setRoot({
+    root:{
+        component:{
+            id:"AuthScreen",
+            name:"AuthScreen",
+            options:{
+                topBar:{
+                    visible:false
+                }
+            }        
+        }
+        
+    }
+})
+
 export const goHome = () => Navigation.setRoot({
     root: {
         sideMenu: {  
@@ -85,6 +106,7 @@ export const goHome = () => Navigation.setRoot({
                                     }
                                 },
                                 topBar:{
+                                    visible:false,
                                     title:{
                                         text:"Podcasts"
                                     },
@@ -100,13 +122,6 @@ export const goHome = () => Navigation.setRoot({
                             }
                         },
                     }]
-                }
-            },
-            options:{
-                sideMenu:{
-                    left:{
-                        width:500
-                    }
                 }
             }
       }

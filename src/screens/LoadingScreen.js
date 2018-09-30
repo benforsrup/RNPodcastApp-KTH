@@ -1,24 +1,24 @@
 import React, { Component } from "react";
 import {
   View,
-  Text,
-  Button,
   StyleSheet,
 } from "react-native";
+import { Spinner } from '@shoutem/ui'
 
-
-import { initHome, goHome } from '../navigation/navigation'
+import { initAuth, initHome } from '../navigation/navigation'
 
 
 class LoadingScreen extends Component {
     componentDidMount(){
-        setTimeout(() => initHome(), 1000)
+        setTimeout(() => initHome(), 0)
     }
+
+
 
     render() {
     return (
         <View style={styles.container}>      
-           <Text> Loading</Text>
+          <Spinner />
         </View>
     );
     }
@@ -31,7 +31,7 @@ export default LoadingScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
+    alignItems:'center',
     justifyContent: 'center'
   }
 });

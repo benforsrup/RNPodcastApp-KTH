@@ -4,7 +4,8 @@ import LoadingScreen from './src/screens/LoadingScreen'
 Navigation.registerComponent('LoadingScreen', () => LoadingScreen)
 class App extends Component{
     constructor(props){
-        super(props)    
+        super(props)   
+        console.disableYellowBox = true; 
         this.startApp()
     }
 

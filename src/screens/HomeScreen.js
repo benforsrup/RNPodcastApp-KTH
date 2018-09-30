@@ -5,12 +5,9 @@ import {
     StyleSheet,
     Button
 } from "react-native";
-import PlayerView from '../containers/PlayerView'
-import * as actions from "../redux/actions";
-import { bindActionCreators } from "redux";
-import { Provider } from 'react-redux'
-import store from '../redux/store'
-import {Navigation} from 'react-native-navigation'
+
+import Comments from '../components/Comments/Comments'
+import Player from '../components/Player/Player'
 class HomeScreen extends Component {
     constructor(props){
         super(props)
@@ -21,9 +18,11 @@ class HomeScreen extends Component {
         //set navigation options
     }
     render() {
+        console.log(this.props)
         return (     
                 <View>
-                    <PlayerView />
+                    <Player podcast={this.props.podcast} />
+                    <Comments />
                 </View>  
         );
     }

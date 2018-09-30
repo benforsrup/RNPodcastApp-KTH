@@ -15,10 +15,11 @@ import Comment from '../Comments/Comment'
 import * as actions from "../../redux/actions";
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
+import { Spinner } from '@shoutem/ui'
 
 //import Svg, { G, Path } from 'react-native-svg';
 import CircularSlider from '../Timeline/CircularSlider'
-var Sound = require('react-native-sound');
+import Sound from 'react-native-sound';
 
 
 const SCREEN_HEIGHT = Dimensions.get('window').height
@@ -31,6 +32,7 @@ class Player extends Component {
   constructor(props){
     super(props)
     this.state = {
+      hasLoaded: false,
       canScrollUp :false,
       angle: 0,
       timeSeconds:0,
@@ -43,16 +45,15 @@ class Player extends Component {
   componentWillMount() {
     console.disableYellowBox = true;
     Sound.setCategory('Playback');
-    this.whoosh = new Sound('podcast.mp3', Sound.MAIN_BUNDLE, (error) => {
+    this.whoosh = new Sound(this.props.podcast.mp3, null, (error) => {
     if (error) {
       console.log('failed to load the sound', error);
       return;
     }
     let formattedDuration = moment("2015-01-01").startOf('day').seconds(this.whoosh.getDuration()).format('H:mm:ss');
     this.setState({timeFormatted:"0:00:00 / " + formattedDuration })
-
     console.log('duration in seconds: ' + this.whoosh.getDuration() + 'number of channels: ' + this.whoosh.getNumberOfChannels());
-
+    this.setState({hasLoaded: true})
     this.whoosh.setVolume(0.5);
     });
 
@@ -61,7 +62,6 @@ class Player extends Component {
 
     this.animation = new Animated.ValueXY({ x: 0, y:  40 })
   }
-
 
   _onPaus(){
     this.setState({isPlaying:false})
@@ -174,8 +174,6 @@ class Player extends Component {
       extrapolate: "clamp"
     })
 
-   
-
     animatedBackgroundColor = this.animation.y.interpolate({
       inputRange: [0, SCREEN_HEIGHT - 40],
       outputRange: ['white', 'gray'],
@@ -196,7 +194,7 @@ class Player extends Component {
     })
 
 
-    const { commentList } = this.props
+    const { commentList, podcast } = this.props
     const topComment = commentList.comments.filter(comment =>   comment.time + 10 > this.state.timeSeconds).slice(1)|| ""
     return (
 
@@ -248,8 +246,8 @@ class Player extends Component {
               
                 <Animated.View style={{ height: animatedImageHeight, width: animatedImageWidth, marginLeft: animatedImageMarginLeft }}>
                 
-                  <Image  style={{ flex: 1, width:null, height: null, opacity:0.7 }}
-                    source={require('../../assets/Hotelcalifornia.jpg')}
+                  <Image  style={{ flex: 1, width:null, height: null, opacity:1 }}
+                    source={podcast.image}
                     />
                    <Animated.View style={{position:'absolute', top:0, left: 0,right:0,width:null, zIndex:9999, opacity:animatedSongDetailsOpacity}}>
                     <Icon onPress={() => this.onTouchPlayer()} name='chevron-up' size={50} type='evilicon' color='#255' />
@@ -257,7 +255,7 @@ class Player extends Component {
 
                 </Animated.View>
                 
-                <Animated.Text onPress={() => this.onTouchPlayer()} style={{ opacity: animatedSongTitleOpacity, fontSize: 18, paddingLeft: 10 }}>Hotel California(Live)</Animated.Text>
+                <Animated.Text onPress={() => this.onTouchPlayer()} style={{ opacity: animatedSongTitleOpacity, fontSize: 18, paddingLeft: 10 }}>{this.props.podcast.name}</Animated.Text>
                 <Animated.View style={{ opacity: animatedSongTitleOpacity, flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
                     {this.state.isPlaying ? 
                         <Icon name="controller-paus" type="entypo" size={40} onPress={()=> this._onPaus()} /> : 
@@ -267,8 +265,8 @@ class Player extends Component {
             </Animated.View>
 
             <Animated.View style={{ height: animatedHeaderHeight, opacity: animatedSongDetailsOpacity, flex: 1, justifyContent:'center', alignItems:'center'}}>
-
-           <Animated.Text onPress={() => this.onTouchPlayer()} style={{ fontSize: 18, paddingLeft: 10, marginBottom:20 }}>Hotel California(Live)</Animated.Text>
+            { !this.state.hasLoaded && <Spinner />}
+           <Animated.Text onPress={() => this.onTouchPlayer()} style={{ fontSize: 18, paddingLeft: 10, marginBottom:20 }}>{podcast.name}</Animated.Text>
               <View>
 
                 <Text> {this.state.timeFormatted}</Text>
