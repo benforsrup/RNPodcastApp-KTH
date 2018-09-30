@@ -16,6 +16,7 @@ import * as actions from "../../redux/actions";
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
 import { Spinner } from '@shoutem/ui'
+import TrackPlayer from 'react-native-track-player';
 
 //import Svg, { G, Path } from 'react-native-svg';
 import CircularSlider from '../Timeline/CircularSlider'
@@ -42,26 +43,48 @@ class Player extends Component {
     }
   }
 
-  componentWillMount() {
+  
+
+  async componentWillMount() {
     console.disableYellowBox = true;
-    Sound.setActive(true)
-    Sound.enableInSilenceMode(true)
-    Sound.setCategory('Playback')
-    this.whoosh = new Sound(this.props.podcast.mp3, null, (error) => {
-    if (error) {
-      console.log('failed to load the sound', error);
-      return;
+    // Sound.setActive(true)
+    // Sound.enableInSilenceMode(true)
+    // Sound.setCategory('Playback')
+    // this.whoosh = new Sound(this.props.podcast.mp3, null, (error) => {
+    // if (error) {
+    //   console.log('failed to load the sound', error);
+    //   return;
+    // }
+    // let formattedDuration = moment("2015-01-01").startOf('day').seconds(this.whoosh.getDuration()).format('H:mm:ss');
+    // this.setState({timeFormatted:"0:00:00 / " + formattedDuration })
+    // console.log('duration in seconds: ' + this.whoosh.getDuration() + 'number of channels: ' + this.whoosh.getNumberOfChannels());
+    // this.setState({hasLoaded: true})
+    // this.whoosh.setVolume(0.5);
+    // });
+
+    // Creates the player
+
+    let track ={
+      id:(this.props.podcast.id).toString(),
+      url: this.props.podcast.mp3,
+      title: this.props.podcast.name,
+      artist: this.props.podcast.name
     }
-    let formattedDuration = moment("2015-01-01").startOf('day').seconds(this.whoosh.getDuration()).format('H:mm:ss');
-    this.setState({timeFormatted:"0:00:00 / " + formattedDuration })
-    console.log('duration in seconds: ' + this.whoosh.getDuration() + 'number of channels: ' + this.whoosh.getNumberOfChannels());
-    this.setState({hasLoaded: true})
-    this.whoosh.setVolume(0.5);
-    });
+
+    console.log(track)
+
+    TrackPlayer.setupPlayer().then(async () => {
+      // Adds a track to the queue
+        await TrackPlayer.add(track);
+        
+        // Starts playing it
+        this.setState({hasLoaded:true})
+        TrackPlayer.play();
+
+      });
 
 
     this.scrollOffset = 0
-
     this.animation = new Animated.ValueXY({ x: 0, y:  40 })
   }
 

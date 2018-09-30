@@ -6,22 +6,24 @@ import {
   StyleSheet,
 } from "react-native";
 
-
-class OptionsScreen extends Component {
-
-
+import { Screen } from '@shoutem/ui'
+class SettingsScreen extends Component {
+    constructor(props){
+      super(props)
+    }
     render() {
+
     return (
-        <View style={styles.container}>      
-           <Text> Settings</Text>
-        </View>
+      <Screen>     
+        <Text>dsadas</Text> 
+      </Screen>
     );
     }
 }
 
   
   
-export default OptionsScreen;
+export default SettingsScreen;
 
 const styles = StyleSheet.create({
   container: {

@@ -1,30 +1,24 @@
 import React, { Component } from 'react';
-import { Provider } from 'react-redux';
 import {
-    StyleSheet,
-    SafeAreaView
+    SafeAreaView,
+     StyleSheet
   } from 'react-native';
+  
 
-const withReduxStoreWrapper = (MyComponent, store) =>
+const withSafeWrapper = (MyComponent) =>
     class StoreWrapper extends Component {
         render() {
             
             return (
-                
-                <Provider store={store}>
-                    
                     <MyComponent {...this.props} />
-                   
-                </Provider>
-                
             );
         }
     };
 
     const styles = StyleSheet.create({
         safeArea: {
-          flex: 1
+          flex: 1,
+          
         }
       })
-
-export default withReduxStoreWrapper;
+export default withSafeWrapper;
