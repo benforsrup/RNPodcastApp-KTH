@@ -11,6 +11,11 @@ class App extends Component{
 
     startApp(){
         Navigation.events().registerAppLaunchedListener(() => { 
+            Navigation.setDefaultOptions({
+                topBar: {
+                  visible: false
+                }
+              });
             Navigation.setRoot({
                 root: {
                     component:{

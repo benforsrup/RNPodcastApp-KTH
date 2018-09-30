@@ -44,7 +44,9 @@ class Player extends Component {
 
   componentWillMount() {
     console.disableYellowBox = true;
-    Sound.setCategory('Playback');
+    Sound.setActive(true)
+    Sound.enableInSilenceMode(true)
+    Sound.setCategory('Playback')
     this.whoosh = new Sound(this.props.podcast.mp3, null, (error) => {
     if (error) {
       console.log('failed to load the sound', error);
