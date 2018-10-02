@@ -20,11 +20,30 @@ function getFormattedDuration(duration){
 }
 
 class ProgressBar extends ProgressComponent {
+  constructor(props){
+    super(props)
+  }
 
+  componentDidMount(){
+    this.setState({angle:0})
+  }
   componentDidUpdate(prevProps, nextProps) {
+    let currAngle = this.getProgress()*360
     if(this.state.position != nextProps.position && this.props.shouldSetTime){
       this.props.setCurrentTime(nextProps.position)
+      this.setState({angle: currAngle})
     }
+    
+    if(currAngle != this.state.angle && !this.props.shouldSetTime){
+      this.setState({angle: currAngle})
+    }
+  }
+
+  _updateCircularTimeline = (value) =>{
+    //this.setState({angle: value})
+    let time  = (value*this.state.duration)/360  
+    TrackPlayer.seekTo(time)
+    this.setState({angle:value})
   }
 
 
@@ -51,8 +70,8 @@ class ProgressBar extends ProgressComponent {
                   height={SCREEN_WIDTH-100} 
                   meterColor='#0cd' 
                   textColor='#fff'
-                  value={0}
-                  // onValueChange={(value)=> {this._updateTimeValue(value)}}
+                  value={this.state.angle}
+                  onValueChange={(value)=> this._updateCircularTimeline(value)}
                   />
         </View>
 

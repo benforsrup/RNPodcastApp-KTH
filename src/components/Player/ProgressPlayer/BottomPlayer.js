@@ -23,19 +23,18 @@ class ProgressBar extends ProgressComponent {
     componentDidUpdate(prevProps, nextProps) {
       if(this.state.position != nextProps.position && this.props.shouldSetTime){
         this.props.setCurrentTime(nextProps.position)
-      }
+      }      
     }
 
 
   onTimeLineChange(value){
     let time = (value/100)*this.state.duration
     TrackPlayer.seekTo(time)
-    this.setState({currentTime:value})
+    //this.setState({currentTime:value})
   }
 
   render() {
     const {position, duration} = this.state
-    console.log(this.props.opacity)
     return (
       <Animated.View style={[{height: !this.props.shouldSetTime ? 0 : 40, opacity: !this.props.shouldSetTime ? 0 : 100}, styles.bottomTimeLineStyle]}>
           <Text style={{fontWeight:"bold", color:'rgb(135,206,250)'}}> {getFormattedTime(position)}</Text>
@@ -45,7 +44,7 @@ class ProgressBar extends ProgressComponent {
                 minimumValue={0}
                 maximumValue={100}
                 thumbStyle={{width:15, height:15}}
-                value={this.state.currentTime}
+                value={this.getProgress()*100}
                 onValueChange={(value)=>this.setState({currentTime: value})}
                 onSlidingComplete={(value) => this.onTimeLineChange(value)}
                       />
