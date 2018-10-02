@@ -10,7 +10,7 @@ import { initAuth, initHome } from '../navigation/navigation'
 
 class LoadingScreen extends Component {
     componentDidMount(){
-        setTimeout(() => initAuth(), 0)
+        setTimeout(() => initHome(), 0)
     }
 
 

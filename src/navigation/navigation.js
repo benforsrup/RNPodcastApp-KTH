@@ -104,12 +104,11 @@ export const goHome = () => Navigation.setRoot({
                                 },
                                 topBar:{
                                     barStyle: 'default',
-                                    blur:true,
                                     title:{
                                         text:"Podcasts"
                                     },
                                     largeTitle: {
-                                        visible: false,
+                                        visible: true,
                                         
                                      },
                                     leftButtons:{

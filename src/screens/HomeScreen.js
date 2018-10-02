@@ -8,6 +8,9 @@ import {
 
 import Comments from '../components/Comments/Comments'
 import Player from '../components/Player/Player'
+import PodCastPlayer from '../components/Player/PodCastPlayer'
+
+import { Navigation } from 'react-native-navigation'
 class HomeScreen extends Component {
     constructor(props){
         super(props)
@@ -20,8 +23,8 @@ class HomeScreen extends Component {
     render() {
         console.log(this.props)
         return (     
-                <View>
-                    <Player podcast={this.props.podcast} />
+                <View >
+                    <PodCastPlayer podcast={this.props.podcast} />
                     <Comments />
                 </View>  
         );
@@ -31,8 +34,10 @@ class HomeScreen extends Component {
 export default HomeScreen
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
+        borderBottomLeftRadius: 0,
+		borderBottomRightRadius: 0,
+		borderTopLeftRadius: 20,
+		borderTopRightRadius: 20,
+       backgroundColor:'gray'
     }
 });

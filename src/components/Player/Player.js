@@ -21,6 +21,7 @@ import TrackPlayer from 'react-native-track-player';
 //import Svg, { G, Path } from 'react-native-svg';
 import CircularSlider from '../Timeline/CircularSlider'
 import Sound from 'react-native-sound';
+import { Navigation } from "react-native-navigation";
 
 
 const SCREEN_HEIGHT = Dimensions.get('window').height
@@ -99,6 +100,7 @@ class Player extends Component {
     TrackPlayer.pause();
   }
   _onPlay(){
+    Navigation.dismissAllModals();
     this.setState({isPlaying:true})
     // this.whoosh.play()
     TrackPlayer.play();
@@ -116,8 +118,7 @@ class Player extends Component {
   _updateTimeLine(){
     TrackPlayer.getDuration().then((dur) => {
       if(dur > 0){
-        this.setState({duration:dur})
-        
+        this.setState({duration:dur})     
       }
     })
     TrackPlayer.getPosition().then((seconds)=> { 
@@ -280,7 +281,10 @@ class Player extends Component {
                 
                   <Image  style={{ flex: 1, width:null, height: null, opacity:1 }}
                     source={podcast.image}
+                    resizeMode='center'
                     />
+                     
+                
                    <Animated.View style={{position:'absolute', top:0, left: 0,right:0,width:null, zIndex:9999, opacity:animatedSongDetailsOpacity}}>
                     <Icon onPress={() => this.onTouchPlayer()} name='chevron-up' size={50} type='evilicon' color='#255' />
                    </Animated.View> 

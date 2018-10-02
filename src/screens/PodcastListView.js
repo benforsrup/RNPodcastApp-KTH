@@ -143,19 +143,37 @@ class PodcastListView extends Component {
 
     goToScreen = (screenName, prop) => {
         if(screenName == "HomeScreen"){
-                Navigation.push(this.props.componentId, {
-                    component: {
-                        name: screenName,
-                        passProps: {
-                            "podcast": prop
-                        },
-                        options:{
+                // Navigation.push(this.props.componentId, {
+                //     component: {
+                //         name: screenName,
+                //         passProps: {
+                //             "podcast": prop
+                //         },
+                //         options:{
+                //             topBar:{
+                //                 visible:false,
+                //             },
+                //         }
+                //     }
+                // })
+                Navigation.showModal({
+                    stack: {
+                        children: [{
+                            component: {
+                                name: screenName,
+                                passProps: {
+                                    "podcast": prop
+                                }
+                            }
+                        }],
+        
+                        options: {
                             topBar:{
-                                visible:false
+                                visible:false,
                             }
                         }
                     }
-                })
+                });
             }
             else if(screenName=="SettingsScreen"){
                 Navigation.push(this.props.componentId, {
@@ -184,11 +202,11 @@ class PodcastListView extends Component {
           return (
             <TouchableOpacity onPress={() =>this.goToScreen("HomeScreen", podcast)} key={id} styleName="flexible">
               <Card>
-                <Image
-                    style={{height:150}}
-                    styleName="medium-wide"
-                    source={{ uri: podcast.image.url  }}
-                />
+                      <Image
+                      style={{height:150}}
+                      styleName="medium-wide"
+                      source={{ uri: podcast.image.url  }}
+                      />
                 <View styleName="content" style={{paddingTop:10, paddingBottom:10}}>
                   <Subtitle numberOfLines={3}>{podcast.name}</Subtitle>
                 </View>

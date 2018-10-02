@@ -19,6 +19,10 @@ class Comments extends Component {
         return moment("2015-01-01").startOf('day').seconds(seconds).format('H:mm:ss');
       }
 
+      showReply = () => {
+          this.props.onReplyClick(this.props.index)
+      }
+
     render() {
         return (
             <View style={{borderBottomWidth:1,borderBottomColor:'gray', paddingBottom:5}}>
@@ -50,7 +54,7 @@ class Comments extends Component {
                         <Text style={{marginRight:20}}> 10 </Text>
                         <Icon name="thumb-down" type="materialicon" iconStyle={{fontSize:20}} /> 
                     </View>
-                    <Icon name="chevron-down" type="entypo" />
+                    <Icon onPress={() => this.showReply()} name="chevron-down" type="entypo" />
                     <View><Text style={{marginRight:50, fontWeight:'700', fontSize:15, color:'gray'}}> Reply</Text></View>
                 </View>
 

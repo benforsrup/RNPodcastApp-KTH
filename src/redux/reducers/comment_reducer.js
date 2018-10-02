@@ -2,7 +2,12 @@ import { ADD_COMMENT, DELETE_COMMENT, GET_COMMENTS, GET_TOP_COMMENT} from '../co
 
 const initialState = {
   comments:[
-    {title: 'This is a longer comment, I think that you are wrong at the beginning', id: 1, user:"Oscar", time: 0},
+    {title: 'This is a longer comment, I think that you are wrong at the beginning', id: 1, user:"Oscar", time: 5,
+    replies:[
+      {title: 'This is a reply', id: 2, user:"Martin", time: 11},
+      {title: 'This is reply', id: 5, user:"Oscar", time: 21},
+    ]
+  },
     {title: 'Time 11!', id: 2, user:"Martin", time: 11},
     {title: 'Time 21!', id: 5, user:"Oscar", time: 21},
     {title: 'Late comments', id: 8, user:"Martin", time: 180}

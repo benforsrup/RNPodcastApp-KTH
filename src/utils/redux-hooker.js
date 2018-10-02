@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import {
     StyleSheet,
-    SafeAreaView
   } from 'react-native';
 
 const withReduxStoreWrapper = (MyComponent, store) =>
@@ -12,9 +11,7 @@ const withReduxStoreWrapper = (MyComponent, store) =>
             return (
                 
                 <Provider store={store}>
-                    
                     <MyComponent {...this.props} />
-                   
                 </Provider>
                 
             );

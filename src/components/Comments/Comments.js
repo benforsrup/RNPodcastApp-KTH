@@ -24,7 +24,9 @@ const SCREEN_WIDTH = Dimensions.get('window').width
 class Comments extends Component {
     constructor(props){
         super(props)
-    
+        this.state = {
+            showReply: false
+        }
     }
 
     componentDidMount(){
@@ -38,18 +40,25 @@ class Comments extends Component {
     }
     _keyExtractor = (item, index) => index.toString();
 
+    showReply = (index) => {
+        console.log(index)
+    }
 
     _renderItem = ({item, index}) => ( 
             <Comment 
                 id={item.id}
                 data={item}
+                index={index}
+                onReplyClick={this.showReply}
             />
     );
+    
+    
 
     render() {
         const { commentList, player  } = this.props
         const topComment = commentList.comments.filter(comment =>   Math.abs(player.currentTime - comment.time)<11)|| ""
-        
+
         return (
             <View style={styles.commentContainer}>
             
@@ -64,6 +73,7 @@ class Comments extends Component {
                         extraData={topComment}
                         renderItem={this._renderItem}
                     />
+
                   </ScrollView>
                   :
                   <View>

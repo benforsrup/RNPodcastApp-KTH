@@ -11,13 +11,15 @@ import {
   Slider
 } from "react-native";
 import Comments from '../components/Comments/Comments'
-import Player from '../components/Player/Player'
+// import Player from '../components/Player/Player'
+import PodCastPlayer from '../components/Player/PodCastPlayer'
+
 class PlayerView extends Component {
 
   render() {
     return (
         <View>      
-          <Player />
+          <PodCastPlayer />
           <Comments />
         </View>
     );
