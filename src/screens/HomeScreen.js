@@ -7,7 +7,6 @@ import {
 } from "react-native";
 
 import Comments from '../components/Comments/Comments'
-import Player from '../components/Player/Player'
 import PodCastPlayer from '../components/Player/PodCastPlayer'
 
 import { Navigation } from 'react-native-navigation'
@@ -21,11 +20,10 @@ class HomeScreen extends Component {
         //set navigation options
     }
     render() {
-        console.log(this.props)
         return (     
                 <View >
                     <PodCastPlayer podcast={this.props.podcast} />
-                    <Comments />
+                    <Comments  />
                 </View>  
         );
     }

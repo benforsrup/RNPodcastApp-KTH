@@ -66,7 +66,6 @@ class PodCastPlayer extends Component {
       // Adds a track to the queue
         TrackPlayer.add(track).then(() => {
           this.setState({hasLoaded:true})
-          console.log("audio loaded")     
         });
 
       });
@@ -163,7 +162,7 @@ class PodCastPlayer extends Component {
   }
   _onTimeLineChange(value){
     console.log(value)
-    
+
   }
 
  
@@ -214,17 +213,19 @@ class PodCastPlayer extends Component {
     })
 
 
-    const { commentList, podcast } = this.props
-    const topComment = commentList.comments.filter(comment =>   comment.time + 10 > this.state.timeSeconds).slice(1)|| ""
+    const { podcast } = this.props
     return (
         <View>  
             <Animated.View style={{ flex: 1}}>  
                 <Animated.View style={[animatedHeight, styles.modalStyle]}>
-                  {this.state.canScrollUp && 
+                  
                   <BottomPlayer 
+                      shouldSetTime={this.state.canScrollUp}
+                      setCurrentTime={this.props.actions.setCurrentTime}
                       onTimeLineChange={this._onTimeLineChange}
-                      height={animatedBottomTimelineHeight} 
-                      styling={styles.bottomTimeLineStyle} />}
+                      
+                       
+                      styling={[{height:animatedBottomTimelineHeight, opacity: animatedSongTitleOpacity}, styles.bottomTimeLineStyle]} />
 
               <Animated.View style={{ height: animatedHeaderHeight-animatedBottomTimelineHeight, flexDirection: 'row', alignItems:'center' }}>    
                   <Animated.View style={{ height: animatedImageHeight, width: animatedImageWidth, marginLeft: animatedImageMarginLeft }}>
@@ -254,33 +255,9 @@ class PodCastPlayer extends Component {
                 </View>
 
                 <View style={{ marginBottom:30}}>
+
+              <CircularPlayer shouldSetTime={!this.state.canScrollUp} setCurrentTime={this.props.actions.setCurrentTime} />
               
-              <View style={{width: SCREEN_WIDTH-100, height:SCREEN_WIDTH-100, position:'absolute', top:0, left:0}}>
-                
-                  <View style={{flex: 1, alignItems:'center', justifyContent:'center'}}>
-                    <Text>{topComment[0] ? topComment[0].title: "No Comment"} </Text>
-                  </View>
-
-              </View>
-
-              <CircularPlayer style={{
-                width: SCREEN_WIDTH - 100,
-                height: 40,
-                flex: 1,
-                backgroundColor:'blue'
-              }}/>
-
-              {/* <CircularSlider 
-                  width={SCREEN_WIDTH-100} 
-                  height={SCREEN_WIDTH-100} 
-                  meterColor='#0cd' 
-                  textColor='#fff'
-                  value={this.state.angle} 
-                  // onValueChange={(value)=> {this._updateTimeValue(value)}}
-                  /> */}
-
-              
-                  
                 </View>
 
                 <View style={{ width:SCREEN_WIDTH-100, height:60, flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -303,7 +280,7 @@ class PodCastPlayer extends Component {
 }
 
 const mapStateToProps = state => ({ 
-  commentList: state.comments 
+  commentList: state.comments,
 });
 
 const mapDispatchToProps = dispatch =>({

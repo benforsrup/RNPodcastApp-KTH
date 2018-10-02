@@ -310,13 +310,7 @@ class Player extends Component {
 
               <View style={{ marginBottom:30}}>
             
-            <View style={{width: SCREEN_WIDTH-100, height:SCREEN_WIDTH-100, position:'absolute', top:0, left:0}}>
-              
-                <View style={{flex: 1, alignItems:'center', justifyContent:'center'}}>
-                  <Text>{topComment[0] ? topComment[0].title: "No Comment"} </Text>
-                </View>
-
-             </View>
+           
               
              <CircularSlider 
                 width={SCREEN_WIDTH-100} 

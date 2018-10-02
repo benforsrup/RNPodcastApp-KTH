@@ -20,13 +20,17 @@ class ProgressBar extends ProgressComponent {
     componentDidMount(){
       this.setState({currentTime: this.getProgress()})
     }
+    componentDidUpdate(prevProps, nextProps) {
+      if(this.state.position != nextProps.position && this.props.shouldSetTime){
+        this.props.setCurrentTime(nextProps.position)
+      }
+    }
 
 
   onTimeLineChange(value){
     let time = (value/100)*this.state.duration
     TrackPlayer.seekTo(time)
     this.setState({currentTime:value})
-    console.log(this.getProgress())
   }
 
   render() {

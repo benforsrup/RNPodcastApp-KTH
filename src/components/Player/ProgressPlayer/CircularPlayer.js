@@ -3,51 +3,76 @@ import React, { Component } from 'react';
 import TrackPlayer, { ProgressComponent } from 'react-native-track-player';
 import { Image, StyleSheet, Text, TouchableOpacity, View, ViewPropTypes, Dimensions } from 'react-native';
 import { Slider } from 'react-native-elements'
-
+import * as actions from "../../../redux/actions";
+import { bindActionCreators } from "redux";
+import { connect } from 'react-redux'
+import CircularSlider from '../../Timeline/CircularSlider'
 
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
 class ProgressBar extends ProgressComponent {
-  render() {
+
+  componentDidUpdate(prevProps, nextProps) {
+    if(this.state.position != nextProps.position && this.props.shouldSetTime){
+      this.props.setCurrentTime(nextProps.position)
+    }
+  }
+
+
+  render() {    
+    const {commentList} = this.props
+    const topComment = commentList.comments.filter(comment =>   Math.abs(this.state.position - comment.time)<11)|| ""
     return (
-        <View>
-            <Slider
-                style={{ width: SCREEN_WIDTH-120, marginLeft:5, marginRight:5 }}
-                step={0.1}
-                minimumValue={0}
-                maximumValue={100}
-                thumbStyle={{width:15, height:15}}
-                value={this.getProgress()}
-                        // onValueChange={(value)=>this._updateBottomTimeValue(value)}
-                      />
+        <View >
+
+             <View style={{width: SCREEN_WIDTH-100, height:SCREEN_WIDTH-100, position:'absolute', top:0, left:0}}>
+              
+              <View style={{flex: 1, alignItems:'center', justifyContent:'center'}}>
+                <Text> {topComment.length > 0 ? topComment[0].title: "No Comment"}</Text>
+              </View>
+
+            </View>
+
+            <CircularSlider 
+                  width={SCREEN_WIDTH-100} 
+                  height={SCREEN_WIDTH-100} 
+                  meterColor='#0cd' 
+                  textColor='#fff'
+                  value={0}
+                  // onValueChange={(value)=> {this._updateTimeValue(value)}}
+                  />
         </View>
-    //   <View style={styles.progress}>
-    //     <View style={{ flex: this.getProgress(), backgroundColor: 'red' }} />
-    //     <View style={{ flex: 1 - this.getProgress(), backgroundColor: 'grey' }} />
-    //   </View>
+
     );
   }
 }
 
-function ControlButton({ title, onPress }) {
-  return (
-    <TouchableOpacity style={styles.controlButtonContainer} onPress={onPress}>
-      <Text style={styles.controlButtonText}>{title}</Text>
-    </TouchableOpacity>
-  );
-}
 
-
-export default class CircularPlayer extends Component {
+class CircularPlayer extends Component {
   render() {
-
     return (
-      <View style={styles.card}>
-        <ProgressBar />
+      <View >
+        <ProgressBar {...this.props} />
         </View>
     );
   }
 }
+
+const mapStateToProps = state => ({ 
+  commentList: state.comments,
+});
+
+const mapDispatchToProps = dispatch =>({
+    actions: bindActionCreators( actions , dispatch)
+  
+})
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(CircularPlayer);
+
+
+
+
 
 const styles = StyleSheet.create({
   card: {

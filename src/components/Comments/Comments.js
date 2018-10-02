@@ -58,7 +58,6 @@ class Comments extends Component {
     render() {
         const { commentList, player  } = this.props
         const topComment = commentList.comments.filter(comment =>   Math.abs(player.currentTime - comment.time)<11)|| ""
-
         return (
             <View style={styles.commentContainer}>
             
@@ -115,8 +114,8 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
       marginTop:30,
-      borderTopWidth:1,
-      borderTopColor:'gray',
+      backgroundColor:'rgba(220,220,220, 0.9)',
+      borderRadius:10
     },
     commentContainer :{
       width:SCREEN_WIDTH,
