@@ -35,11 +35,12 @@ class ProgressBar extends ProgressComponent {
 
   render() {
     const {position, duration} = this.state
+    console.log(this.props.opacity)
     return (
-      <Animated.View style={[{height: this.props.height}, this.props.styling]}>
-          <Text> {getFormattedTime(position)}</Text>
+      <Animated.View style={[{height: !this.props.shouldSetTime ? 0 : 40, opacity: !this.props.shouldSetTime ? 0 : 100}, styles.bottomTimeLineStyle]}>
+          <Text style={{fontWeight:"bold", color:'rgb(135,206,250)'}}> {getFormattedTime(position)}</Text>
             <Slider
-                style={{ width: SCREEN_WIDTH-120, marginLeft:5, marginRight:5 }}
+                style={{ width: SCREEN_WIDTH-150, marginLeft:5, marginRight:5 }}
                 step={0.1}
                 minimumValue={0}
                 maximumValue={100}
@@ -77,44 +78,11 @@ export default class BottomPlayer extends Component {
 }
 
 const styles = StyleSheet.create({
-  card: {
-    width: '80%',
-    elevation: 1,
-    borderRadius: 4,
-    shadowRadius: 2,
-    shadowOpacity: 0.1,
-    alignItems: 'center',
-    shadowColor: 'black',
-    backgroundColor: 'white',
-    shadowOffset: { width: 0, height: 1},
-  },
-  cover: {
-    width: 140,
-    height: 140,
-    marginTop: 20,
-    backgroundColor: 'grey',
-  },
-  progress: {
-    height: 1,
-    width: '90%',
-    marginTop: 10,
-    flexDirection: 'row',
-  },
-  title: {
-    marginTop: 10,
-  },
-  artist: {
-    fontWeight: 'bold',
-  },
-  controls: {
-    marginVertical: 20,
-    flexDirection: 'row',
-  },
-  controlButtonContainer: {
-    flex: 1,
-  },
-  controlButtonText: {
-    fontSize: 18,
-    textAlign: 'center',
+  
+  bottomTimeLineStyle:{
+    width: SCREEN_WIDTH, 
+    alignItems: 'center', 
+    flexDirection:'row',
+    justifyContent:'center'
   },
 });

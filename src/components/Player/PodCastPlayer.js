@@ -80,7 +80,7 @@ class PodCastPlayer extends Component {
     });
     TrackPlayer.setVolume(0.1)
     this.scrollOffset = 0
-    this.animation = new Animated.ValueXY({ x: 0, y:  40 })
+    this.animation = new Animated.ValueXY({ x: 0, y:  30 })
   }
 
   _onPaus(){
@@ -126,7 +126,7 @@ class PodCastPlayer extends Component {
   onTouchPlayer(){
     if(this.state.canScrollUp){
       Animated.spring(this.animation.y, {
-        toValue:40,
+        toValue:30,
         tension:1
       }).start()
       this.setState({canScrollUp:false})
@@ -177,12 +177,12 @@ class PodCastPlayer extends Component {
       extrapolate: "clamp"
     })
     animatedSongTitleOpacity = this.animation.y.interpolate({
-      inputRange: [0, SCREEN_HEIGHT - 500, SCREEN_HEIGHT - 40],
+      inputRange: [0, SCREEN_HEIGHT - 500, SCREEN_HEIGHT - 30],
       outputRange: [0, 0, 1],
       extrapolate: "clamp"
     })
     animatedImageMarginLeft = this.animation.y.interpolate({
-      inputRange: [0, SCREEN_HEIGHT - 40],
+      inputRange: [0, SCREEN_HEIGHT - 30],
       outputRange: [0, 10],
       extrapolate: "clamp"
     })
@@ -203,12 +203,18 @@ class PodCastPlayer extends Component {
     })
     animatedImageWidth = this.animation.y.interpolate({
       inputRange:[0, SCREEN_HEIGHT ],
-      outputRange:[SCREEN_WIDTH+25, 20],
+      outputRange:[SCREEN_WIDTH+16, 20],
       extrapolate:"clamp"
     })
     animatedBottomTimelineHeight = this.animation.y.interpolate({
       inputRange:[0, SCREEN_HEIGHT],
-      outputRange:[0, 40],
+      outputRange:[0, 50],
+      extrapolate:"clamp"
+    })
+
+    animatedBorderRadius = this.animation.y.interpolate({
+      inputRange:[0, SCREEN_HEIGHT],
+      outputRange:[10, 0],
       extrapolate:"clamp"
     })
 
@@ -218,18 +224,15 @@ class PodCastPlayer extends Component {
         <View>  
             <Animated.View style={{ flex: 1}}>  
                 <Animated.View style={[animatedHeight, styles.modalStyle]}>
-                  
                   <BottomPlayer 
                       shouldSetTime={this.state.canScrollUp}
                       setCurrentTime={this.props.actions.setCurrentTime}
                       onTimeLineChange={this._onTimeLineChange}
-                      
-                       
-                      styling={[{height:animatedBottomTimelineHeight, opacity: animatedSongTitleOpacity}, styles.bottomTimeLineStyle]} />
+                       />
 
               <Animated.View style={{ height: animatedHeaderHeight-animatedBottomTimelineHeight, flexDirection: 'row', alignItems:'center' }}>    
-                  <Animated.View style={{ height: animatedImageHeight, width: animatedImageWidth, marginLeft: animatedImageMarginLeft }}>
-                    <Image  style={{ flex: 1, width:null, height: null, opacity:1 }} source={podcast.image} resizeMode='center'/>
+                  <Animated.View style={{ height: animatedImageHeight, width: animatedImageWidth, marginLeft: animatedImageMarginLeft, borderTopLeftRadius:animatedBorderRadius,borderTopRightRadius:animatedBorderRadius, overflow:"hidden" }}>
+                    <Image style={{ flex: 1, width:null, height: null, opacity:1 }} source={podcast.image} />
                     
                     <Animated.View style={[{opacity:animatedSongDetailsOpacity},styles.minimizeButton]}>
                       <Icon onPress={() => this.onTouchPlayer()} name='chevron-up' size={50} type='evilicon' color='#255' />
@@ -251,7 +254,7 @@ class PodCastPlayer extends Component {
             <Animated.Text onPress={() => this.onTouchPlayer()} style={{ fontSize: 18, paddingLeft: 10, marginBottom:20 }}>{podcast.name}</Animated.Text>
                 <View>
 
-                  <Text> {this.state.timeFormatted}</Text>
+                 
                 </View>
 
                 <View style={{ marginBottom:30}}>
@@ -304,6 +307,8 @@ const styles = StyleSheet.create({
     zIndex: 10, 
     backgroundColor: 'white', 
     height: SCREEN_HEIGHT,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -314,7 +319,7 @@ const styles = StyleSheet.create({
     elevation: 8
   },
   bottomTimeLineStyle:{
-    width: SCREEN_WIDTH, 
+    width: SCREEN_WIDTH - 100, 
     alignItems: 'center', 
     flexDirection:'row',
     justifyContent:'center'
