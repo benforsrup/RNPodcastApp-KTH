@@ -161,6 +161,10 @@ class PodCastPlayer extends Component {
     })
     //TrackPlayer.seekTo(time)
   }
+  _onTimeLineChange(value){
+    console.log(value)
+    
+  }
 
  
   render() {
@@ -217,19 +221,10 @@ class PodCastPlayer extends Component {
             <Animated.View style={{ flex: 1}}>  
                 <Animated.View style={[animatedHeight, styles.modalStyle]}>
                   {this.state.canScrollUp && 
-                  <Animated.View style={[{height:animatedBottomTimelineHeight}, styles.bottomTimeLineStyle]}>
-                      <Text> {getFormattedTime(this.state.timeSeconds)}</Text>
-                      <Slider
-                        style={{ width: SCREEN_WIDTH-120, marginLeft:5, marginRight:5 }}
-                        step={0.1}
-                        minimumValue={0}
-                        maximumValue={100}
-                        thumbStyle={{width:15, height:15}}
-                        value={this.state.timePercentage}
-                        // onValueChange={(value)=>this._updateBottomTimeValue(value)}
-                      />
-                      <Text>{geFormattedDuration(this.state.duration)}</Text>
-                  </Animated.View>}
+                  <BottomPlayer 
+                      onTimeLineChange={this._onTimeLineChange}
+                      height={animatedBottomTimelineHeight} 
+                      styling={styles.bottomTimeLineStyle} />}
 
               <Animated.View style={{ height: animatedHeaderHeight-animatedBottomTimelineHeight, flexDirection: 'row', alignItems:'center' }}>    
                   <Animated.View style={{ height: animatedImageHeight, width: animatedImageWidth, marginLeft: animatedImageMarginLeft }}>
@@ -345,8 +340,7 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH, 
     alignItems: 'center', 
     flexDirection:'row',
-    justifyContent:'center',
-    height:40
+    justifyContent:'center'
   },
   minimizeButton:{
     position:'absolute', 
