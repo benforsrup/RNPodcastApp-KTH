@@ -19,10 +19,8 @@ TrackPlayer.registerEventHandler(async (data) => {
       TrackPlayer.pause()
     } else if(data.type == 'remote-next') {
       TrackPlayer.skipToNext()
-    } else if(data.type == 'remote-previous') {
-      TrackPlayer.skipToPrevious()
-    } else if (data.type === 'playback-state') {
-      PlayerStore.playbackState = data.state;
+    } else if(data.type == 'remote-seek') {
+      console.log(data.type)
     }
   });
 

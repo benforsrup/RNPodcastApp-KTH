@@ -7,6 +7,7 @@ import * as actions from "../../../redux/actions";
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
 import CircularSlider from '../../Timeline/CircularSlider'
+import { Navigation } from 'react-native-navigation'
 import moment from 'moment'
 
 const SCREEN_HEIGHT = Dimensions.get('window').height
@@ -46,33 +47,81 @@ class ProgressBar extends ProgressComponent {
     this.setState({angle:value})
   }
 
+  goToScreenPreview = async ({reactTag}) => {
+    console.log("yh")
+    await Navigation.push("PodcastListView", {
+        component: {
+          name: 'CommentScreen',
+          options: {
+            animations: {
+              push: {
+                enable: false
+              }
+            },
+            topBar:{
+                visible:true
+            },
+            preview: reactTag ? {
+              reactTag,
+              height: 500,
+              commit: true,
+            } : undefined,
+          }
+        }
+      });
+  }
+
+goToScreen = async () => {
+    await Navigation.push("PodcastListView", {
+        component: {
+            name: "CommentScreen",
+            options:{
+                topBar:{
+                    visible:true,
+                }, 
+            }
+        }
+    })
+  }
 
   render() {    
     const {commentList} = this.props
     const topComment = commentList.comments.filter(comment =>   Math.abs(this.state.position - comment.time)<11)|| ""
     return (
         <View >
+
+            <Navigation.TouchablePreview
+                  
+                  onPress={() => this.goToScreen()}
+                   onPressIn={({reactTag}) => this.goToScreenPreview({reactTag})}
+                  >
+                <Text style={{backgroundColor:'blue', padding:10}}> {topComment.length > 0 ? topComment[0].title: "No Comment"}</Text>
+                </Navigation.TouchablePreview>
+
+
             <View style={{justifyContent: 'center', flexDirection:'row'}}>
             <Text style={{fontWeight:"bold", color:'rgb(135,206,250)'}}>  {getFormattedTime(this.state.position)}  / </Text> 
             <Text> {getFormattedDuration(this.state.duration)}</Text>
             </View>
+
             
-             <View style={{width: SCREEN_WIDTH-100, height:SCREEN_WIDTH-100, position:'absolute', top:0, left:0}}>
+            
+             {/* <View style={{width: SCREEN_WIDTH-100, height:SCREEN_WIDTH-100, position:'absolute', top:0, left:0}}>
               
-              <View style={{flex: 1, alignItems:'center', justifyContent:'center'}}>
-                <Text> {topComment.length > 0 ? topComment[0].title: "No Comment"}</Text>
+              <View style={{flex: 1, alignItems:'center', justifyContent:'center', }}>
+                
               </View>
 
-            </View>
-
-            <CircularSlider 
+            </View> */}
+            
+            {/* <CircularSlider 
                   width={SCREEN_WIDTH-100} 
                   height={SCREEN_WIDTH-100} 
                   meterColor='#0cd' 
                   textColor='#fff'
                   value={this.state.angle}
                   onValueChange={(value)=> this._updateCircularTimeline(value)}
-                  />
+                  /> */}
         </View>
 
     );

@@ -26,11 +26,13 @@ import {
     Caption,
     Image,
     Divider,
-    Tile
+    Tile,
+    Touchable
  } from '@shoutem/ui'
+import HomeScreen from "./HomeScreen";
 
 
-
+import PodCastPlayer from '../components/Player/PodCastPlayer'
 class PodcastListView extends Component {
 
     constructor(props) {
@@ -140,55 +142,88 @@ class PodcastListView extends Component {
             }
         })  
     }
+    previewCompleted({ previewComponentId }) {
+        console.log(previewComponentId)
+    }
 
-    goToScreen = (screenName, prop) => {
-        if(screenName == "HomeScreen"){
-                // Navigation.push(this.props.componentId, {
-                //     component: {
-                //         name: screenName,
-                //         passProps: {
-                //             "podcast": prop
-                //         },
-                //         options:{
-                //             topBar:{
-                //                 visible:false,
-                //             },
-                //         }
-                //     }
-                // })
-                Navigation.showModal({
-                    stack: {
-                        children: [{
-                            component: {
-                                name: screenName,
-                                passProps: {
-                                    "podcast": prop
-                                }
-                            }
-                        }],
-        
-                        options: {
-                            topBar:{
-                                visible:false,
-                            }
-                        }
-                    }
-                });
+    goToScreenPreview = async (podcast, {reactTag}) => {
+        console.log(reactTag, podcast, "hejsan")
+        await Navigation.push(this.props.componentId, {
+            component: {
+              name: 'HomeScreen',
+              passProps: {
+                "podcast": podcast
+            },
+              options: {
+                  popGesture:true,
+                animations: {
+                  push: {
+                    enable: false
+                  }
+                },
+                topBar:{
+                    visible:true
+                },
+                preview: reactTag ? {
+                  reactTag,
+                  height: 500,
+                  commit: true,
+                } : undefined,
+              }
             }
-            else if(screenName=="SettingsScreen"){
-                Navigation.push(this.props.componentId, {
+          });
+    }
+
+    goToScreen = async (podcast) => {
+        
+        console.log(this.props.componentId)
+        // if(screenName == "HomeScreen"){
+               await Navigation.push(this.props.componentId, {
                     component: {
-                        name: screenName,
+                        name: "HomeScreen",
+                        passProps: {
+                            "podcast": podcast
+                        },
                         options:{
                             topBar:{
-                                title:{
-                                    text: "Settings"
-                                }
-                            }
+                                visible:false,
+                            }, 
                         }
                     }
                 })
-            }
+                // Navigation.showModal({
+                //     stack: {
+                //         children: [{
+                //             component: {
+                //                 name: screenName,
+                //                 passProps: {
+                //                     "podcast": prop
+                //                 }
+                //             }
+                //         }],
+        
+                //         options: {
+                //             topBar:{
+                //                 visible:false,
+                //             }
+                //         }
+                //     }
+                // });
+            // }
+            // else if(screenName=="SettingsScreen"){
+            //     Navigation.push(this.props.componentId, {
+            //         component: {
+            //             name: screenName,
+            //             options:{
+            //                 topBar:{
+            //                     title:{
+            //                         text: "Settings"
+            //                     }
+            //                 }
+            //             }
+            //         }
+            //     })
+            // }
         
     }
 
@@ -200,7 +235,9 @@ class PodcastListView extends Component {
       
         const cellViews = rowData.map((podcast, id) => {
           return (
-            <TouchableOpacity onPress={() =>this.goToScreen("HomeScreen", podcast)} key={id} styleName="flexible">
+            <Navigation.TouchablePreview 
+                // onPressIn={({reactTag})=>this.goToScreenPreview(podcast,{reactTag})}
+                onPress={() => this.goToScreen(podcast)} key={id} styleName="flexible">
               <Card>
                       <Image
                       style={{height:150}}
@@ -211,7 +248,7 @@ class PodcastListView extends Component {
                   <Subtitle numberOfLines={3}>{podcast.name}</Subtitle>
                 </View>
               </Card>
-            </TouchableOpacity>
+            </Navigation.TouchablePreview>
           );
         });
       

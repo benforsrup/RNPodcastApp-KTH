@@ -73,10 +73,9 @@ class PodCastPlayer extends Component {
     TrackPlayer.updateOptions({
       capabilities: [
         TrackPlayer.CAPABILITY_PLAY,
-        TrackPlayer.CAPABILITY_PAUSE,
-        TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
-        TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS,
+        TrackPlayer.CAPABILITY_PAUSE
       ]
+
     });
     TrackPlayer.setVolume(0.1)
     this.scrollOffset = 0
@@ -235,7 +234,7 @@ class PodCastPlayer extends Component {
                     <Image style={{ flex: 1, width:null, height: null, opacity:1 }} source={podcast.image} />
                     
                     <Animated.View style={[{opacity:animatedSongDetailsOpacity},styles.minimizeButton]}>
-                      <Icon onPress={() => this.onTouchPlayer()} name='chevron-up' size={50} type='evilicon' color='#255' />
+                      <Icon onPress={() => this.onTouchPlayer()} name='chevron-down' size={70} type='evilicon' color='#255' />
                     </Animated.View> 
 
                   </Animated.View>
@@ -326,7 +325,7 @@ const styles = StyleSheet.create({
   },
   minimizeButton:{
     position:'absolute', 
-    top:0, 
+    top:-10, 
     left: 0,
     right:0,
     width:null, 

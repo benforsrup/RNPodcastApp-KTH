@@ -79,6 +79,19 @@ export const goHome = () => Navigation.setRoot({
                             },
                         },
                         component:{
+                            name:"CommentScreen",
+                            id:"CommentScreen",
+                            options:{
+                                sideMenu:{
+                                    left:{
+                                        enabled:false,
+                                        visible:false
+                                    }
+                                }
+                            },
+                            
+                        },
+                        component:{
                             name:"HomeScreen",
                             id:"HomeScreen",
                             options:{
@@ -91,6 +104,7 @@ export const goHome = () => Navigation.setRoot({
                             },
                             
                         },
+                        
                         component: {
                             id:"PodcastListView",
                             name: 'PodcastListView',

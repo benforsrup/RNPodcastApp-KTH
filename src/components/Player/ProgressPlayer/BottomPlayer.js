@@ -37,18 +37,18 @@ class ProgressBar extends ProgressComponent {
     const {position, duration} = this.state
     return (
       <Animated.View style={[{height: !this.props.shouldSetTime ? 0 : 40, opacity: !this.props.shouldSetTime ? 0 : 100}, styles.bottomTimeLineStyle]}>
-          <Text style={{fontWeight:"bold", color:'rgb(135,206,250)'}}> {getFormattedTime(position)}</Text>
-            <Slider
-                style={{ width: SCREEN_WIDTH-150, marginLeft:5, marginRight:5 }}
-                step={0.1}
-                minimumValue={0}
-                maximumValue={100}
-                thumbStyle={{width:15, height:15}}
-                value={this.getProgress()*100}
-                onValueChange={(value)=>this.setState({currentTime: value})}
-                onSlidingComplete={(value) => this.onTimeLineChange(value)}
-                      />
-          <Text> {getFormattedDuration(duration)}</Text>
+          <Text style={{fontWeight:"bold", color:'rgb(135,206,250)', width:'17%'}}> {getFormattedTime(position)}</Text>
+          <Slider
+              style={{ width: '60%' }}
+              step={0.1}
+              minimumValue={0}
+              maximumValue={100}
+              thumbStyle={{width:15, height:15}}
+              value={this.getProgress()*100}
+              onValueChange={(value)=>this.setState({currentTime: value})}
+              onSlidingComplete={(value) => this.onTimeLineChange(value)}
+                    />
+          <Text style={{width:'16%'}}> {getFormattedDuration(duration)}</Text>
         </Animated.View>
     //   <View style={styles.progress}>
     //     <View style={{ flex: this.getProgress(), backgroundColor: 'red' }} />
@@ -79,9 +79,11 @@ export default class BottomPlayer extends Component {
 const styles = StyleSheet.create({
   
   bottomTimeLineStyle:{
-    width: SCREEN_WIDTH, 
+    width: SCREEN_WIDTH,
+    paddingLeft:10,
+    paddingRight:10,
     alignItems: 'center', 
     flexDirection:'row',
-    justifyContent:'center'
+    justifyContent:'space-between'
   },
 });

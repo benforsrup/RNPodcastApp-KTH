@@ -7,13 +7,10 @@ import {
 } from "react-native";
 
 import Comments from '../components/Comments/Comments'
-import PodCastPlayer from '../components/Player/PodCastPlayer'
 
-import { Navigation } from 'react-native-navigation'
-class HomeScreen extends Component {
+class CommentScreen extends Component {
     constructor(props){
-        super(props)
-        
+        super(props)   
     }
 
     componentDidMount(){
@@ -22,14 +19,13 @@ class HomeScreen extends Component {
     render() {
         return ( 
                 <View >
-                    <PodCastPlayer podcast={this.props.podcast} />
                     <Comments  />
                 </View>
         );
     }
 }
   
-export default HomeScreen
+export default CommentScreen
 const styles = StyleSheet.create({
     container: {
         borderBottomLeftRadius: 0,
