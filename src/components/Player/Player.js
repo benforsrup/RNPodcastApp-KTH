@@ -102,7 +102,7 @@ class Player extends Component {
     this.setState({isPlaying:true})
     // this.whoosh.play()
     TrackPlayer.play();
-    this.timeInterval = setInterval(() => {this._updateTimeLine()}, 1000 )
+    //this.timeInterval = setInterval(() => {this._updateTimeLine()}, 1000 )
     
   }
 
