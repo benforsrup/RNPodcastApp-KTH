@@ -25,7 +25,7 @@ class Comments extends Component {
 
     render() {
         return (
-            <View style={{borderBottomWidth:1,borderBottomColor:'gray', paddingBottom:5}}>
+            <View style={this.props.customStyling}>
             <View style={styles.commentContainer}>
 
                 <Avatar
@@ -48,7 +48,7 @@ class Comments extends Component {
                 
             </View> 
 
-                <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', display:'flex'}}>
+             {!this.props.isSmall &&   <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', display:'flex'}}>
                     <View style={{flexDirection:'row', marginLeft:15}}>
                         <Icon name="thumb-up" type="materialicon" iconStyle={{fontSize:20}} /> 
                         <Text style={{marginRight:20}}> 10 </Text>
@@ -57,6 +57,7 @@ class Comments extends Component {
                     <Icon onPress={() => this.showReply()} name="chevron-down" type="entypo" />
                     <View><Text style={{marginRight:50, fontWeight:'700', fontSize:15, color:'gray'}}> Reply</Text></View>
                 </View>
+             }
 
             </View>
         );
@@ -66,7 +67,7 @@ export default Comments;
 
 const styles = StyleSheet.create({
     commentContainer :{
-      width:SCREEN_WIDTH,
+      
       display:'flex',
       paddingLeft:10,
       paddingTop:10,

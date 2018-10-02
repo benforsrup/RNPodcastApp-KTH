@@ -49,6 +49,9 @@ class Comments extends Component {
                 id={item.id}
                 data={item}
                 index={index}
+                isSmall={false}
+                isPreview={false}
+                customStyling={{width: SCREEN_WIDTH}}
                 onReplyClick={this.showReply}
             />
     );
@@ -59,7 +62,7 @@ class Comments extends Component {
         const { commentList, player  } = this.props
         const topComment = commentList.comments.filter(comment =>   Math.abs(player.currentTime - comment.time)<30)|| ""
         return (
-            <View style={styles.commentContainer}>
+            <View style={[styles.commentContainer, this.props.styling]}>
             
                 <View style={styles.container}>
                 { topComment.length > 0 ?
@@ -113,9 +116,7 @@ const styles = StyleSheet.create({
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-      marginTop:30,
-      backgroundColor:'rgba(220,220,220, 0.9)',
-      borderRadius:10
+      backgroundColor:'rgba(220,220,220, 0.1)'
     },
     commentContainer :{
       width:SCREEN_WIDTH,

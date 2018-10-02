@@ -9,6 +9,8 @@ import { connect } from 'react-redux'
 import CircularSlider from '../../Timeline/CircularSlider'
 import { Navigation } from 'react-native-navigation'
 import moment from 'moment'
+import Comment from '../../Comments/Comment'
+
 
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
@@ -86,17 +88,17 @@ goToScreen = async () => {
 
   render() {    
     const {commentList} = this.props
-    const topComment = commentList.comments.filter(comment =>   Math.abs(this.state.position - comment.time)<11)|| ""
+    const topComment = commentList.comments.filter(comment =>   Math.abs(this.state.position - comment.time)<30)|| ""
     return (
         <View >
 
-            <Navigation.TouchablePreview
+            {/* <Navigation.TouchablePreview
                   
                   onPress={() => this.goToScreen()}
                    onPressIn={({reactTag}) => this.goToScreenPreview({reactTag})}
                   >
                 <Text style={{backgroundColor:'blue', padding:10}}> {topComment.length > 0 ? topComment[0].title: "No Comment"}</Text>
-                </Navigation.TouchablePreview>
+                </Navigation.TouchablePreview> */}
 
 
             <View style={{justifyContent: 'center', flexDirection:'row'}}>
@@ -105,23 +107,86 @@ goToScreen = async () => {
             </View>
 
             
+             
             
-             {/* <View style={{width: SCREEN_WIDTH-100, height:SCREEN_WIDTH-100, position:'absolute', top:0, left:0}}>
+            <View style={{justifyContent:'center', width:SCREEN_WIDTH-20}}>
+            <View style={{borderRadius:150,width: SCREEN_WIDTH-90, height:SCREEN_WIDTH-90, position:'absolute', top:35, left:35,zIndex:10}}>
               
               <View style={{flex: 1, alignItems:'center', justifyContent:'center', }}>
-                
+              <Navigation.TouchablePreview
+                  
+                  onPress={() => this.goToScreen()}
+                   onPressIn={({reactTag}) => this.goToScreenPreview({reactTag})}
+                  >
+
+                  {topComment.length > 0 ?
+                  <View>
+                      <Comment 
+                          id={topComment[0].id} 
+                          data={topComment[0]} 
+                          isSmall={true}
+                          index={topComment[0].id}
+                          customStyling={styles.customCommentStyle} /> 
+                          
+                          <View style={{
+                            backgroundColor:'#F9F9F9',
+                            height:'100%',
+                            width:SCREEN_WIDTH-135, 
+                            position:'absolute', 
+                            top:7,
+                            borderRadius:10,
+                            
+                            shadowColor: "#000",
+                            shadowOffset: {
+                              width: 0,
+                              height: 1,
+                            },
+                            shadowOpacity: 0.20,
+                            shadowRadius: 1.41,
+
+                            elevation: 2,
+                            shadowColor: "#000",
+                            zIndex:-1, 
+                            left:7.5}}></View>
+
+                            <View style={{
+                            backgroundColor:'#F9F9F9',
+                            shadowColor: "#000",
+                            shadowOffset: {
+                              width: 0,
+                              height: 1,
+                            },
+                            shadowOpacity: 0.20,
+                            shadowRadius: 1.41,
+
+                            elevation: 2,
+                            height:'100%',
+                            width:SCREEN_WIDTH-160, 
+                            position:'absolute', 
+                            top:14,
+                            borderRadius:10,
+                            zIndex:-2, 
+                            left:20}}></View>
+
+                          </View> 
+                          : 
+                      
+                      <Text> No Comment</Text> }
+
+                {/* <Text style={{padding:10}}> {topComment.length > 0 ? topComment[0].title: "No Comment"}</Text> */}
+                </Navigation.TouchablePreview> 
               </View>
 
-            </View> */}
-            
-            {/* <CircularSlider 
-                  width={SCREEN_WIDTH-100} 
-                  height={SCREEN_WIDTH-100} 
+            </View>
+            <CircularSlider 
+                  width={SCREEN_WIDTH-20} 
+                  height={SCREEN_WIDTH-20}
                   meterColor='#0cd' 
                   textColor='#fff'
                   value={this.state.angle}
                   onValueChange={(value)=> this._updateCircularTimeline(value)}
-                  /> */}
+                  />
+                  </View>
         </View>
 
     );
@@ -153,47 +218,21 @@ export default connect(mapStateToProps, mapDispatchToProps)(CircularPlayer);
 
 
 
-
-
 const styles = StyleSheet.create({
-  card: {
-    width: '80%',
-    elevation: 1,
-    borderRadius: 4,
-    shadowRadius: 2,
-    shadowOpacity: 0.1,
-    alignItems: 'center',
-    shadowColor: 'black',
-    backgroundColor: 'white',
-    shadowOffset: { width: 0, height: 1},
-  },
-  cover: {
-    width: 140,
-    height: 140,
-    marginTop: 20,
-    backgroundColor: 'grey',
-  },
-  progress: {
-    height: 1,
-    width: '90%',
-    marginTop: 10,
-    flexDirection: 'row',
-  },
-  title: {
-    marginTop: 10,
-  },
-  artist: {
-    fontWeight: 'bold',
-  },
-  controls: {
-    marginVertical: 20,
-    flexDirection: 'row',
-  },
-  controlButtonContainer: {
-    flex: 1,
-  },
-  controlButtonText: {
-    fontSize: 18,
-    textAlign: 'center',
-  },
+  customCommentStyle:{
+    width: SCREEN_WIDTH-120,
+    borderWidth: 1.5,
+    borderColor:'rgba(0,0,0,0.1)',
+    borderRadius: 10,
+    backgroundColor:'white',
+    // shadowColor: "#000",
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 3,
+    // },
+    // shadowOpacity: 0.29,
+    // shadowRadius: 4.65,
+
+    // elevation: 7,
+  }
 });

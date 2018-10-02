@@ -256,13 +256,13 @@ class PodCastPlayer extends Component {
                  
                 </View>
 
-                <View style={{ marginBottom:30}}>
+                <View>
 
               <CircularPlayer shouldSetTime={!this.state.canScrollUp} setCurrentTime={this.props.actions.setCurrentTime} />
               
                 </View>
 
-                <View style={{ width:SCREEN_WIDTH-100, height:60, flexDirection: 'row', justifyContent: 'space-between' }}>
+                <View style={{ width:SCREEN_WIDTH-100, height:60, flexDirection: 'row', justifyContent: 'space-between', marginBottom:20 }}>
                 <Icon name="skip-back" type="feather" size={40} />
                   
                   {this.state.isPlaying ? <Icon name="controller-paus" type="entypo" size={60} onPress={()=> this._onPaus()} /> : <Icon name="play" type="evilicon" size={70} onPress={()=> this._onPlay()} />}

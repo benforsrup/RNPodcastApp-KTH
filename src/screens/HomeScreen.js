@@ -3,11 +3,13 @@ import {
     View,
     Text,
     StyleSheet,
-    Button
+    Button, 
+    Dimensions
 } from "react-native";
 
 import Comments from '../components/Comments/Comments'
 import PodCastPlayer from '../components/Player/PodCastPlayer'
+const SCREEN_HEIGHT = Dimensions.get('window').height
 
 import { Navigation } from 'react-native-navigation'
 class HomeScreen extends Component {
@@ -21,9 +23,9 @@ class HomeScreen extends Component {
     }
     render() {
         return ( 
-                <View >
+                <View  >
                     <PodCastPlayer podcast={this.props.podcast} />
-                    <Comments  />
+                    <Comments styling={{marginTop:25}} />
                 </View>
         );
     }

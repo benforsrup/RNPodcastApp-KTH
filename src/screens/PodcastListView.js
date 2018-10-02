@@ -175,7 +175,7 @@ class PodcastListView extends Component {
     }
 
     goToScreen = async (podcast) => {
-        
+
         console.log(this.props.componentId)
         // if(screenName == "HomeScreen"){
                await Navigation.push(this.props.componentId, {
@@ -188,6 +188,7 @@ class PodcastListView extends Component {
                             topBar:{
                                 visible:false,
                             }, 
+                            
                         }
                     }
                 })

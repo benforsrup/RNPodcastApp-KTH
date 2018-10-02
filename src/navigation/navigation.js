@@ -95,6 +95,7 @@ export const goHome = () => Navigation.setRoot({
                             name:"HomeScreen",
                             id:"HomeScreen",
                             options:{
+                                
                                 sideMenu:{
                                     left:{
                                         enabled:false,
