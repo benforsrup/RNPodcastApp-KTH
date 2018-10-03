@@ -129,7 +129,7 @@ goToScreen = async () => {
                           customStyling={styles.customCommentStyle} /> 
                           
                           <View style={{
-                            backgroundColor:'#F9F9F9',
+                            backgroundColor:'#F3F3F3',
                             height:'100%',
                             width:SCREEN_WIDTH-135, 
                             position:'absolute', 

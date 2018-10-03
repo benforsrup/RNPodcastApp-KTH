@@ -25,14 +25,14 @@ class CircularSlider extends Component {
   }
   polarToCartesian(angle){
     const {cx,cy,r} = this.state
-        , a = (angle-270) * Math.PI / 180.0
+        , a = (angle-90) * Math.PI / 180.0
         , x = cx + (r * Math.cos(a))  
         , y = cy + (r * Math.sin(a))
     return {x,y}
   }
   cartesianToPolar(x,y){
     const {cx,cy} = this.state
-    return Math.round((Math.atan((y-cy)/(x-cx)))/(Math.PI/180)+((x>cx) ? 270 : 90))
+    return Math.round((Math.atan((y-cy)/(x-cx)))/(Math.PI/180)+((x>cx) ? 90 : 90))
   }
   handlePanResponderMove({nativeEvent:{locationX,locationY}}){
     this.props.onValueChange(this.cartesianToPolar(locationX,locationY))
