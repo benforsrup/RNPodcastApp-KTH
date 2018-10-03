@@ -7,6 +7,8 @@ import * as actions from "../../../redux/actions";
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
 import CircularSlider from '../../Timeline/CircularSlider'
+import CircleSlider from '../../Timeline/CircleSlider'
+
 import { Navigation } from 'react-native-navigation'
 import moment from 'moment'
 import Comment from '../../Comments/Comment'
@@ -88,7 +90,7 @@ goToScreen = async () => {
 
   render() {    
     const {commentList} = this.props
-    const topComment = commentList.comments.filter(comment =>   Math.abs(this.state.position - comment.time)<30)|| ""
+    //const topComment = commentList.comments.filter(comment =>   Math.abs(this.state.position - comment.time)<30)|| ""
     return (
         <View >
 
@@ -101,7 +103,7 @@ goToScreen = async () => {
                 </Navigation.TouchablePreview> */}
 
 
-            <View style={{justifyContent: 'center', flexDirection:'row'}}>
+            <View style={{justifyContent: 'center', flexDirection:'row', marginBottom:10}}>
             <Text style={{fontWeight:"bold", color:'rgb(135,206,250)'}}>  {getFormattedTime(this.state.position)}  / </Text> 
             <Text> {getFormattedDuration(this.state.duration)}</Text>
             </View>
@@ -109,15 +111,11 @@ goToScreen = async () => {
             
              
             
-            <View style={{justifyContent:'center', width:SCREEN_WIDTH-20}}>
-            <View style={{borderRadius:150,width: SCREEN_WIDTH-90, height:SCREEN_WIDTH-90, position:'absolute', top:35, left:35,zIndex:10}}>
-              
-              <View style={{flex: 1, alignItems:'center', justifyContent:'center', }}>
+            {/* <View style={{ justifyContent:'center', width:SCREEN_WIDTH-65, height:SCREEN_WIDTH-65,alignItems: 'center', zIndex: 1}}>
+            <View style={{width: SCREEN_WIDTH-140, height:SCREEN_WIDTH-220, position:'absolute', top:80, left:40,zIndex:10}}> 
               <Navigation.TouchablePreview
-                  
                   onPress={() => this.goToScreen()}
-                   onPressIn={({reactTag}) => this.goToScreenPreview({reactTag})}
-                  >
+                   onPressIn={({reactTag}) => this.goToScreenPreview({reactTag})}>
 
                   {topComment.length > 0 ?
                   <View>
@@ -131,7 +129,7 @@ goToScreen = async () => {
                           <View style={{
                             backgroundColor:'#F3F3F3',
                             height:'100%',
-                            width:SCREEN_WIDTH-135, 
+                            width:SCREEN_WIDTH-150, 
                             position:'absolute', 
                             top:7,
                             borderRadius:10,
@@ -161,7 +159,7 @@ goToScreen = async () => {
 
                             elevation: 2,
                             height:'100%',
-                            width:SCREEN_WIDTH-160, 
+                            width:SCREEN_WIDTH-180, 
                             position:'absolute', 
                             top:14,
                             borderRadius:10,
@@ -173,20 +171,19 @@ goToScreen = async () => {
                       
                       <Text> No Comment</Text> }
 
-                {/* <Text style={{padding:10}}> {topComment.length > 0 ? topComment[0].title: "No Comment"}</Text> */}
                 </Navigation.TouchablePreview> 
-              </View>
 
             </View>
-            <CircularSlider 
+           
+             <CircularSlider 
                   width={SCREEN_WIDTH-20} 
                   height={SCREEN_WIDTH-20}
                   meterColor='#0cd' 
                   textColor='#fff'
                   value={this.state.angle}
                   onValueChange={(value)=> this._updateCircularTimeline(value)}
-                  />
-                  </View>
+                  /> 
+                  </View> */}
         </View>
 
     );
@@ -220,7 +217,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(CircularPlayer);
 
 const styles = StyleSheet.create({
   customCommentStyle:{
-    width: SCREEN_WIDTH-120,
+    width: SCREEN_WIDTH-140,
     borderWidth: 1.5,
     borderColor:'rgba(0,0,0,0.1)',
     borderRadius: 10,

@@ -71,50 +71,7 @@ class PodcastListView extends Component {
                     "address": "225 Mulberry St, New York, NY 10012",
                     "image": { "url": "/Users/benforsrup/Documents/Webdev/ReactNative/RNPodcastApp/src/assets/mordpodden.png" },
                     "mp3": "https://ads-e-bauerse-pods.sharp-stream.com/441/s07e03_dodsskjutningen_3f21a015_normal.mp3"
-                },
-                {
-                    "name": "P3 Dokumentär",
-                    "id": 2,
-                    "address": "225 Mulberry St, New York, NY 10012",
-                    "image": { "url": "/Users/benforsrup/Documents/Webdev/ReactNative/RNPodcastApp/src/assets/p3.png" },
-                    "mp3": "https://sverigesradio.se/topsy/ljudfil/itunes/6650863.mp3"
-                },
-                {
-                    "name": "Mordpodden",
-                    "id": 3,
-                    "address": "225 Mulberry St, New York, NY 10012",
-                    "image": { "url": "/Users/benforsrup/Documents/Webdev/ReactNative/RNPodcastApp/src/assets/mordpodden.png" },
-                    "mp3": "https://ads-e-bauerse-pods.sharp-stream.com/441/s07e03_dodsskjutningen_3f21a015_normal.mp3"
-                },
-                {
-                    "name": "P3 Dokumentär",
-                    "id": 2,
-                    "address": "225 Mulberry St, New York, NY 10012",
-                    "image": { "url": "/Users/benforsrup/Documents/Webdev/ReactNative/RNPodcastApp/src/assets/p3.png" },
-                    "mp3": "https://sverigesradio.se/topsy/ljudfil/itunes/6650863.mp3"
-                },
-                {
-                    "name": "Mordpodden",
-                    "id": 3,
-                    "address": "225 Mulberry St, New York, NY 10012",
-                    "image": { "url": "/Users/benforsrup/Documents/Webdev/ReactNative/RNPodcastApp/src/assets/mordpodden.png" },
-                    "mp3": "https://ads-e-bauerse-pods.sharp-stream.com/441/s07e03_dodsskjutningen_3f21a015_normal.mp3"
-                },
-                {
-                    "name": "P3 Dokumentär",
-                    "id": 2,
-                    "address": "225 Mulberry St, New York, NY 10012",
-                    "image": { "url": "/Users/benforsrup/Documents/Webdev/ReactNative/RNPodcastApp/src/assets/p3.png" },
-                    "mp3": "https://sverigesradio.se/topsy/ljudfil/itunes/6650863.mp3"
-                },
-                {
-                    "name": "Mordpodden",
-                    "id": 3,
-                    "address": "225 Mulberry St, New York, NY 10012",
-                    "image": { "url": "/Users/benforsrup/Documents/Webdev/ReactNative/RNPodcastApp/src/assets/mordpodden.png" },
-                    "mp3": "https://ads-e-bauerse-pods.sharp-stream.com/441/s07e03_dodsskjutningen_3f21a015_normal.mp3"
-                }
-                
+                }    
             ]
         }
       }
@@ -143,7 +100,7 @@ class PodcastListView extends Component {
         })  
     }
     previewCompleted({ previewComponentId }) {
-        console.log(previewComponentId)
+       // console.log(previewComponentId)
     }
 
     goToScreenPreview = async (podcast, {reactTag}) => {

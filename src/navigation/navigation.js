@@ -123,7 +123,7 @@ export const goHome = () => Navigation.setRoot({
                                         text:"Podcasts"
                                     },
                                     largeTitle: {
-                                        visible: true,
+                                        visible: false,
                                         
                                      },
                                     leftButtons:{

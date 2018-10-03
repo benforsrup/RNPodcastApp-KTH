@@ -243,7 +243,15 @@ class PodCastPlayer extends Component {
                   <Animated.View style={{ opacity: animatedSongTitleOpacity, flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
                       {this.state.isPlaying ? 
                           <Icon name="controller-paus" type="entypo" size={40} onPress={()=> this._onPaus()} /> : 
-                          <Icon name="play" type="evilicon" size={40} onPress={()=> this._onPlay()} />}
+                          <Icon  iconStyle={{shadowColor: "#000",
+                          shadowOffset: {
+                            width: 0,
+                            height: 2,
+                          },
+                          shadowOpacity: 0.25,
+                          shadowRadius: 3.84,
+                          
+                          elevation: 5,}}name="play-circle-filled" type="materialicons" color="blue" size={40} onPress={()=> this._onPlay()} />}
                   </Animated.View>
 
               </Animated.View>
@@ -262,10 +270,30 @@ class PodCastPlayer extends Component {
               
                 </View>
 
-                <View style={{ width:SCREEN_WIDTH-100, height:60, flexDirection: 'row', justifyContent: 'space-between', marginBottom:20 }}>
-                <Icon name="skip-back" type="feather" size={40} />
+                <View style={{ width:SCREEN_WIDTH-100, height:60, flexDirection: 'row', justifyContent: 'space-between', marginBottom:10 }}>
+                <Icon name="replay-5" type="materialicons" size={40} />
                   
-                  {this.state.isPlaying ? <Icon name="controller-paus" type="entypo" size={60} onPress={()=> this._onPaus()} /> : <Icon name="play" type="evilicon" size={70} onPress={()=> this._onPlay()} />}
+                  {this.state.isPlaying ? 
+                  <Icon  iconStyle={{shadowColor: "#000",
+                  shadowColor: "#000",
+                  shadowOffset: {
+                    width: 0,
+                    height: 12,
+                  },
+                  shadowOpacity: 0.58,
+                  shadowRadius: 16.00,
+
+                  elevation: 24,}} name="controller-paus" type="entypo" size={60} onPress={()=> this._onPaus()} /> :
+                  <Icon iconStyle={{shadowColor: "#000",
+                  shadowColor: "#000",
+                  shadowOffset: {
+                    width: 0,
+                    height: 12,
+                  },
+                  shadowOpacity: 0.58,
+                  shadowRadius: 16.00,
+
+                  elevation: 24,}} name="play" type="feather" size={50} onPress={()=> this._onPlay()} />}
                   <Icon name="skip-forward" type="feather" size={40} /> 
                 
                 </View>

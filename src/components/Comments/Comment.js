@@ -20,7 +20,7 @@ class Comments extends Component {
       }
 
       showReply = () => {
-          this.props.onReplyClick(this.props.index)
+          this.props.onReplyClick(this.props.data.id)
       }
 
     render() {
@@ -39,7 +39,9 @@ class Comments extends Component {
                 <View style={{flex:1, flexDirection:'column'}}>
                     <View style={{flexDirection:'row', paddingBottom: 10, alignItems:'center'}}>
                         <Text style={styles.titleStyle}>{this.props.data.user} </Text>
-                        <Badge style={styles.timeStyle}value={this.getFormattedTime(this.props.data.time)} textStyle={{fontWeight:'bold'}} />
+                        
+                        
+                       { this.props.data.time && <Badge style={styles.timeStyle}value={this.getFormattedTime(this.props.data.time)} textStyle={{fontWeight:'bold'}} /> }
                     </View>
                 
                     <Text style={styles.commentStyle} > {this.props.data.title} </Text>
@@ -54,8 +56,13 @@ class Comments extends Component {
                         <Text style={{marginRight:20}}> 10 </Text>
                         <Icon name="thumb-down" type="materialicon" iconStyle={{fontSize:20}} /> 
                     </View>
-                    <Icon onPress={() => this.showReply()} name="chevron-down" type="entypo" />
-                    <View><Text style={{marginRight:50, fontWeight:'700', fontSize:15, color:'gray'}}> Reply</Text></View>
+
+                
+                {this.props.data.isParent && <Icon onPress={() => this.showReply()} name="chevron-down" type="entypo" />}
+                {this.props.data.isParent && <View>
+                     <Text style={{marginRight:50, fontWeight:'700', fontSize:15, color:'gray'}}> Reply</Text>
+                </View> }
+                
                 </View>
              }
 
@@ -69,9 +76,9 @@ const styles = StyleSheet.create({
     commentContainer :{
       
       display:'flex',
-      paddingLeft:10,
+      paddingLeft:20,
       paddingTop:10,
-      paddingBottom:10,
+      paddingBottom:20,
       flexDirection:'row',  
     },
     titleStyle:{

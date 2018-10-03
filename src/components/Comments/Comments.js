@@ -11,7 +11,8 @@ import {
 import Comment from './Comment'
 import * as actions from "../../redux/actions";
 import { bindActionCreators } from "redux";
-import { Icon } from 'react-native-elements' 
+import { Icon, Avatar } from 'react-native-elements'
+import {TextInput} from '@shoutem/ui'
 
 import { connect } from 'react-redux'
 
@@ -25,7 +26,8 @@ class Comments extends Component {
     constructor(props){
         super(props)
         this.state = {
-            showReply: false
+            showReply: false,
+            text:""
         }
     }
 
@@ -34,17 +36,39 @@ class Comments extends Component {
 
     }
 
-    addComment(){
-        console.log(this.props)
+    addComment=()=>{
+        console.log(this.state)
+        const comment ={
+            title: this.state.text,
+            id: 20,
+            time: 5, 
+            user:"Oscar", 
+            isParent: true,
+            hasReplies: false,
+            showReply: false,
+        }
+        this.numberOfComments = this.props.commentList.length
+        this.props.actions.addComment(comment)
+        setTimeout(() =>this.refs._commentList.scrollToEnd(), 200)
+        this.setState({text:""})
         //console.log(this.state.data, joined)
     }
     _keyExtractor = (item, index) => index.toString();
 
     showReply = (index) => {
-        console.log(index)
+        this.props.actions.toggleReply(index)
     }
 
-    _renderItem = ({item, index}) => ( 
+    _renderItem = ({item, index}) => { 
+        let replies = this.props.commentList.filter((comment) => {
+            if(!comment.isParent && comment.parentId == item.id){
+                return comment
+            }
+        })
+
+
+        return(
+        <View>
             <Comment 
                 id={item.id}
                 data={item}
@@ -54,29 +78,54 @@ class Comments extends Component {
                 customStyling={{width: SCREEN_WIDTH}}
                 onReplyClick={this.showReply}
             />
-    );
+             {(item.hasReplies && item.showReply) && 
+                <FlatList 
+                style={{marginLeft:30, backgroundColor:'gray'}}
+                keyExtractor={this._keyExtractor}
+                data={replies}
+                extraData={replies}
+                renderItem={this._renderItem}
+            />
+            } 
+            </View>
+        )
+
+    };
     
     
 
     render() {
         const { commentList, player  } = this.props
-        const topComment = commentList.comments.filter(comment =>   Math.abs(player.currentTime - comment.time)<30)|| ""
+        const topComment = commentList.filter((comment) => comment.isParent)
+        
         return (
             <View style={[styles.commentContainer, this.props.styling]}>
-            
+            <View style={{flexDirection:'row', marginLeft:20}}>
+            <Avatar
+                containerStyle={{flex:0, marginRight:10}}
+                medium
+                rounded
+                source={{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/jsa/128.jpg"}}
+                onPress={() => console.log("Works!")}
+                activeOpacity={0.7} />
+            <TextInput placeholder={'Add a comment'} value={this.state.text} 
+            onSubmitEditing={this.addComment}
+            onChangeText={(text) => this.setState({text})} />
+            </View>
+
+
                 <View style={styles.container}>
                 { topComment.length > 0 ?
-                <ScrollView
-                    scrollEnabled={true}
-                    scrollEventThrottle={16}>
-                    <FlatList 
+                
+                    <FlatList
+                        contentContainerStyle={{ flexGrow: 1 }}
+                        ref='_commentList'
                         keyExtractor={this._keyExtractor}
                         data={topComment}
                         extraData={topComment}
                         renderItem={this._renderItem}
                     />
 
-                  </ScrollView>
                   :
                   <View>
                   <Icon
@@ -116,7 +165,7 @@ const styles = StyleSheet.create({
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor:'rgba(220,220,220, 0.1)'
+      backgroundColor:'rgba(220,220,220, 0.5)'
     },
     commentContainer :{
       width:SCREEN_WIDTH,
