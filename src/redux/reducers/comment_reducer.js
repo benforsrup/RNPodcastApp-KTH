@@ -1,4 +1,9 @@
-import { ADD_COMMENT, DELETE_COMMENT, GET_COMMENTS, GET_TOP_COMMENT, TOGGLE_REPLY} from '../constants/ActionTypes'
+import { ADD_COMMENT,
+   DELETE_COMMENT, 
+   GET_COMMENTS, 
+   GET_TOP_COMMENT, 
+   TOGGLE_HAS_REPLIES,
+   TOGGLE_REPLY} from '../constants/ActionTypes'
 
 const initialState = [
     {
@@ -7,7 +12,6 @@ const initialState = [
       user:"Oscar", 
       time: 5,
       isParent:true,
-      hasReplies: true,
       showReply: false,
     },
     {
@@ -33,7 +37,6 @@ const initialState = [
 export default function comments(state = initialState, action) {
   switch (action.type) {
     case ADD_COMMENT:
-      console.log(action.comment)
       let newComment = action.comment
       return [
         ...state, action.comment
@@ -53,6 +56,10 @@ export default function comments(state = initialState, action) {
           showReply: !comment.showReply
         };
       })
+
+    
+
+
     default:
       return state
   }

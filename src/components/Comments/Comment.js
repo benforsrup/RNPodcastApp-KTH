@@ -24,8 +24,9 @@ class Comments extends Component {
       }
 
     render() {
+        const numberOfReplies = (this.props.data.replies && this.props.data.replies.length > 0) ? this.props.data.replies.length: ""
         return (
-            <View style={this.props.customStyling}>
+            <View style={[this.props.customStyling, {paddingTop: 10, paddingBottom: 10}]}>
             <View style={styles.commentContainer}>
 
                 <Avatar
@@ -58,9 +59,14 @@ class Comments extends Component {
                     </View>
 
                 
-                {this.props.data.isParent && <Icon onPress={() => this.showReply()} name="chevron-down" type="entypo" />}
+                {(this.props.data.isParent && this.props.data.hasReplies) &&
+                      <View style={{flexDirection:'row', alignItems:'center'}}> 
+                          <Text> {numberOfReplies} </Text> 
+                          <Icon onPress={() => this.showReply()} name="chevron-down" type="entypo" /> 
+                        </View>
+                }
                 {this.props.data.isParent && <View>
-                     <Text style={{marginRight:50, fontWeight:'700', fontSize:15, color:'gray'}}> Reply</Text>
+                     <Text onPress={() => this.props.replyComment(this.props.data)}style={{marginRight:50, fontWeight:'700', fontSize:15, color:'gray'}}> Reply</Text>
                 </View> }
                 
                 </View>

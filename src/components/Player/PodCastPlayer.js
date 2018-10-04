@@ -334,16 +334,16 @@ const styles = StyleSheet.create({
     zIndex: 10, 
     backgroundColor: 'white', 
     height: SCREEN_HEIGHT,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
+    
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 8,
+      height: 1,
     },
-    shadowOpacity: 0.6,
-    shadowRadius: 11.14,
-    elevation: 8
+    shadowOpacity: 0.20,
+    shadowRadius: 1.41,
+
+    elevation: 2,
   },
   bottomTimeLineStyle:{
     width: SCREEN_WIDTH - 100, 

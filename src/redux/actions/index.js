@@ -1,5 +1,6 @@
 import * as types from '../constants/ActionTypes'
 
+export const toggleHasReply = (parentId) => ({type:types.TOGGLE_HAS_REPLIES, parentId})
 export const toggleMinimized = (color) => ({type:types.TOGGLE_MINIMIZED,color})
 export const toggleReply = (id) => ({type:types.TOGGLE_REPLY, id})
 export const addComment = comment => ({type:types.ADD_COMMENT, comment})
