@@ -3,6 +3,10 @@ import React, { Component } from 'react';
 import LoadingScreen from './src/screens/LoadingScreen'
 import TrackPlayer from 'react-native-track-player'
 
+import firebase from 'react-native-firebase';
+
+
+
 
 TrackPlayer.registerEventHandler(async (data) => {
     console.log(data)
@@ -35,6 +39,7 @@ class App extends Component{
     }
 
     startApp(){
+        
         Navigation.events().registerAppLaunchedListener(() => { 
             // Navigation.setDefaultOptions({
             //     topBar: {

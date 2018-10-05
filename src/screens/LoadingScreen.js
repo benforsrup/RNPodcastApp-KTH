@@ -4,13 +4,14 @@ import {
   StyleSheet,
 } from "react-native";
 import { Spinner } from '@shoutem/ui'
-
 import { initAuth, initHome } from '../navigation/navigation'
+
 
 
 class LoadingScreen extends Component {
     componentDidMount(){
-        setTimeout(() => initHome(), 0)
+      
+        setTimeout(() => initAuth(), 0)
     }
 
 

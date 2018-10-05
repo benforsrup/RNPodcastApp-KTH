@@ -7,13 +7,17 @@ import {
 } from "react-native";
 import { Spinner, TextInput, NavigationBar, Title } from '@shoutem/ui'
 import { SocialIcon } from 'react-native-elements'
-
+import firebase from 'react-native-firebase'
 import { initHome } from '../navigation/navigation'
 
 
 class AuthScreen extends Component {
     componentDidMount(){
         //setTimeout(() => initHome(), 1000)
+        firebase.auth().signInAnonymously()
+            .then((user) => {
+                console.log("User is: ", user);
+            }).catch((error)=>console.log(error))
     }
 
     onPressGoogle = () => {
