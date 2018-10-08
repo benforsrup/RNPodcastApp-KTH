@@ -9,5 +9,7 @@
   pod 'Firebase/Database'
   pod 'Firebase/Storage'
 
+  pod 'RNGoogleSignin', :path => '../node_modules/react-native-google-signin'
+
 end
 

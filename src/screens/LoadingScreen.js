@@ -5,14 +5,30 @@ import {
 } from "react-native";
 import { Spinner } from '@shoutem/ui'
 import { initAuth, initHome } from '../navigation/navigation'
-
+import firebase from 'react-native-firebase'
 
 
 class LoadingScreen extends Component {
-    componentDidMount(){
+  constructor() {
+    super();
+    this.state = {
+      loading: true,
+      authenticated: false,
+    };
+  }
+  componentDidMount(){
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        initHome()
+        this.setState({ loading: false, authenticated: true });
+      } else {
+        initAuth()
+        this.setState({ loading: false, authenticated: false });
+      }
+    });
       
-        setTimeout(() => initAuth(), 0)
-    }
+  }
+
 
 
 
