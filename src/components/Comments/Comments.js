@@ -157,21 +157,7 @@ class Comments extends Component {
 
         return (
             <View style={[styles.commentContainer, this.props.styling]}>
-            <View style={{flexDirection:'row', marginLeft:20}}>
-            <Avatar
-                containerStyle={{flex:0, marginRight:10}}
-                medium
-                rounded
-                source={{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/jsa/128.jpg"}}
-                onPress={() => console.log("Works!")}
-                activeOpacity={0.7} />
-            <TextInput placeholder={'Add a comment'} value={this.state.comment} 
-            ref='_textInput'
-            autoCorrect={false}
-            style={{flex:1}}
-            onSubmitEditing={this.addComment}
-            onChangeText={(comment) => this.setState({comment})} />
-            </View>
+           
 
 
                 <View style={styles.container}>
@@ -199,6 +185,21 @@ class Comments extends Component {
 
               }
                 </View> 
+                <View style={{flexDirection:'row', marginLeft:20}}>
+            <Avatar
+                containerStyle={{flex:0, marginRight:10}}
+                medium
+                rounded
+                source={{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/jsa/128.jpg"}}
+                onPress={() => console.log("Works!")}
+                activeOpacity={0.7} />
+            <TextInput placeholder={'Add a comment'} value={this.state.comment} 
+            ref='_textInput'
+            autoCorrect={false}
+            style={{flex:1}}
+            onSubmitEditing={this.addComment}
+            onChangeText={(comment) => this.setState({comment})} />
+            </View>
             
                 
             </View> 
