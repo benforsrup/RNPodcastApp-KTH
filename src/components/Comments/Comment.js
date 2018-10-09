@@ -33,13 +33,13 @@ class Comments extends Component {
                 containerStyle={{flex:0, marginRight:10}}
                 medium
                 rounded
-                source={{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/jsa/128.jpg"}}
+                source={{uri: this.props.data.user.image}}
                 onPress={() => console.log("Works!")}
                 activeOpacity={0.7} />
 
                 <View style={{flex:1, flexDirection:'column'}}>
                     <View style={{flexDirection:'row', paddingBottom: 10, alignItems:'center'}}>
-                        <Text style={styles.titleStyle}>{this.props.data.user} </Text>
+                        <Text style={styles.titleStyle}>{this.props.data.user.name} </Text>
                         
                         
                        { this.props.data.time && <Badge style={styles.timeStyle}value={this.getFormattedTime(this.props.data.time)} textStyle={{fontWeight:'bold'}} /> }

@@ -8,6 +8,19 @@ export const deleteComment = id =>({type:types.DELETE_COMMENT, id})
 export const getCommentByTime = time => ({type:types.GET_COMMENTS, time})
 export const getTopCommentByTime = time => ({type:types.GET_TOP_COMMENT, time})
 export const setCurrentTime = time => ({type:types.SET_CURRENT_TIME, time})
+
+//* ------- REQUEST ACTIONS --------*//
+export const requestCommentByPodcast = podcastid => ({type: types.REQUEST_COMMENTS_BY_PODCAST, podcastid})
+export const requestAddComment = (comment) => ({type:types.REQUEST_ADD_COMMENT, comment})
+
+
+//* ------- RECEIVED ACTIONS --------*//
+export const receivedCommentsByPodcast = (comments) => ({type:types.RECEIVED_COMMENTS_BY_PODCAST, comments})
+export const receivedCommentsByPodcastError = (error) => ({type:types.RECEIVED_COMMENTS_BY_PODCAST_ERROR, error})
+export const receivedNewComment = (comment) => ({type:types.RECEIVED_NEW_COMMENT, comment})
+
+
+
 export const addProfile = profile => ({ type: types.ADD_PROFILE, profile })
 export const deleteProfile = id => ({ type: types.DELETE_PROFILE, id })
 

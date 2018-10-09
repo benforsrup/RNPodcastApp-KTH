@@ -94,6 +94,7 @@ export const goHome = () => Navigation.setRoot({
                         component:{
                             name:"HomeScreen",
                             id:"HomeScreen",
+                            
                             options:{
                                 
                                 sideMenu:{
@@ -110,6 +111,7 @@ export const goHome = () => Navigation.setRoot({
                             id:"PodcastListView",
                             name: 'PodcastListView',
                             options:{
+                                
                                 sideMenu:{
                                     left:{
                                         width:200,
@@ -118,7 +120,12 @@ export const goHome = () => Navigation.setRoot({
                                     }
                                 },
                                 topBar:{
-                                    barStyle: 'default',
+                                    noBorder: true,
+
+                                    background: {
+                                        translucent: true,
+                                        blur: true
+                                    },
                                     title:{
                                         text:"Podcasts"
                                     },

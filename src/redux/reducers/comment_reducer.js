@@ -3,6 +3,8 @@ import { ADD_COMMENT,
    GET_COMMENTS, 
    GET_TOP_COMMENT, 
    TOGGLE_HAS_REPLIES,
+   RECEIVED_COMMENTS_BY_PODCAST,
+   RECEIVED_NEW_COMMENT,
    TOGGLE_REPLY} from '../constants/ActionTypes'
 
 const initialState = [
@@ -34,10 +36,9 @@ const initialState = [
   ]
 
 
-export default function comments(state = initialState, action) {
+export default function comments(state =[], action) {
   switch (action.type) {
     case ADD_COMMENT:
-      let newComment = action.comment
       return [
         ...state, action.comment
       ]
@@ -56,6 +57,14 @@ export default function comments(state = initialState, action) {
           showReply: !comment.showReply
         };
       })
+    
+    case RECEIVED_COMMENTS_BY_PODCAST:
+      return action.comments
+    
+    case RECEIVED_NEW_COMMENT:
+      return [
+        ...state, action.comment
+      ]
 
     
 

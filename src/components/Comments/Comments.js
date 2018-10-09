@@ -13,7 +13,7 @@ import Comment from './Comment'
 import * as actions from "../../redux/actions";
 import { bindActionCreators } from "redux";
 import { Icon, Avatar } from 'react-native-elements'
-
+import firebase from 'react-native-firebase'
 import { connect } from 'react-redux'
 
 const SCREEN_HEIGHT = Dimensions.get('window').height
@@ -39,21 +39,37 @@ class Comments extends Component {
     }
 
     addComment=()=>{
-        console.log(this.state)
-        const comment ={
+        // console.log(this.state)
+        // const comment ={
+        //     title: this.state.comment,
+        //     id: 20,
+        //     time: 5, 
+        //     user:"Oscar", 
+        //     isParent: true,
+        //     hasReplies: false,
+        //     showReply: false,
+        // }
+        // this.numberOfComments = this.props.commentList.length
+        // this.props.actions.addComment(comment)
+        // setTimeout(() =>this.refs._commentList.scrollToEnd(), 200)
+        // this.setState({comment:""})
+        const comment={
             title: this.state.comment,
             id: 20,
             time: 5, 
-            user:"Oscar", 
+            user:{
+                name: firebase.auth().currentUser.displayName, 
+                image: firebase.auth().currentUser.providerData[0].photoURL
+            }, 
             isParent: true,
             hasReplies: false,
             showReply: false,
+            podcastid: this.props.podcast.id
         }
+        this.props.actions.requestAddComment(comment)
         this.numberOfComments = this.props.commentList.length
-        this.props.actions.addComment(comment)
         setTimeout(() =>this.refs._commentList.scrollToEnd(), 200)
         this.setState({comment:""})
-        //console.log(this.state.data, joined)
     }
     _keyExtractor = (item, index) => index.toString();
 
@@ -88,7 +104,6 @@ class Comments extends Component {
     }
 
     _renderItem = ({item, index}) => { 
-
         return(
         <View>
             <Comment 
@@ -118,7 +133,7 @@ class Comments extends Component {
                     containerStyle={{flex:0, marginRight:10}}
                     medium
                     rounded
-                    source={{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/jsa/128.jpg"}}
+                    source={{uri:firebase.auth().currentUser.providerData[0].photoURL}}
                     onPress={() => console.log("Works!")}
                     activeOpacity={0.7} />
                 <TextInput value={this.state.reply} 
@@ -139,7 +154,6 @@ class Comments extends Component {
 
     render() {
         const { commentList, player  } = this.props
-
         //filtering and mapping comments
         const topComment = commentList.map((parent_comment) => {
             if(parent_comment.isParent){
@@ -190,7 +204,7 @@ class Comments extends Component {
                 containerStyle={{flex:0, marginRight:10}}
                 medium
                 rounded
-                source={{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/jsa/128.jpg"}}
+                source={{uri: firebase.auth().currentUser.providerData[0].photoURL}}
                 onPress={() => console.log("Works!")}
                 activeOpacity={0.7} />
             <TextInput placeholder={'Add a comment'} value={this.state.comment} 

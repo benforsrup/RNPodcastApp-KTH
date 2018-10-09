@@ -9,7 +9,7 @@ import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
 import DeviceInfo from 'react-native-device-info';
-
+import firebase from 'react-native-firebase'
 import { 
     Icon,
     NavigationBar, 
@@ -46,34 +46,36 @@ class PodcastListView extends Component {
             podcasts:[
                 {
                     "name": "Framgångspodden",
-                    "id": 0,
+                    "id": "3m8Mh2c9ZYnSBBar0qDL",
                     "address": "185 Sutter St, San Francisco, CA 94109",
                     "image": { "url": "/Users/benforsrup/Documents/Webdev/ReactNative/RNPodcastApp/src/assets/framgang.png" },
                     "mp3":"https://ads-e-bauerse-pods.sharp-stream.com/499/titti_schultz_original_0026b3ac_normal.mp3"
                 },
                 {
                     "name": "Bank & Frändén",
-                    "id": 1,
+                    "id": "L8HQJg6hc2aMbQqBCiIc",
                     "address": "527 Broome St, New York, NY 10013",
                     "image": { "url": "/Users/benforsrup/Documents/Webdev/ReactNative/RNPodcastApp/src/assets/bank.png" },
                     "mp3": "https://media.acast.com/bankochfranden/-1-hornyteenspornfootballpod/media.mp3"
                 },
                 {
                     "name": "P3 Dokumentär",
-                    "id": 2,
+                    "id": "ZKoH8HcoYGCDWxXFwy30",
                     "address": "225 Mulberry St, New York, NY 10012",
                     "image": { "url": "/Users/benforsrup/Documents/Webdev/ReactNative/RNPodcastApp/src/assets/p3.png" },
                     "mp3": "https://sverigesradio.se/topsy/ljudfil/itunes/6650863.mp3"
                 },
                 {
                     "name": "Mordpodden",
-                    "id": 3,
+                    "id": "9882l8rBy1t8Yx4oWb7i",
                     "address": "225 Mulberry St, New York, NY 10012",
                     "image": { "url": "/Users/benforsrup/Documents/Webdev/ReactNative/RNPodcastApp/src/assets/mordpodden.png" },
                     "mp3": "https://ads-e-bauerse-pods.sharp-stream.com/441/s07e03_dodsskjutningen_3f21a015_normal.mp3"
                 }    
             ]
+            
         }
+
       }
     
       navigationButtonPressed({ buttonId }) {
@@ -86,8 +88,17 @@ class PodcastListView extends Component {
           }
       }
 
-     componentDidMount(){
-         
+    componentDidMount(){
+        // this.state.podcasts.forEach(element => {
+        //     firebase.firestore().collection('podcasts').add(element)
+        //     .then(newComment => {
+        //         firebase.firestore().collection('podcasts').doc(newComment.id).update({
+        //             id: newComment.id
+        //         })
+        //     })
+            
+        // });
+  
     }
 
     toggleMenu = () => {
@@ -112,7 +123,7 @@ class PodcastListView extends Component {
                 "podcast": podcast
             },
               options: {
-                  popGesture:true,
+                popGesture:true,
                 animations: {
                   push: {
                     enable: false
@@ -142,8 +153,14 @@ class PodcastListView extends Component {
                             "podcast": podcast
                         },
                         options:{
+                            animations:{
+                                push:{
+                                    enable:true
+                                }
+                            },
                             topBar:{
                                 visible:false,
+                                drawBehind:false
                             }, 
                             
                         }

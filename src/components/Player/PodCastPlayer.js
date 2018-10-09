@@ -20,10 +20,7 @@ import TrackPlayer from 'react-native-track-player';
 import CircularPlayer from './ProgressPlayer/CircularPlayer'
 import BottomPlayer from './ProgressPlayer/BottomPlayer'
 
-//import Svg, { G, Path } from 'react-native-svg';
-import CircularSlider from '../Timeline/CircularSlider'
-import Sound from 'react-native-sound';
-import { Navigation } from "react-native-navigation";
+import firebase from 'react-native-firebase'
 
 
 const SCREEN_HEIGHT = Dimensions.get('window').height
