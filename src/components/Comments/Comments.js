@@ -91,16 +91,20 @@ class Comments extends Component {
             
     }
     addReply = (id) => {
+        console.log(id)
         const reply ={
             title: this.state.reply,
-            id: 100,
-            user:"Emil",
+            user:{
+                name: firebase.auth().currentUser.displayName, 
+                image: firebase.auth().currentUser.providerData[0].photoURL
+            }, 
             isParent: false,
-            parentId: id
+            parentId: id,
+            podcastid: this.props.podcast.id
         }
+        this.props.actions.requestAddComment(reply)
         this.props.actions.toggleHasReply(id)
-        this.props.actions.addComment(reply)
-        this.setState({isReplying:false, reply:""})
+        setTimeout(() => this.setState({isReplying:false, reply:""}), 1000)
     }
 
     _renderItem = ({item, index}) => { 
