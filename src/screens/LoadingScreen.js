@@ -19,6 +19,7 @@ class LoadingScreen extends Component {
   componentDidMount(){
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
+        console.log(user)
         initHome()
         this.setState({ loading: false, authenticated: true });
       } else {

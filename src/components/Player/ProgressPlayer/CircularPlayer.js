@@ -79,6 +79,7 @@ goToScreen = async () => {
     await Navigation.push("PodcastListView", {
         component: {
             name: "CommentScreen",
+            
             options:{
                 topBar:{
                     visible:true,
@@ -90,18 +91,9 @@ goToScreen = async () => {
 
   render() {    
     const {commentList} = this.props
-    //const topComment = commentList.comments.filter(comment =>   Math.abs(this.state.position - comment.time)<30)|| ""
+    const topComment = commentList.filter(comment =>   Math.abs(this.state.position - comment.time)<30)|| ""
     return (
         <View >
-
-            {/* <Navigation.TouchablePreview
-                  
-                  onPress={() => this.goToScreen()}
-                   onPressIn={({reactTag}) => this.goToScreenPreview({reactTag})}
-                  >
-                <Text style={{backgroundColor:'blue', padding:10}}> {topComment.length > 0 ? topComment[0].title: "No Comment"}</Text>
-                </Navigation.TouchablePreview> */}
-
 
             <View style={{justifyContent: 'center', flexDirection:'row', marginBottom:10}}>
             <Text style={{fontWeight:"bold", color:'rgb(135,206,250)'}}>  {getFormattedTime(this.state.position)}  / </Text> 
@@ -111,8 +103,8 @@ goToScreen = async () => {
             
              
             
-            {/* <View style={{ justifyContent:'center', width:SCREEN_WIDTH-65, height:SCREEN_WIDTH-65,alignItems: 'center', zIndex: 1}}>
-            <View style={{width: SCREEN_WIDTH-140, height:SCREEN_WIDTH-220, position:'absolute', top:80, left:40,zIndex:10}}> 
+            <View style={{ justifyContent:'center', width:SCREEN_WIDTH-60, height:SCREEN_WIDTH-60,alignItems: 'center', zIndex: 1}}>
+            <View style={{width: SCREEN_WIDTH-120, height:SCREEN_WIDTH-220, position:'absolute', top:90, left:30,zIndex:10}}> 
               <Navigation.TouchablePreview
                   onPress={() => this.goToScreen()}
                    onPressIn={({reactTag}) => this.goToScreenPreview({reactTag})}>
@@ -123,13 +115,14 @@ goToScreen = async () => {
                           id={topComment[0].id} 
                           data={topComment[0]} 
                           isSmall={true}
+                          variant="preview"
                           index={topComment[0].id}
                           customStyling={styles.customCommentStyle} /> 
                           
                           <View style={{
                             backgroundColor:'#F3F3F3',
                             height:'100%',
-                            width:SCREEN_WIDTH-150, 
+                            width:SCREEN_WIDTH-145, 
                             position:'absolute', 
                             top:7,
                             borderRadius:10,
@@ -145,7 +138,7 @@ goToScreen = async () => {
                             elevation: 2,
                             shadowColor: "#000",
                             zIndex:-1, 
-                            left:7.5}}></View>
+                            left:12.5}}></View>
 
                             <View style={{
                             backgroundColor:'#F9F9F9',
@@ -164,7 +157,7 @@ goToScreen = async () => {
                             top:14,
                             borderRadius:10,
                             zIndex:-2, 
-                            left:20}}></View>
+                            left:30}}></View>
 
                           </View> 
                           : 
@@ -183,7 +176,7 @@ goToScreen = async () => {
                   value={this.state.angle}
                   onValueChange={(value)=> this._updateCircularTimeline(value)}
                   /> 
-                  </View> */}
+                  </View>
         </View>
 
     );
@@ -217,7 +210,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(CircularPlayer);
 
 const styles = StyleSheet.create({
   customCommentStyle:{
-    width: SCREEN_WIDTH-140,
+    width: SCREEN_WIDTH-120,
     borderWidth: 1.5,
     borderColor:'rgba(0,0,0,0.1)',
     borderRadius: 10,

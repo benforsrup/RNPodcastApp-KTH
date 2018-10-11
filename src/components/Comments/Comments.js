@@ -59,7 +59,7 @@ class Comments extends Component {
             time: 5, 
             user:{
                 name: firebase.auth().currentUser.displayName, 
-                image: firebase.auth().currentUser.providerData[0].photoURL
+                image: firebase.auth().currentUser.providerData[0] ? firebase.auth().currentUser.providerData[0].photoURL : ""
             }, 
             isParent: true,
             hasReplies: false,
@@ -96,7 +96,7 @@ class Comments extends Component {
             title: this.state.reply,
             user:{
                 name: firebase.auth().currentUser.displayName, 
-                image: firebase.auth().currentUser.providerData[0].photoURL
+                image: firebase.auth().currentUser.providerData[0] ?  firebase.auth().currentUser.providerData[0].photoURL :  ""
             }, 
             isParent: false,
             parentId: id,
@@ -114,7 +114,7 @@ class Comments extends Component {
                 id={item.id}
                 data={item}
                 index={index}
-                isSmall={false}
+                variant="default"
                 replyComment= {item.isParent ? this._addReply : null}
                 isPreview={false}
                 customStyling={item.isParent ? {width: SCREEN_WIDTH} : {width:SCREEN_WIDTH - 30}}
@@ -137,7 +137,7 @@ class Comments extends Component {
                     containerStyle={{flex:0, marginRight:10}}
                     medium
                     rounded
-                    source={{uri:firebase.auth().currentUser.providerData[0].photoURL}}
+                    source={{uri:firebase.auth().currentUser.providerData[0] ? firebase.auth().currentUser.providerData[0].photoURL : ""}}
                     onPress={() => console.log("Works!")}
                     activeOpacity={0.7} />
                 <TextInput value={this.state.reply} 
@@ -158,6 +158,7 @@ class Comments extends Component {
 
     render() {
         const { commentList, player  } = this.props
+        const userProfile = firebase.auth().currentUser.providerData[0] ? firebase.auth().currentUser.providerData[0].photoURL : ""
         //filtering and mapping comments
         const topComment = commentList.map((parent_comment) => {
             if(parent_comment.isParent){
@@ -208,7 +209,7 @@ class Comments extends Component {
                 containerStyle={{flex:0, marginRight:10}}
                 medium
                 rounded
-                source={{uri: firebase.auth().currentUser.providerData[0].photoURL}}
+                source={{uri: userProfile}}
                 onPress={() => console.log("Works!")}
                 activeOpacity={0.7} />
             <TextInput placeholder={'Add a comment'} value={this.state.comment} 
