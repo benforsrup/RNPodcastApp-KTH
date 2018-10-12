@@ -115,7 +115,6 @@ class PodcastListView extends Component {
     }
 
     goToScreenPreview = async (podcast, {reactTag}) => {
-        console.log(reactTag, podcast, "hejsan")
         await Navigation.push(this.props.componentId, {
             component: {
               name: 'HomeScreen',
@@ -160,7 +159,7 @@ class PodcastListView extends Component {
                             },
                             topBar:{
                                 visible:false,
-                                drawBehind:false
+                                drawBehind:true
                             }, 
                             
                         }
@@ -242,10 +241,10 @@ class PodcastListView extends Component {
         const groupedData = GridRow.groupByRows(podcasts, 2);
         return (
             <Screen>     
-                {/* <NavigationBar
+                <NavigationBar
                   styleName="inline no-border"
                   style={{container:{
-                      backgroundColor:'gray',   
+                      backgroundColor:'#BDBDBD',   
                       height:isIphoneX ? 90 : 70
                   },
                   componentsContainer:{
@@ -257,8 +256,8 @@ class PodcastListView extends Component {
                     <Button styleName="clear">
                     <Icon onPress={() => this.goToScreen("SettingsScreen")} name="settings"/>
                     </Button>)}
-                centerComponent={<Title>TITLE</Title>}
-                /> */}
+                centerComponent={<Title>Podcasts</Title>}
+                />
                 <ListView
                     data={groupedData}
                     renderRow={this.renderRow}

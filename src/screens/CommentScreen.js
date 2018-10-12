@@ -19,7 +19,7 @@ class CommentScreen extends Component {
     render() {
         return ( 
                 <View >
-                    <Comments  />
+                    <Comments podcast={this.props.podcast}  />
                 </View>
         );
     }

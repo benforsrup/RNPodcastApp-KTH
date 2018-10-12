@@ -82,6 +82,7 @@ export const goHome = () => Navigation.setRoot({
                             name:"CommentScreen",
                             id:"CommentScreen",
                             options:{
+                                
                                 sideMenu:{
                                     left:{
                                         enabled:false,
@@ -96,7 +97,7 @@ export const goHome = () => Navigation.setRoot({
                             id:"HomeScreen",
                             
                             options:{
-                                
+                               
                                 sideMenu:{
                                     left:{
                                         enabled:false,
@@ -121,7 +122,7 @@ export const goHome = () => Navigation.setRoot({
                                 },
                                 topBar:{
                                     noBorder: true,
-
+                                    visible:false,
                                     background: {
                                         translucent: true,
                                         blur: true

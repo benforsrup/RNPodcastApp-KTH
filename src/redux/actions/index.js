@@ -21,22 +21,8 @@ export const receivedNewComment = (comment) => ({type:types.RECEIVED_NEW_COMMENT
 
 
 
-export const addProfile = profile => ({ type: types.ADD_PROFILE, profile })
-export const deleteProfile = id => ({ type: types.DELETE_PROFILE, id })
 
-export const requestProfiles = () => ({type:types.REQUEST_PROFILES})
-export const receivedProfiles = (profile) => ({type:types.RECEIVED_PROFILES, profile})
-
-
-export const requestStartStations = string => ({type:types.REQUEST_START_STATIONS, string})
-export const requestEndStations = string => ({type:types.REQUEST_END_STATIONS, string})
-
-export const receivedStartStations = data =>({type:types.RECEIVED_START_STATIONS, data})
-export const receivedEndStations = data =>({type:types.RECEIVED_END_STATIONS, data})
-
-
-export const clearStations = () =>({type:types.CLEAR_STATIONS})
-export const toggleVisible = () =>({type:types.TOGGLE_VISIBLE})
-
-export const setStartStationQuery = (query) =>({type:types.SET_STARTSTATIONQUERY, query})
-export const setEndStationQuery = (query) =>({type:types.SET_ENDSTATIONQUERY, query})
+export const setCurrentPlaybackMode = (mode) => ({
+    type: types.SET_CURRENT_PLAYBACK_MODE,
+    payload: mode
+})

@@ -12,24 +12,46 @@ import PodCastPlayer from '../components/Player/PodCastPlayer'
 import * as actions from "../redux/actions";
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
+import TrackPlayer from 'react-native-track-player'
 const SCREEN_HEIGHT = Dimensions.get('window').height
 
 class HomeScreen extends Component {
     constructor(props){
         super(props)
 
-        
+        this.track ={
+            id:(this.props.podcast.id).toString(),
+            url: this.props.podcast.mp3,
+            title: this.props.podcast.name,
+            artist: this.props.podcast.name
+        }
     }
 
     componentDidMount(){
-        //set navigation options
         this.props.actions.requestCommentByPodcast(this.props.podcast.id)
         
+        TrackPlayer.setupPlayer().then(async () => {
+            TrackPlayer.add(this.track).then(() => {
+            });
+        });
+    
+        TrackPlayer.updateOptions({
+            capabilities: [TrackPlayer.CAPABILITY_PLAY,TrackPlayer.CAPABILITY_PAUSE]
+        });
+        
+
+    
     }
+
+ 
+
+
     render() {
         return ( 
                 <View  >
-                    <PodCastPlayer podcast={this.props.podcast} />
+                    <PodCastPlayer 
+                    onTogglePlayback={() => this.togglePlayback()}
+                    podcast={this.props.podcast} />
                     <Comments podcast={this.props.podcast} styling={{marginTop:25, height: SCREEN_HEIGHT - 126, marginBottom:30}} />
                 </View>
         );
@@ -38,7 +60,8 @@ class HomeScreen extends Component {
   
 
 const mapStateToProps = state => ({ 
-    commentList: state.comments 
+    commentList: state.comments,
+    player: state.player 
   });
   
   const mapDispatchToProps = dispatch =>({
@@ -46,7 +69,7 @@ const mapStateToProps = state => ({
   })
   
   
-export default connect(null, mapDispatchToProps)(HomeScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
 const styles = StyleSheet.create({
     container: {
         borderBottomLeftRadius: 0,

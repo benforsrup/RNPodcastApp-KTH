@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import TrackPlayer, { ProgressComponent } from 'react-native-track-player';
 import { Image, StyleSheet, Text, TouchableOpacity, View, ViewPropTypes, Dimensions } from 'react-native';
-import { Slider } from 'react-native-elements'
+import { Slider, Icon } from 'react-native-elements'
 import * as actions from "../../../redux/actions";
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
@@ -49,13 +49,16 @@ class ProgressBar extends ProgressComponent {
     let time  = (value*this.state.duration)/360  
     TrackPlayer.seekTo(time)
     this.setState({angle:value})
+    
   }
 
   goToScreenPreview = async ({reactTag}) => {
-    console.log("yh")
     await Navigation.push("PodcastListView", {
         component: {
           name: 'CommentScreen',
+          passProps:{
+            podcast:this.props.podcast
+          },
           options: {
             animations: {
               push: {
@@ -63,7 +66,10 @@ class ProgressBar extends ProgressComponent {
               }
             },
             topBar:{
-                visible:true
+                visible:true,
+                title:{
+                  text:"Comments"
+              }
             },
             preview: reactTag ? {
               reactTag,
@@ -75,19 +81,24 @@ class ProgressBar extends ProgressComponent {
       });
   }
 
-goToScreen = async () => {
-    await Navigation.push("PodcastListView", {
-        component: {
-            name: "CommentScreen",
-            
-            options:{
-                topBar:{
-                    visible:true,
-                }, 
-            }
-        }
-    })
-  }
+  goToScreen = async () => {
+      await Navigation.push("PodcastListView", {
+          component: {
+              name: "CommentScreen",
+              passProps:{
+                podcast:this.props.podcast
+              },
+              options:{
+                  topBar:{
+                      visible:true,
+                      title:{
+                        text:"Comments"
+                      }
+                  }, 
+              }
+          }
+      })
+    }
 
   render() {    
     const {commentList} = this.props
@@ -162,7 +173,19 @@ goToScreen = async () => {
                           </View> 
                           : 
                       
-                      <Text> No Comment</Text> }
+                          <View style={{
+                            position:'absolute',
+                            top:30,
+                            left:80
+                          }}>
+                          <Icon
+                                iconStyle={{fontSize:40}}
+                              name='circle-with-plus'
+                              type='entypo'
+                              color='#517fa4'
+                          />
+                          <Text> Add comment!</Text>
+                          </View> }
 
                 </Navigation.TouchablePreview> 
 

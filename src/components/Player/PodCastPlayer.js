@@ -51,30 +51,10 @@ class PodCastPlayer extends Component {
 
   
 
-  async componentWillMount() {
-    console.disableYellowBox = true;
-    let track ={
-      id:(this.props.podcast.id).toString(),
-      url: this.props.podcast.mp3,
-      title: this.props.podcast.name,
-      artist: this.props.podcast.name
-    }
-    TrackPlayer.setupPlayer().then(async () => {
-      // Adds a track to the queue
-        TrackPlayer.add(track).then(() => {
-          this.setState({hasLoaded:true})
-        });
+  componentWillMount() {
+   
+    this.setState({hasLoaded:true})
 
-      });
-
-    TrackPlayer.updateOptions({
-      capabilities: [
-        TrackPlayer.CAPABILITY_PLAY,
-        TrackPlayer.CAPABILITY_PAUSE
-      ]
-
-    });
-    TrackPlayer.setVolume(0.1)
     this.scrollOffset = 0
     this.animation = new Animated.ValueXY({ x: 0, y:  30 })
   }
@@ -84,36 +64,17 @@ class PodCastPlayer extends Component {
     clearInterval(this.timeInterval);
     //this.whoosh.pause()
     TrackPlayer.pause();
+
   }
   _onPlay(){
     this.setState({isPlaying:true})
     // this.whoosh.play()
     TrackPlayer.play();
-
     //this.timeInterval = setInterval(() => {this._updateTimeLine()}, 1000 )
     
   }
 
-  _updateTimeLine(){
-    TrackPlayer.getDuration().then((dur) => {
-      if(dur > 0){
-        this.setState({duration:dur})     
-      }
-    })
-    TrackPlayer.getPosition().then((seconds)=> { 
-      let formattedTime = moment("2015-01-01").startOf('day').seconds(seconds).format('H:mm:ss')
-      let formattedDuration = moment("2015-01-01").startOf('day').seconds(this.state.duration).format('H:mm:ss');
-      let angle = (360*(seconds+1))/this.state.duration
-      let timePercentage = seconds*100/this.state.duration
-      this.props.actions.setCurrentTime(seconds)
-      this.setState({
-        angle: angle,
-        timeFormatted: formattedTime + " / " + formattedDuration,
-        timeSeconds: Math.round(seconds), 
-        timePercentage: timePercentage
-      })
-    })
-  }
+  
 
   componentWillUnmount() {
     clearInterval(this.timeInterval);
@@ -137,29 +98,6 @@ class PodCastPlayer extends Component {
     
   }
 
-  _updateTimeValue (value){
-    console.log(value)
-      let time  = (value*this.state.duration)/360  
-      let timePercentage = (value*100)/360
-     
-      this.setState({angle: value, duration: Math.round(time), timePercentage: timePercentage})
-      //TrackPlayer.seekTo(time);
-  }
-  _updateBottomTimeValue(value){
-    console.log(value)
-    let angle = (value/100)*360
-    let time = (value/100)*this.state.duration
-    this.setState({
-      angle: angle,
-      duration: Math.round(time),
-      timePercentage: value
-    })
-    //TrackPlayer.seekTo(time)
-  }
-  _onTimeLineChange(value){
-    console.log(value)
-
-  }
 
  
   render() {
@@ -223,7 +161,6 @@ class PodCastPlayer extends Component {
                   <BottomPlayer 
                       shouldSetTime={this.state.canScrollUp}
                       setCurrentTime={this.props.actions.setCurrentTime}
-                      onTimeLineChange={this._onTimeLineChange}
                        />
 
               <Animated.View style={{ height: animatedHeaderHeight-animatedBottomTimelineHeight, flexDirection: 'row', alignItems:'center' }}>    
@@ -263,7 +200,10 @@ class PodCastPlayer extends Component {
 
                 <View>
 
-              <CircularPlayer shouldSetTime={!this.state.canScrollUp} setCurrentTime={this.props.actions.setCurrentTime} />
+              <CircularPlayer 
+                  podcast={this.props.podcast}
+                  shouldSetTime={!this.state.canScrollUp} 
+                  setCurrentTime={this.props.actions.setCurrentTime} />
               
                 </View>
 
