@@ -6,7 +6,7 @@ import {
     Button
 } from "react-native";
 
-import Comments from '../components/Comments/Comments'
+import CommentsInd from '../components/Comments/CommentsInd'
 
 class CommentScreen extends Component {
     constructor(props){
@@ -19,7 +19,7 @@ class CommentScreen extends Component {
     render() {
         return ( 
                 <View >
-                    <Comments podcast={this.props.podcast}  />
+                    <CommentsInd podcast={this.props.podcast}  />
                 </View>
         );
     }

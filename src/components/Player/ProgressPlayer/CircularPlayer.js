@@ -52,12 +52,13 @@ class ProgressBar extends ProgressComponent {
     
   }
 
-  goToScreenPreview = async ({reactTag}) => {
+  goToScreenPreview = async ({reactTag}, comment) => {
     await Navigation.push("PodcastListView", {
         component: {
           name: 'CommentScreen',
           passProps:{
-            podcast:this.props.podcast
+            podcast:this.props.podcast,
+            comment: comment
           },
           options: {
             animations: {
@@ -118,7 +119,7 @@ class ProgressBar extends ProgressComponent {
             <View style={{width: SCREEN_WIDTH-120, height:SCREEN_WIDTH-220, position:'absolute', top:90, left:30,zIndex:10}}> 
               <Navigation.TouchablePreview
                   onPress={() => this.goToScreen()}
-                   onPressIn={({reactTag}) => this.goToScreenPreview({reactTag})}>
+                   onPressIn={({reactTag}) => this.goToScreenPreview({reactTag}, topComment[0])}>
 
                   {topComment.length > 0 ?
                   <View>

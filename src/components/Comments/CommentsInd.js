@@ -22,7 +22,7 @@ const SCREEN_WIDTH = Dimensions.get('window').width
 
 
 
-class Comments extends Component {
+class CommentsInd extends Component {
     constructor(props){
         super(props)
         this.state = {
@@ -158,6 +158,7 @@ class Comments extends Component {
 
     render() {
         const { commentList, player  } = this.props
+        console.log(this.props.player.currentTime)
         const userProfile = firebase.auth().currentUser.providerData[0] ? firebase.auth().currentUser.providerData[0].photoURL : ""
         //filtering and mapping comments
         const topComment = commentList.map((parent_comment) => {
@@ -238,7 +239,7 @@ const mapDispatchToProps = dispatch =>({
   
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Comments);
+export default connect(mapStateToProps, mapDispatchToProps)(CommentsInd);
 
 const styles = StyleSheet.create({
     container: {

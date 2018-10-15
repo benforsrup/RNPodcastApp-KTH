@@ -74,6 +74,28 @@ class PodCastPlayer extends Component {
     
   }
 
+   skipForward = async () => {
+    const currentTime = await TrackPlayer.getPosition()
+    const duration = await TrackPlayer.getDuration()
+
+    if(currentTime + 30 < duration){
+      TrackPlayer.seekTo(currentTime + 30)
+    }
+
+  }
+
+
+  skipBackward = async () => {
+    const currentTime = await TrackPlayer.getPosition()
+    if(currentTime - 30 > 0){
+      TrackPlayer.seekTo(currentTime - 30)
+    }
+    else{
+      TrackPlayer.seekTo(0)
+    }
+
+  }
+
   
 
   componentWillUnmount() {
@@ -176,16 +198,8 @@ class PodCastPlayer extends Component {
                   <Animated.Text onPress={() => this.onTouchPlayer()} style={{ opacity: animatedSongTitleOpacity, fontSize: 18, paddingLeft: 10 }}>{this.props.podcast.name}</Animated.Text>
                   <Animated.View style={{ opacity: animatedSongTitleOpacity, flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
                       {this.state.isPlaying ? 
-                          <Icon name="controller-paus" type="entypo" size={40} onPress={()=> this._onPaus()} /> : 
-                          <Icon  iconStyle={{shadowColor: "#000",
-                          shadowOffset: {
-                            width: 0,
-                            height: 2,
-                          },
-                          shadowOpacity: 0.25,
-                          shadowRadius: 3.84,
-                          
-                          elevation: 5,}}name="play-circle-filled" type="materialicons" color="blue" size={40} onPress={()=> this._onPlay()} />}
+                          <Icon containerStyle={styles.pauseBottomIconStyle} name="controller-paus" type="entypo" size={20} onPress={()=> this._onPaus()} /> : 
+                          <Icon  containerStyle={styles.playBottomIconStyle} name="play" type="feather" size={20} onPress={()=> this._onPlay()} />}
                   </Animated.View>
 
               </Animated.View>
@@ -207,31 +221,13 @@ class PodCastPlayer extends Component {
               
                 </View>
 
-                <View style={{ width:SCREEN_WIDTH-100, height:60, flexDirection: 'row', justifyContent: 'space-between', marginBottom:10 }}>
-                <Icon name="replay-5" type="materialicons" size={40} />
+                <View style={{ width:SCREEN_WIDTH-150, height:60, flexDirection: 'row', justifyContent: 'space-between', marginBottom:10 }}>
+                <Icon containerStyle={styles.circleRounded} name="replay-30" type="materialicons" size={30} onPress={() => this.skipBackward()} />
                   
                   {this.state.isPlaying ? 
-                  <Icon  iconStyle={{shadowColor: "#000",
-                  shadowColor: "#000",
-                  shadowOffset: {
-                    width: 0,
-                    height: 12,
-                  },
-                  shadowOpacity: 0.58,
-                  shadowRadius: 16.00,
-
-                  elevation: 24,}} name="controller-paus" type="entypo" size={60} onPress={()=> this._onPaus()} /> :
-                  <Icon iconStyle={{shadowColor: "#000",
-                  shadowColor: "#000",
-                  shadowOffset: {
-                    width: 0,
-                    height: 12,
-                  },
-                  shadowOpacity: 0.58,
-                  shadowRadius: 16.00,
-
-                  elevation: 24,}} name="play" type="feather" size={50} onPress={()=> this._onPlay()} />}
-                  <Icon name="skip-forward" type="feather" size={40} /> 
+                  <Icon  containerStyle={styles.pauseIconStyle} name="controller-paus" type="entypo" size={30} onPress={()=> this._onPaus()} /> :
+                  <Icon containerStyle={styles.playIconStyle} name="play" type="feather" size={30} onPress={()=> this._onPlay()} />}
+                  <Icon containerStyle={styles.circleRounded} name="forward-30" type="materialicons" size={30}  onPress={()=>this.skipForward()}/> 
                 
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20, paddingBottom: 20 }}>
@@ -281,6 +277,71 @@ const styles = StyleSheet.create({
     shadowRadius: 1.41,
 
     elevation: 2,
+  },
+  circleRounded:{
+   
+  
+  },
+  playIconStyle:{
+    backgroundColor:'#FCF7F8',
+    borderRadius:100,
+    width:60,
+    paddingLeft:6,
+    height:60,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  playBottomIconStyle:{
+    backgroundColor:'#FCF7F8',
+    borderRadius:100,
+    width:40,
+    paddingLeft:6,
+    height:40,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  pauseIconStyle:{
+    backgroundColor:'#FCF7F8',
+    borderRadius:100,
+    width:60,
+    paddingTop:3,
+    height:60,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  pauseBottomIconStyle:{
+    backgroundColor:'#FCF7F8',
+    borderRadius:100,
+    width:40,
+    paddingTop:3,
+    paddingLeft:3,
+    height:40,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   bottomTimeLineStyle:{
     width: SCREEN_WIDTH - 100, 
