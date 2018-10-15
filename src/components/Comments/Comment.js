@@ -60,33 +60,24 @@ class Comments extends Component {
 
         return (
             <View style={[this.props.customStyling, {paddingTop: 10, paddingBottom: 10}]}>
-            <View style={styles.commentContainer}>
+                <View style={styles.commentContainer}>
+                    <Avatar
+                    containerStyle={{flex:0, marginRight:10}}
+                    medium
+                    rounded
+                    source={{uri: this.props.data.user.image}}
+                    activeOpacity={0.7} />
 
-                <Avatar
-                containerStyle={{flex:0, marginRight:10}}
-                medium
-                rounded
-                source={{uri: this.props.data.user.image}}
-                onPress={() => console.log("Works!")}
-                activeOpacity={0.7} />
+                    <View style={{flex:1, flexDirection:'column'}}>
+                        <View style={{flexDirection:'row', paddingBottom: 10, alignItems:'center'}}>
+                            <Text style={styles.titleStyle}> {this.props.data.user.name} </Text>
+                            {/* { this.props.data.time && <Badge style={styles.timeStyle}value={this.getFormattedTime(this.props.data.time)} textStyle={{fontWeight:'bold'}} /> } */}
 
-                <View style={{flex:1, flexDirection:'column'}}>
-                    <View style={{flexDirection:'row', paddingBottom: 10, alignItems:'center'}}>
-                        <Text style={styles.titleStyle}>{this.props.data.user.name} </Text>
-                        
-                        
-                       { this.props.data.time && 
-                       <Badge 
-                            style={styles.timeStyle} 
-                            value={this.getFormattedTime(this.props.data.time)} 
-                            textStyle={{fontWeight:'bold'}} 
-                            
-                            /> }
-                    </View>
-                
-                    <Text style={styles.commentStyle} > {this.props.data.title} </Text>
+                        </View>
                     
-                </View>
+                        <Text style={styles.commentStyle} > {this.props.data.title} </Text>
+                        
+                    </View>
                 
             </View> 
 

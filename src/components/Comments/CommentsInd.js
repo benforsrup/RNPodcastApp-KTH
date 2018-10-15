@@ -38,46 +38,13 @@ class CommentsInd extends Component {
 
     }
 
-    addComment=()=>{
-        // console.log(this.state)
-        // const comment ={
-        //     title: this.state.comment,
-        //     id: 20,
-        //     time: 5, 
-        //     user:"Oscar", 
-        //     isParent: true,
-        //     hasReplies: false,
-        //     showReply: false,
-        // }
-        // this.numberOfComments = this.props.commentList.length
-        // this.props.actions.addComment(comment)
-        // setTimeout(() =>this.refs._commentList.scrollToEnd(), 200)
-        // this.setState({comment:""})
-        const comment={
-            title: this.state.comment,
-            id: 20,
-            time: this.props.player.currentTime, 
-            user:{
-                name: firebase.auth().currentUser.displayName, 
-                image: firebase.auth().currentUser.providerData[0] ? firebase.auth().currentUser.providerData[0].photoURL : ""
-            }, 
-            isParent: true,
-            hasReplies: false,
-            showReply: false,
-            podcastid: this.props.podcast.id
-        }
-        this.props.actions.requestAddComment(comment)
-        this.numberOfComments = this.props.commentList.length
-        setTimeout(() =>this.refs._commentList.scrollToEnd(), 200)
-        this.setState({comment:""})
-    }
     _keyExtractor = (item, index) => index.toString();
 
     showReply = (index) => {
+        console.log(index)
         this.props.actions.toggleReply(index)
     }
     _addReply = (item) => {
-        console.log(item)
         //if already open
         if(item.showReply){
             this.setState({isReplying:true})
@@ -107,7 +74,9 @@ class CommentsInd extends Component {
         setTimeout(() => this.setState({isReplying:false, reply:""}), 1000)
     }
 
-    _renderItem = ({item, index}) => { 
+
+ 
+    _renderItems = ({item, index}) => { 
         return(
         <View>
             <Comment 
@@ -120,14 +89,14 @@ class CommentsInd extends Component {
                 customStyling={item.isParent ? {width: SCREEN_WIDTH} : {width:SCREEN_WIDTH - 30}}
                 onReplyClick={this.showReply}
             />
-             {(item.hasReplies && item.showReply) && 
+            {item.hasReplies && 
              <View>
                 <FlatList 
                 style={{marginLeft:30, backgroundColor:'gray'}}
                 keyExtractor={this._keyExtractor}
                 data={item.replies}
                 extraData={item.replies}
-                renderItem={this._renderItem}
+                renderItem={this._renderItems}
             />
             </View>
             } 
@@ -141,12 +110,12 @@ class CommentsInd extends Component {
                     onPress={() => console.log("Works!")}
                     activeOpacity={0.7} />
                 <TextInput value={this.state.reply} 
-                placeholder="Add reply"
-                autoFocus={true}
-                style={{flex:1}}
-                autoCorrect={false}
-                onChangeText={(reply) => this.setState({reply})}
-                onSubmitEditing={() => this.addReply(item.id)}/>
+                    placeholder="Add reply"
+                    autoFocus={true}
+                    style={{flex:1}}
+                    autoCorrect={false}
+                    onChangeText={(reply) => this.setState({reply})}
+                    onSubmitEditing={() => this.addReply(item.id)}/>
                 </View>
             }
             </View>
@@ -157,71 +126,18 @@ class CommentsInd extends Component {
     
 
     render() {
-        const { commentList, player  } = this.props
-        console.log(this.props.player.currentTime)
         const userProfile = firebase.auth().currentUser.providerData[0] ? firebase.auth().currentUser.providerData[0].photoURL : ""
-        //filtering and mapping comments
-        const topComment = commentList.map((parent_comment) => {
-            if(parent_comment.isParent){
-                let replies = commentList.filter((comment)=>{
-                    return (!comment.isParent && (comment.parentId ==parent_comment.id ))
-                }) 
-                if(replies.length > 0){
-                    parent_comment.hasReplies = true
-                }
-                parent_comment.replies = replies
-                return parent_comment
-            }
-            return parent_comment
-        }).filter((comment) => comment.isParent).filter(comment =>   Math.abs(player.currentTime - comment.time)<30)
-
+        const topComment = [this.props.comment]
         return (
             <View style={[styles.commentContainer, this.props.styling]}>
-           
-
-
-                <View style={styles.container}>
-                { topComment.length > 0 ?
-                
-                    <FlatList
+                <View style={styles.container}>  
+                <FlatList
                         contentContainerStyle={{ flexGrow: 1 }}
                         ref='_commentList'
                         keyExtractor={this._keyExtractor}
                         data={topComment}
-                        extraData={topComment}
-                        renderItem={this._renderItem}
-                    />
-
-                  :
-                  <View>
-                  <Icon
-                        iconStyle={{fontSize:40}}
-                      name='circle-with-plus'
-                      type='entypo'
-                      color='#517fa4'
-                  />
-                  <Text> Add comment!</Text>
-                  </View>
-
-              }
+                        renderItem={this._renderItems}/>
                 </View> 
-                <View style={{flexDirection:'row', marginLeft:20}}>
-            <Avatar
-                containerStyle={{flex:0, marginRight:10}}
-                medium
-                rounded
-                source={{uri: userProfile}}
-                onPress={() => console.log("Works!")}
-                activeOpacity={0.7} />
-            <TextInput placeholder={'Add a comment'} value={this.state.comment} 
-            ref='_textInput'
-            autoCorrect={false}
-            style={{flex:1}}
-            onSubmitEditing={this.addComment}
-            onChangeText={(comment) => this.setState({comment})} />
-            </View>
-            
-                
             </View> 
         );
     }
@@ -229,9 +145,7 @@ class CommentsInd extends Component {
 
 
 const mapStateToProps = state => ({ 
-    commentList: state.comments,
-    player: state.player
-     
+    player: state.player  
 });
 
 const mapDispatchToProps = dispatch =>({
@@ -245,7 +159,6 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       alignItems: 'center',
-      justifyContent: 'center',
       backgroundColor:'rgba(220,220,220, 0.5)'
     },
     commentContainer :{

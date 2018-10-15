@@ -6,6 +6,7 @@ import {
     Dimensions,
     FlatList,
     TextInput,
+    TouchableOpacity,
     ScrollView,
     Button
 } from "react-native";
@@ -15,7 +16,7 @@ import { bindActionCreators } from "redux";
 import { Icon, Avatar } from 'react-native-elements'
 import firebase from 'react-native-firebase'
 import { connect } from 'react-redux'
-
+import {Navigation} from 'react-native-navigation'
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
 
@@ -39,20 +40,6 @@ class Comments extends Component {
     }
 
     addComment=()=>{
-        // console.log(this.state)
-        // const comment ={
-        //     title: this.state.comment,
-        //     id: 20,
-        //     time: 5, 
-        //     user:"Oscar", 
-        //     isParent: true,
-        //     hasReplies: false,
-        //     showReply: false,
-        // }
-        // this.numberOfComments = this.props.commentList.length
-        // this.props.actions.addComment(comment)
-        // setTimeout(() =>this.refs._commentList.scrollToEnd(), 200)
-        // this.setState({comment:""})
         const comment={
             title: this.state.comment,
             id: 20,
@@ -86,8 +73,7 @@ class Comments extends Component {
             this.props.actions.toggleReply(item.id)
             this.setState({isReplying:true})
 
-        }
-        
+        }      
             
     }
     addReply = (id) => {
@@ -107,9 +93,30 @@ class Comments extends Component {
         setTimeout(() => this.setState({isReplying:false, reply:""}), 1000)
     }
 
+    goToCommentScreen = async (comment) => {
+        console.log("logged")
+        await Navigation.push("PodcastListView", {
+            component: {
+                name: "CommentScreen",
+                passProps:{
+                  podcast:this.props.podcast,
+                  comment: comment
+                },
+                options:{
+                    topBar:{
+                        visible:true,
+                        title:{
+                          text:"Comments"
+                        }
+                    }, 
+                }
+            }
+        })
+      }
+
     _renderItem = ({item, index}) => { 
         return(
-        <View>
+        <TouchableOpacity onPress={()=> this.goToCommentScreen(item)} activeOpacity={0.9}>
             <Comment 
                 id={item.id}
                 data={item}
@@ -118,8 +125,7 @@ class Comments extends Component {
                 replyComment= {item.isParent ? this._addReply : null}
                 isPreview={false}
                 customStyling={item.isParent ? {width: SCREEN_WIDTH} : {width:SCREEN_WIDTH - 30}}
-                onReplyClick={this.showReply}
-            />
+                onReplyClick={this.showReply} />
              {(item.hasReplies && item.showReply) && 
              <View>
                 <FlatList 
@@ -149,7 +155,7 @@ class Comments extends Component {
                 onSubmitEditing={() => this.addReply(item.id)}/>
                 </View>
             }
-            </View>
+            </TouchableOpacity>
         )
 
     };
@@ -159,11 +165,10 @@ class Comments extends Component {
     render() {
         const { commentList, player  } = this.props
         const userProfile = firebase.auth().currentUser.providerData[0] ? firebase.auth().currentUser.providerData[0].photoURL : ""
-        //filtering and mapping comments
         const topComment = commentList.map((parent_comment) => {
             if(parent_comment.isParent){
                 let replies = commentList.filter((comment)=>{
-                    return (!comment.isParent && (comment.parentId ==parent_comment.id ))
+                    return (!comment.isParent && (comment.parentId == parent_comment.id ))
                 }) 
                 if(replies.length > 0){
                     parent_comment.hasReplies = true
@@ -176,32 +181,21 @@ class Comments extends Component {
 
         return (
             <View style={[styles.commentContainer, this.props.styling]}>
-           
-
-
                 <View style={styles.container}>
-                { topComment.length > 0 ?
                 
+                { topComment.length > 0 ?          
                     <FlatList
                         contentContainerStyle={{ flexGrow: 1 }}
                         ref='_commentList'
                         keyExtractor={this._keyExtractor}
                         data={topComment}
                         extraData={topComment}
-                        renderItem={this._renderItem}
-                    />
-
-                  :
+                        renderItem={this._renderItem}/>
+                    :
                   <View>
-                  <Icon
-                        iconStyle={{fontSize:40}}
-                      name='circle-with-plus'
-                      type='entypo'
-                      color='#517fa4'
-                  />
+                  <Icon iconStyle={{fontSize:40}} name='circle-with-plus' type='entypo'color='#517fa4'/>
                   <Text> Add comment!</Text>
                   </View>
-
               }
                 </View> 
                 <View style={{flexDirection:'row', marginLeft:20}}>

@@ -82,12 +82,13 @@ class ProgressBar extends ProgressComponent {
       });
   }
 
-  goToScreen = async () => {
+  goToScreen = async (comment) => {
       await Navigation.push("PodcastListView", {
           component: {
               name: "CommentScreen",
               passProps:{
-                podcast:this.props.podcast
+                podcast:this.props.podcast,
+                comment: comment
               },
               options:{
                   topBar:{
@@ -103,7 +104,19 @@ class ProgressBar extends ProgressComponent {
 
   render() {    
     const {commentList} = this.props
-    const topComment = commentList.filter(comment =>   Math.abs(this.state.position - comment.time)<30)|| ""
+    const starredComment = commentList.map((parent_comment) => {
+      if(parent_comment.isParent){
+          let replies = commentList.filter((comment)=>{
+              return (!comment.isParent && (comment.parentId == parent_comment.id ))
+          }) 
+          if(replies.length > 0){
+              parent_comment.hasReplies = true
+          } 
+          parent_comment.replies = replies
+          return parent_comment
+      }
+      return parent_comment
+  }).filter((comment) => comment.isParent).filter(comment =>   Math.abs(this.state.position - comment.time)<30)
     return (
         <View >
 
@@ -118,17 +131,17 @@ class ProgressBar extends ProgressComponent {
             <View style={{ justifyContent:'center', width:SCREEN_WIDTH-60, height:SCREEN_WIDTH-60,alignItems: 'center', zIndex: 1}}>
             <View style={{width: SCREEN_WIDTH-120, height:SCREEN_WIDTH-220, position:'absolute', top:90, left:30,zIndex:10}}> 
               <Navigation.TouchablePreview
-                  onPress={() => this.goToScreen()}
-                   onPressIn={({reactTag}) => this.goToScreenPreview({reactTag}, topComment[0])}>
+                  onPress={() => this.goToScreen(starredComment[0])}
+                   onPressIn={({reactTag}) => this.goToScreenPreview({reactTag}, starredComment[0])}>
 
-                  {topComment.length > 0 ?
+                  {starredComment.length > 0 ?
                   <View>
                       <Comment 
-                          id={topComment[0].id} 
-                          data={topComment[0]} 
+                          id={starredComment[0].id} 
+                          data={starredComment[0]} 
                           isSmall={true}
                           variant="preview"
-                          index={topComment[0].id}
+                          index={starredComment[0].id}
                           customStyling={styles.customCommentStyle} /> 
                           
                           <View style={{
