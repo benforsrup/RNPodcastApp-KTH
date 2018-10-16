@@ -128,8 +128,8 @@ class PodCastPlayer extends Component {
     }
 
     animatedImageHeight = this.animation.y.interpolate({
-      inputRange: [0, SCREEN_HEIGHT - 40],
-      outputRange: [155, 32],
+      inputRange: [0, SCREEN_HEIGHT - 30],
+      outputRange: [135, 37],
       extrapolate: "clamp"
     })
     animatedSongTitleOpacity = this.animation.y.interpolate({
@@ -143,17 +143,17 @@ class PodCastPlayer extends Component {
       extrapolate: "clamp"
     })
     animatedHeaderHeight = this.animation.y.interpolate({
-      inputRange: [0, SCREEN_HEIGHT - 40],
+      inputRange: [0, SCREEN_HEIGHT - 30],
       outputRange: [150, 90],
       extrapolate: "clamp"
     })
     animatedSongDetailsOpacity = this.animation.y.interpolate({
-      inputRange: [0, SCREEN_HEIGHT-220, SCREEN_HEIGHT - 40],
+      inputRange: [0, SCREEN_HEIGHT-220, SCREEN_HEIGHT - 30],
       outputRange: [1, 0, 0],
       extrapolate: "clamp"
     })
     animatedBackgroundColor = this.animation.y.interpolate({
-      inputRange: [0, SCREEN_HEIGHT - 40],
+      inputRange: [0, SCREEN_HEIGHT - 30],
       outputRange: ['white', 'gray'],
       extrapolate: "clamp"
     })
@@ -173,10 +173,16 @@ class PodCastPlayer extends Component {
       outputRange:[10, 0],
       extrapolate:"clamp"
     })
+    animatedBlurRadius = this.animation.y.interpolate({
+      inputRange:[0, SCREEN_HEIGHT-30],
+      outputRange:[10, 0],
+      extrapolate:"clamp"
+    })
 
 
     const { podcast } = this.props
     return (
+      
         <View>  
             <Animated.View style={{ flex: 1}}>  
                 <Animated.View style={[animatedHeight, styles.modalStyle]}>
@@ -187,8 +193,13 @@ class PodCastPlayer extends Component {
 
               <Animated.View style={{ height: animatedHeaderHeight-animatedBottomTimelineHeight, flexDirection: 'row', alignItems:'center' }}>    
                   <Animated.View style={{ height: animatedImageHeight, width: animatedImageWidth, marginLeft: animatedImageMarginLeft, borderTopLeftRadius:animatedBorderRadius,borderTopRightRadius:animatedBorderRadius, overflow:"hidden" }}>
-                    <Image style={{ flex: 1, width:null, height: null, opacity:1 }} source={podcast.image} />
+                   
+                    <Animated.Image blurRadius={animatedBlurRadius} style={{ flex: 1, width:null, height: null, opacity:1 }} source={podcast.image} />
                     
+                    <Animated.View style={{position:'absolute', width:SCREEN_WIDTH, height:150, justifyContent:'center', alignItems:'center'}}>
+                      <Text style={{fontSize:20, color:'white', fontWeight:'bold'}} > {this.props.podcast.name }</Text>
+                    </Animated.View>
+
                     <Animated.View style={[{opacity:animatedSongDetailsOpacity},styles.minimizeButton]}>
                       <Icon onPress={() => this.onTouchPlayer()} name='chevron-down' size={70} type='evilicon' color='#255' />
                     </Animated.View> 
@@ -204,21 +215,19 @@ class PodCastPlayer extends Component {
 
               </Animated.View>
 
-              <Animated.View style={{ height: animatedHeaderHeight, opacity: animatedSongDetailsOpacity, flex: 1, justifyContent:'center', alignItems:'center'}}>
+              <Animated.View style={{ height: animatedHeaderHeight, opacity: animatedSongDetailsOpacity, flex: 1, alignItems:'center', justifyContent:'space-between'}}>
               { !this.state.hasLoaded && <Spinner />}
-            <Animated.Text onPress={() => this.onTouchPlayer()} style={{ fontSize: 18, paddingLeft: 10, marginBottom:20 }}>{podcast.name}</Animated.Text>
                 <View>
 
                  
                 </View>
 
-                <View>
+                <View style={{paddingBottom: 30}}>
 
               <CircularPlayer 
                   podcast={this.props.podcast}
                   shouldSetTime={!this.state.canScrollUp} 
                   setCurrentTime={this.props.actions.setCurrentTime} />
-              
                 </View>
 
                 <View style={{ width:SCREEN_WIDTH-150, height:60, flexDirection: 'row', justifyContent: 'space-between', marginBottom:10 }}>

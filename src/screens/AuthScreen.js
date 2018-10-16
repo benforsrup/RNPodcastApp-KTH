@@ -48,19 +48,15 @@ class AuthScreen extends Component {
         <View style={styles.container}>    
         
           <View style={styles.input}>
-          <GoogleSigninButton
-            style={{ width: 48, height: 48 }}
-            size={GoogleSigninButton.Size.Icon}
-            color={GoogleSigninButton.Color.Dark}
-            onPress={this.googleLogin}
-           />
-        
-            <SocialIcon
+          
+
+           <SocialIcon
               iconSize={20}
-              title='Sign In With Facebook'
+              onPress={this.googleLogin}
+              title='Sign In With Google'
               button
-              type='facebook'
-            />
+              type='google-plus-official' />
+        
           </View>
         </View>
     );

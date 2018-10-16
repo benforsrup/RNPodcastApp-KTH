@@ -119,23 +119,21 @@ class ProgressBar extends ProgressComponent {
   }).filter((comment) => comment.isParent).filter(comment =>   Math.abs(this.state.position - comment.time)<30)
     return (
         <View >
-
-            <View style={{justifyContent: 'center', flexDirection:'row', marginBottom:10}}>
-            <Text style={{fontWeight:"bold", color:'rgb(135,206,250)'}}>  {getFormattedTime(this.state.position)}  / </Text> 
-            <Text> {getFormattedDuration(this.state.duration)}</Text>
+            <View style={{justifyContent: 'center', flexDirection:'row', marginBottom:20, marginTop:20}}>
+                <Text style={{fontWeight:"bold", color:'rgb(135,206,250)'}}>  {getFormattedTime(this.state.position)}  / </Text> 
+                <Text> {getFormattedDuration(this.state.duration)}</Text>
             </View>
+            <View style={styles.circleContainerStyle}>
+                <View style={{position:'absolute',width: SCREEN_WIDTH-60, height:SCREEN_WIDTH-60, justifyContent:'center', alignItems:'center'}}>
+                    <Image resizeMode={'cover'} source={require('../../../assets/Circular_Bars-hires.png')} style={{flex: 1, width:300, height: 150}} />
+                </View>
+                <View style={{width: SCREEN_WIDTH-150, height:130, position:'absolute', top:90, left:30,zIndex:10}}> 
+                    <Navigation.TouchablePreview
+                        onPress={() => this.goToScreen(starredComment[0])}
+                        onPressIn={({reactTag}) => this.goToScreenPreview({reactTag}, starredComment[0])}>
 
-            
-             
-            
-            <View style={{ justifyContent:'center', width:SCREEN_WIDTH-60, height:SCREEN_WIDTH-60,alignItems: 'center', zIndex: 1}}>
-            <View style={{width: SCREEN_WIDTH-120, height:SCREEN_WIDTH-220, position:'absolute', top:90, left:30,zIndex:10}}> 
-              <Navigation.TouchablePreview
-                  onPress={() => this.goToScreen(starredComment[0])}
-                   onPressIn={({reactTag}) => this.goToScreenPreview({reactTag}, starredComment[0])}>
-
-                  {starredComment.length > 0 ?
-                  <View>
+                    {starredComment.length > 0 ?
+                    <View>
                       <Comment 
                           id={starredComment[0].id} 
                           data={starredComment[0]} 
@@ -147,7 +145,7 @@ class ProgressBar extends ProgressComponent {
                           <View style={{
                             backgroundColor:'#F3F3F3',
                             height:'100%',
-                            width:SCREEN_WIDTH-145, 
+                            width:SCREEN_WIDTH-175, 
                             position:'absolute', 
                             top:7,
                             borderRadius:10,
@@ -177,7 +175,7 @@ class ProgressBar extends ProgressComponent {
 
                             elevation: 2,
                             height:'100%',
-                            width:SCREEN_WIDTH-180, 
+                            width:SCREEN_WIDTH-210, 
                             position:'absolute', 
                             top:14,
                             borderRadius:10,
@@ -203,11 +201,14 @@ class ProgressBar extends ProgressComponent {
 
                 </Navigation.TouchablePreview> 
 
+            
+
             </View>
            
              <CircularSlider 
-                  width={SCREEN_WIDTH-20} 
-                  height={SCREEN_WIDTH-20}
+                  
+                  width={SCREEN_WIDTH-60} 
+                  height={SCREEN_WIDTH-60}
                   meterColor='#0cd' 
                   textColor='#fff'
                   value={this.state.angle}
@@ -247,7 +248,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(CircularPlayer);
 
 const styles = StyleSheet.create({
   customCommentStyle:{
-    width: SCREEN_WIDTH-120,
+    width: SCREEN_WIDTH-150,
     borderWidth: 1.5,
     borderColor:'rgba(0,0,0,0.1)',
     borderRadius: 10,
@@ -261,5 +262,13 @@ const styles = StyleSheet.create({
     // shadowRadius: 4.65,
 
     // elevation: 7,
+  },
+  circleContainerStyle:{
+    justifyContent:'center', 
+    width:SCREEN_WIDTH-90, 
+    height:SCREEN_WIDTH-90,
+    alignItems: 'center', 
+    zIndex: 1
+    
   }
 });

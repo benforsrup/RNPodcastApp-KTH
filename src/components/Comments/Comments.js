@@ -16,7 +16,7 @@ import { bindActionCreators } from "redux";
 import { Icon, Avatar } from 'react-native-elements'
 import firebase from 'react-native-firebase'
 import { connect } from 'react-redux'
-import {Navigation} from 'react-native-navigation'
+import { Navigation } from 'react-native-navigation'
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
 

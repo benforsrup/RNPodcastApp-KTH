@@ -40,7 +40,7 @@ class Comments extends Component {
                 <View style={{flex:1, flexDirection:'column'}}>
                     <View style={{flexDirection:'row', paddingBottom: 10, alignItems:'center'}}>
                         <Text style={styles.titleStyle}>{this.props.data.user.name} </Text>
-                       { this.props.data.time && <Badge style={styles.timeStyle}value={this.getFormattedTime(this.props.data.time)} textStyle={{fontWeight:'bold'}} /> }
+                       {/* { this.props.data.time && <Badge style={styles.timeStyle}value={this.getFormattedTime(this.props.data.time)} textStyle={{fontWeight:'bold'}} /> } */}
                     </View>
                 
                     <Text style={styles.commentStyle} > {this.props.data.title} </Text>

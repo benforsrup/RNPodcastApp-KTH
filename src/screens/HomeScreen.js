@@ -4,7 +4,8 @@ import {
     Text,
     StyleSheet,
     Button, 
-    Dimensions
+    Dimensions,
+    SafeAreaView
 } from "react-native";
 
 import Comments from '../components/Comments/Comments'
@@ -14,6 +15,8 @@ import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
 import TrackPlayer from 'react-native-track-player'
 const SCREEN_HEIGHT = Dimensions.get('window').height
+import {Navigation} from 'react-native-navigation'
+
 
 class HomeScreen extends Component {
     constructor(props){
@@ -28,6 +31,11 @@ class HomeScreen extends Component {
     }
 
     componentDidMount(){
+        Navigation.mergeOptions(this.props.componentId,{
+            statusBar:{
+                visible:false
+            }
+        })
         this.props.actions.requestCommentByPodcast(this.props.podcast.id)
         
         TrackPlayer.setupPlayer().then(async () => {
@@ -47,8 +55,8 @@ class HomeScreen extends Component {
 
 
     render() {
-        return ( 
-                <View  >
+        return (
+                <View >
                     <PodCastPlayer 
                     onTogglePlayback={() => this.togglePlayback()}
                     podcast={this.props.podcast} />

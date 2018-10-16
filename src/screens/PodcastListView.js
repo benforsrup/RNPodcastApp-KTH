@@ -30,7 +30,7 @@ import {
     Touchable
  } from '@shoutem/ui'
 import HomeScreen from "./HomeScreen";
-
+import podcasts from '../services/podcasts'
 
 import PodCastPlayer from '../components/Player/PodCastPlayer'
 class PodcastListView extends Component {
@@ -47,28 +47,24 @@ class PodcastListView extends Component {
                 {
                     "name": "Framgångspodden",
                     "id": "3m8Mh2c9ZYnSBBar0qDL",
-                    "address": "185 Sutter St, San Francisco, CA 94109",
                     "image": { "url": "/Users/benforsrup/Documents/Webdev/ReactNative/RNPodcastApp/src/assets/framgang.png" },
                     "mp3":"https://ads-e-bauerse-pods.sharp-stream.com/499/titti_schultz_original_0026b3ac_normal.mp3"
                 },
                 {
                     "name": "Bank & Frändén",
                     "id": "L8HQJg6hc2aMbQqBCiIc",
-                    "address": "527 Broome St, New York, NY 10013",
                     "image": { "url": "/Users/benforsrup/Documents/Webdev/ReactNative/RNPodcastApp/src/assets/bank.png" },
                     "mp3": "https://media.acast.com/bankochfranden/-1-hornyteenspornfootballpod/media.mp3"
                 },
                 {
                     "name": "P3 Dokumentär",
                     "id": "ZKoH8HcoYGCDWxXFwy30",
-                    "address": "225 Mulberry St, New York, NY 10012",
                     "image": { "url": "/Users/benforsrup/Documents/Webdev/ReactNative/RNPodcastApp/src/assets/p3.png" },
                     "mp3": "https://sverigesradio.se/topsy/ljudfil/itunes/6650863.mp3"
                 },
                 {
                     "name": "Mordpodden",
                     "id": "9882l8rBy1t8Yx4oWb7i",
-                    "address": "225 Mulberry St, New York, NY 10012",
                     "image": { "url": "/Users/benforsrup/Documents/Webdev/ReactNative/RNPodcastApp/src/assets/mordpodden.png" },
                     "mp3": "https://ads-e-bauerse-pods.sharp-stream.com/441/s07e03_dodsskjutningen_3f21a015_normal.mp3"
                 }    
@@ -89,6 +85,8 @@ class PodcastListView extends Component {
       }
 
     componentDidMount(){
+        this.listOfPodcasts = podcasts
+
         // this.state.podcasts.forEach(element => {
         //     firebase.firestore().collection('podcasts').add(element)
         //     .then(newComment => {
@@ -110,44 +108,12 @@ class PodcastListView extends Component {
             }
         })  
     }
-    previewCompleted({ previewComponentId }) {
-       // console.log(previewComponentId)
-    }
-
-    goToScreenPreview = async (podcast, {reactTag}) => {
-        await Navigation.push(this.props.componentId, {
-            component: {
-              name: 'HomeScreen',
-              passProps: {
-                "podcast": podcast
-            },
-              options: {
-                popGesture:true,
-                animations: {
-                  push: {
-                    enable: false
-                  }
-                },
-                topBar:{
-                    visible:true
-                },
-                preview: reactTag ? {
-                  reactTag,
-                  height: 500,
-                  commit: true,
-                } : undefined,
-              }
-            }
-          });
-    }
 
     goToScreen = async (podcast) => {
-
-        console.log(this.props.componentId)
         // if(screenName == "HomeScreen"){
                await Navigation.push(this.props.componentId, {
                     component: {
-                        name: "HomeScreen",
+                        name: "PodcastChooseView",
                         passProps: {
                             "podcast": podcast
                         },
@@ -161,44 +127,14 @@ class PodcastListView extends Component {
                                 visible:false,
                                 drawBehind:true
                             }, 
+                            statusBar:{
+                                style:'dark'
+                            }
+                            
                             
                         }
                     }
                 })
-                // Navigation.showModal({
-                //     stack: {
-                //         children: [{
-                //             component: {
-                //                 name: screenName,
-                //                 passProps: {
-                //                     "podcast": prop
-                //                 }
-                //             }
-                //         }],
-        
-                //         options: {
-                //             topBar:{
-                //                 visible:false,
-                //             }
-                //         }
-                //     }
-                // });
-            // }
-            // else if(screenName=="SettingsScreen"){
-            //     Navigation.push(this.props.componentId, {
-            //         component: {
-            //             name: screenName,
-            //             options:{
-            //                 topBar:{
-            //                     title:{
-            //                         text: "Settings"
-            //                     }
-            //                 }
-            //             }
-            //         }
-            //     })
-            // }
-        
     }
 
 
@@ -236,15 +172,15 @@ class PodcastListView extends Component {
 
 
     render() {
-        const podcasts = this.state.podcasts
+        const listOfPodcasts = podcasts
         const isIphoneX = this.device == 'iPhone10,6'
-        const groupedData = GridRow.groupByRows(podcasts, 2);
+        const groupedData = GridRow.groupByRows(listOfPodcasts, 2);
         return (
             <Screen>     
                 <NavigationBar
                   styleName="inline no-border"
                   style={{container:{
-                      backgroundColor:'#BDBDBD',   
+                         
                       height:isIphoneX ? 90 : 70
                   },
                   componentsContainer:{
@@ -252,10 +188,7 @@ class PodcastListView extends Component {
                   }
                 }}
                 leftComponent={<Icon onPress={this.toggleMenu} name="sidebar" />}
-                rightComponent={(
-                    <Button styleName="clear">
-                    <Icon onPress={() => this.goToScreen("SettingsScreen")} name="settings"/>
-                    </Button>)}
+                
                 centerComponent={<Title>Podcasts</Title>}
                 />
                 <ListView

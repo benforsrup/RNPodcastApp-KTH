@@ -1,0 +1,67 @@
+
+export default podcasts = 
+[
+    {
+        "name": "Framgångspodden",
+        "id": "3m8Mh2c9ZYnSBBar0qDL",
+        "image": { "url": "/Users/benforsrup/Documents/Webdev/ReactNative/RNPodcastApp/src/assets/framgang.png" },
+        "mp3":"https://ads-e-bauerse-pods.sharp-stream.com/499/titti_schultz_original_0026b3ac_normal.mp3",
+        "episodes":[
+            {
+                "name":'215. Leif Silbersky, "Djävulens advokat", Original',
+                "id": "dasbopasdas",
+                "mp3":"https://ads-e-bauerse-pods.sharp-stream.com/499/ny_leif_silbersky_original_3f62dd3e_normal.mp3?aw_0_1st.collectionid=499&aw_0_1st.episodeid=38518"
+            },
+            {
+                "name":'214. Isabella Löwengrip, Original',
+                "id": "dasbopasdas",
+                "mp3":"https://ads-e-bauerse-pods.sharp-stream.com/499/isabella_lowengrip_original_8311f1a5_normal.mp3?aw_0_1st.collectionid=499&aw_0_1st.episodeid=38488"
+            },
+        ]
+    },
+    {
+        "name": "Bank & Frändén",
+        "id": "L8HQJg6hc2aMbQqBCiIc",
+        "image": { "url": "/Users/benforsrup/Documents/Webdev/ReactNative/RNPodcastApp/src/assets/bank.png" },
+        "mp3": "https://media.acast.com/bankochfranden/-1-hornyteenspornfootballpod/media.mp3",
+        'episodes':[
+            {
+            'name':'#3 - Väst när det gäller',
+            "mp3": 'https://media.acast.com/bankochfranden/-3-vastnardetgaller/media.mp3'
+            },
+            {
+                'name':'#2 - No Pasarán!',
+                "mp3": 'https://media.acast.com/bankochfranden/-2-nopasaran-/media.mp3'
+            },
+            {
+                'name':'#1 - Horny Teens Porn Football Pod',
+                "mp3": 'https://media.acast.com/bankochfranden/-1-hornyteenspornfootballpod/media.mp3'
+            }
+        ]
+    },
+    {
+        "name": "P3 Dokumentär",
+        "id": "ZKoH8HcoYGCDWxXFwy30",
+        "image": { "url": "/Users/benforsrup/Documents/Webdev/ReactNative/RNPodcastApp/src/assets/p3.png" },
+        "mp3": "https://sverigesradio.se/topsy/ljudfil/itunes/6650863.mp3",
+        'episodes':[
+            {
+                'name':'Mutskandalen på Systembolaget',
+                'mp3':'https://sverigesradio.se/topsy/ljudfil/itunes/6667137.mp3'
+            }
+        ]
+    },
+    {
+        "name": "Mordpodden",
+        "id": "9882l8rBy1t8Yx4oWb7i",
+        "image": { "url": "/Users/benforsrup/Documents/Webdev/ReactNative/RNPodcastApp/src/assets/mordpodden.png" },
+        "mp3": "https://ads-e-bauerse-pods.sharp-stream.com/441/s07e03_dodsskjutningen_3f21a015_normal.mp3",
+        'episodes':[
+            {
+                'name':'S07E05 Ridmordet',
+                'mp3':'https://ads-e-bauerse-pods.sharp-stream.com/441/s07e05_ridmordet_9866a2dc_normal.mp3?aw_0_1st.collectionid=441&aw_0_1st.episodeid=38514'
+            }
+        ]
+    }    
+]
+

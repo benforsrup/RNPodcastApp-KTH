@@ -6,7 +6,7 @@ import AuthScreen from './src/screens/AuthScreen'
 import SettingsScreen from './src/screens/SettingsScreen'
 import { Navigation } from 'react-native-navigation'
 import CommentScreen from './src/screens/CommentScreen';
-
+import PodcastChooseView from './src/screens/PodcastChooseView'
 import { Provider } from 'react-redux';
 
 
@@ -25,5 +25,7 @@ export function registerScreens(store) {
     Navigation.registerComponentWithRedux('SettingsScreen', () => SettingsScreen, Provider, store);
     Navigation.registerComponentWithRedux('AuthScreen', () => AuthScreen, Provider, store);
     Navigation.registerComponentWithRedux('CommentScreen', () => CommentScreen, Provider, store);
+    Navigation.registerComponentWithRedux('PodcastChooseView', () => PodcastChooseView, Provider, store);
+
 
 }

@@ -97,7 +97,6 @@ export const goHome = () => Navigation.setRoot({
                             id:"HomeScreen",
                             
                             options:{
-                               
                                 sideMenu:{
                                     left:{
                                         enabled:false,
@@ -107,12 +106,15 @@ export const goHome = () => Navigation.setRoot({
                             },
                             
                         },
-                        
+                        component:{
+                            name:"PodcastChooseView",
+                            id:"PodcastChooseView",
+                        },
                         component: {
                             id:"PodcastListView",
                             name: 'PodcastListView',
                             options:{
-                                
+                               
                                 sideMenu:{
                                     left:{
                                         width:200,
@@ -123,17 +125,10 @@ export const goHome = () => Navigation.setRoot({
                                 topBar:{
                                     noBorder: true,
                                     visible:false,
-                                    background: {
-                                        translucent: true,
-                                        blur: true
-                                    },
                                     title:{
                                         text:"Podcasts"
                                     },
-                                    largeTitle: {
-                                        visible: false,
-                                        
-                                     },
+                                    
                                     leftButtons:{
                                         id:"menuButton",
                                         icon:menuIcon
