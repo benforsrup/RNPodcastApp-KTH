@@ -9,12 +9,12 @@ export default podcasts =
         "episodes":[
             {
                 "name":'215. Leif Silbersky, "Djävulens advokat", Original',
-                "id": "dasbopasdas",
+                "id": "L8HQJg3ac2aMbQqBCiIc",
                 "mp3":"https://ads-e-bauerse-pods.sharp-stream.com/499/ny_leif_silbersky_original_3f62dd3e_normal.mp3?aw_0_1st.collectionid=499&aw_0_1st.episodeid=38518"
             },
             {
                 "name":'214. Isabella Löwengrip, Original',
-                "id": "dasbopasdas",
+                "id": "L9IQJg3ac2aMbQqBCiIc",
                 "mp3":"https://ads-e-bauerse-pods.sharp-stream.com/499/isabella_lowengrip_original_8311f1a5_normal.mp3?aw_0_1st.collectionid=499&aw_0_1st.episodeid=38488"
             },
         ]
@@ -27,14 +27,17 @@ export default podcasts =
         'episodes':[
             {
             'name':'#3 - Väst när det gäller',
+            "id": "L9IQJg3ac2aOLQqKLiIc",
             "mp3": 'https://media.acast.com/bankochfranden/-3-vastnardetgaller/media.mp3'
             },
             {
                 'name':'#2 - No Pasarán!',
+                "id": "L9IQJg12c2aOOQqKLiIc",
                 "mp3": 'https://media.acast.com/bankochfranden/-2-nopasaran-/media.mp3'
             },
             {
                 'name':'#1 - Horny Teens Porn Football Pod',
+                "id": "O0HBKg12c2aOOQqKLiIc",
                 "mp3": 'https://media.acast.com/bankochfranden/-1-hornyteenspornfootballpod/media.mp3'
             }
         ]
@@ -47,6 +50,7 @@ export default podcasts =
         'episodes':[
             {
                 'name':'Mutskandalen på Systembolaget',
+                "id": "O0HBKg99c00OOQqKLiIc",
                 'mp3':'https://sverigesradio.se/topsy/ljudfil/itunes/6667137.mp3'
             }
         ]
@@ -59,6 +63,7 @@ export default podcasts =
         'episodes':[
             {
                 'name':'S07E05 Ridmordet',
+                "id": "O0HBKg12c2OHOLKKLiIc",
                 'mp3':'https://ads-e-bauerse-pods.sharp-stream.com/441/s07e05_ridmordet_9866a2dc_normal.mp3?aw_0_1st.collectionid=441&aw_0_1st.episodeid=38514'
             }
         ]

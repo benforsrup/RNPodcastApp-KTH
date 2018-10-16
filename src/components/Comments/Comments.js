@@ -55,7 +55,7 @@ class Comments extends Component {
         }
         this.props.actions.requestAddComment(comment)
         this.numberOfComments = this.props.commentList.length
-        setTimeout(() =>this.refs._commentList.scrollToEnd(), 200)
+        setTimeout(() => this.refs._commentList ? this.refs._commentList.scrollToEnd(): null, 200)
         this.setState({comment:""})
     }
     _keyExtractor = (item, index) => index.toString();

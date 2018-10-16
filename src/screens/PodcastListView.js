@@ -2,37 +2,26 @@ import React, { Component } from "react";
 import {
   View,
   StyleSheet,
- 
+
 } from "react-native";
 import * as actions from "../redux/actions";
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
 import DeviceInfo from 'react-native-device-info';
-import firebase from 'react-native-firebase'
 import { 
     Icon,
     NavigationBar, 
-    Title, 
-    Button, 
-    Text,
     ListView,
-    ImageBackground,
     Subtitle,
     Card,
     Screen,
     GridRow,
-    TouchableOpacity,
-    Caption,
     Image,
-    Divider,
-    Tile,
-    Touchable
  } from '@shoutem/ui'
-import HomeScreen from "./HomeScreen";
 import podcasts from '../services/podcasts'
+import { NativeEventsReceiver } from "react-native-navigation/lib/dist/adapters/NativeEventsReceiver";
 
-import PodCastPlayer from '../components/Player/PodCastPlayer'
 class PodcastListView extends Component {
 
     constructor(props) {
@@ -189,7 +178,7 @@ class PodcastListView extends Component {
                 }}
                 leftComponent={<Icon onPress={this.toggleMenu} name="sidebar" />}
                 
-                centerComponent={<Title>Podcasts</Title>}
+                centerComponent={<Image styleName="medium-wide" style={{width: 120, height:28}} source={require('../assets/logo.png')}/>}
                 />
                 <ListView
                     data={groupedData}

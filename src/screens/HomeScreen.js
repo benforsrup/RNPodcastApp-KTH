@@ -38,14 +38,14 @@ class HomeScreen extends Component {
         })
         this.props.actions.requestCommentByPodcast(this.props.podcast.id)
         
-        TrackPlayer.setupPlayer().then(async () => {
-            TrackPlayer.add(this.track).then(() => {
-            });
-        });
+        // TrackPlayer.setupPlayer().then(async () => {
+        //     TrackPlayer.add(this.track).then(() => {
+        //     });
+        // });
     
-        TrackPlayer.updateOptions({
-            capabilities: [TrackPlayer.CAPABILITY_PLAY,TrackPlayer.CAPABILITY_PAUSE]
-        });
+        // TrackPlayer.updateOptions({
+        //     capabilities: [TrackPlayer.CAPABILITY_PLAY,TrackPlayer.CAPABILITY_PAUSE]
+        // });
         
 
     
