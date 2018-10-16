@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {
   View,
   StyleSheet,
+  Image
 } from "react-native";
 import { Spinner } from '@shoutem/ui'
 import { initAuth, initHome } from '../navigation/navigation'
@@ -20,7 +21,7 @@ class LoadingScreen extends Component {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         console.log(user)
-        initHome()
+        setTimeout(() => initHome(), 100) 
         this.setState({ loading: false, authenticated: true });
       } else {
         initAuth()
@@ -35,8 +36,9 @@ class LoadingScreen extends Component {
 
     render() {
     return (
-        <View style={styles.container}>      
-          <Spinner />
+        <View style={styles.container}>    
+        <Image source={require('../assets/logo.png')} style={{width: 250, height: 60}} />
+          {/* <Spinner /> */}
         </View>
     );
     }

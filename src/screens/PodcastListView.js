@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {
   View,
   StyleSheet,
+  TouchableOpacity
 
 } from "react-native";
 import * as actions from "../redux/actions";
@@ -134,7 +135,7 @@ class PodcastListView extends Component {
       
         const cellViews = rowData.map((podcast, id) => {
           return (
-            <Navigation.TouchablePreview 
+            <TouchableOpacity  
                 // onPressIn={({reactTag})=>this.goToScreenPreview(podcast,{reactTag})}
                 onPress={() => this.goToScreen(podcast)} key={id} styleName="flexible">
               <Card>
@@ -143,11 +144,11 @@ class PodcastListView extends Component {
                       styleName="medium-wide"
                       source={{ uri: podcast.image.url  }}
                       />
-                <View styleName="content" style={{paddingTop:10, paddingBottom:10}}>
+                <View styleName="content" style={{paddingTop:10, paddingBottom:10, paddingLeft:5}}>
                   <Subtitle numberOfLines={3}>{podcast.name}</Subtitle>
                 </View>
               </Card>
-            </Navigation.TouchablePreview>
+            </TouchableOpacity>
           );
         });
       
@@ -183,6 +184,8 @@ class PodcastListView extends Component {
                 <ListView
                     data={groupedData}
                     renderRow={this.renderRow}
+                    
+                    
                 />
             </Screen>
         );

@@ -103,6 +103,7 @@ class PodCastPlayer extends Component {
   }
 
   onTouchPlayer(){
+    console.log("hey")
     if(this.state.canScrollUp){
       Animated.spring(this.animation.y, {
         toValue:30,
@@ -205,13 +206,15 @@ class PodCastPlayer extends Component {
                     </Animated.View> 
 
                   </Animated.View>
-                  
-                  <Animated.Text onPress={() => this.onTouchPlayer()} style={{ opacity: animatedSongTitleOpacity, fontSize: 18, paddingLeft: 10 }}>{this.props.podcast.name}</Animated.Text>
-                  <Animated.View style={{ opacity: animatedSongTitleOpacity, flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
+
+                  <View style={{ flexDirection:'row', justifyContent:'space-between', alignItems:'center', width:'70%'}}> 
+                  <Animated.Text onPress={() => this.onTouchPlayer()} style={{ opacity: animatedSongTitleOpacity, fontSize: 12,fontWeight:'bold' ,paddingLeft: 10, width:'80%' }}>{this.props.podcast.name}</Animated.Text>
+                  <Animated.View style={{ opacity: animatedSongTitleOpacity}}>
                       {this.state.isPlaying ? 
                           <Icon containerStyle={styles.pauseBottomIconStyle} name="controller-paus" type="entypo" size={20} onPress={()=> this._onPaus()} /> : 
                           <Icon  containerStyle={styles.playBottomIconStyle} name="play" type="feather" size={20} onPress={()=> this._onPlay()} />}
                   </Animated.View>
+                  </View>  
 
               </Animated.View>
 
@@ -227,6 +230,7 @@ class PodCastPlayer extends Component {
               <CircularPlayer 
                   podcast={this.props.podcast}
                   shouldSetTime={!this.state.canScrollUp} 
+                  onMinimize={() => this.onTouchPlayer()}
                   setCurrentTime={this.props.actions.setCurrentTime} />
                 </View>
 

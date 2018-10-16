@@ -19,9 +19,9 @@ class PodcastChooseView extends Component {
     componentDidMount(){
         const { episodes } = this.props.podcast
         let ref = firebase.firestore().collection('podcasts').doc(this.props.podcast.id)
-        ref.update({
-            episodes: episodes
-        })
+        // ref.update({
+        //     episodes: episodes
+        // })
         let tracks = []
         for(let i in episodes){
             let episode = episodes[i]

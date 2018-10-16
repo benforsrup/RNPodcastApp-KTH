@@ -128,11 +128,12 @@ class ProgressBar extends ProgressComponent {
                     <Image resizeMode={'cover'} source={require('../../../assets/Circular_Bars-hires.png')} style={{flex: 1, width:300, height: 150}} />
                 </View>
                 <View style={{width: SCREEN_WIDTH-150, height:130, position:'absolute', top:90, left:30,zIndex:10}}> 
-                    <Navigation.TouchablePreview
-                        onPress={() => this.goToScreen(starredComment[0])}
-                        onPressIn={({reactTag}) => this.goToScreenPreview({reactTag}, starredComment[0])}>
+                    
 
                     {starredComment.length > 0 ?
+                    <Navigation.TouchablePreview
+                      onPress={() => this.goToScreen(starredComment[0])}
+                      onPressIn={({reactTag}) => this.goToScreenPreview({reactTag}, starredComment[0])}>
                     <View>
                       <Comment 
                           id={starredComment[0].id} 
@@ -183,23 +184,15 @@ class ProgressBar extends ProgressComponent {
                             left:30}}></View>
 
                           </View> 
+                           </Navigation.TouchablePreview> 
                           : 
                       
-                          <View style={{
-                            position:'absolute',
-                            top:30,
-                            left:80
-                          }}>
-                          <Icon
-                                iconStyle={{fontSize:40}}
-                              name='circle-with-plus'
-                              type='entypo'
-                              color='#517fa4'
-                          />
-                          <Text> Add comment!</Text>
-                          </View> }
+                          <TouchableOpacity onPress={() => this.props.onMinimize()} style={{position:'absolute', top:20, left:65 }}>
+                            <Icon iconStyle={{fontSize:40}} name='circle-with-plus' type='entypo' color='#517fa4' />
+                            <Text> Add comment!</Text>
+                          </TouchableOpacity> }
 
-                </Navigation.TouchablePreview> 
+               
 
             
 
