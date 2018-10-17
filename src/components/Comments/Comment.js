@@ -75,17 +75,16 @@ class Comment extends Component {
         const numberOfReplies = (this.props.data.replies && this.props.data.replies.length > 0) ? this.props.data.replies.length: ""
 
         return (
-            <View style={[this.props.customStyling, {paddingTop: 2, paddingBottom: 10}]}>
+            <View style={[this.props.customStyling, styles.comStyle]}>
                 <View style={styles.commentContainer}>
                     <Avatar
-                    containerStyle={{flex:0, marginRight:10}}
-                    medium
+                    small
                     rounded
                     source={{uri: this.props.data.user.image}}
                     activeOpacity={0.7} />
 
                     <View style={{flex:1, flexDirection:'column'}}>
-                        <View style={{flexDirection:'row', paddingBottom: 10, alignItems:'center'}}>
+                        <View style={{flexDirection:'row', paddingBottom: 0, alignItems:'center'}}>
                             <Text style={styles.titleStyle}> {this.props.data.user.name} </Text>
                             {/* { this.props.data.time && <Badge style={styles.timeStyle}value={this.getFormattedTime(this.props.data.time)} textStyle={{fontWeight:'bold'}} /> } */}
 
@@ -100,7 +99,7 @@ class Comment extends Component {
                <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', display:'flex'}}>
                     <View style={{flexDirection:'row', marginLeft:15}}>
                         <Icon name="thumb-up" type="materialicon" iconStyle={{fontSize:20, color: !this.state.hasUpvoted ? "black": 'green' }} onPress={() => this._upvote()}/> 
-                        <Text style={{marginRight:20}}> {this.props.data.upvotes > 0 ? this.props.data.upvotes: ""} </Text>
+                        <Text style={{marginRight:20}}> {this.props.data.upvotes ? this.props.data.upvotes: ""} </Text>
                     </View>
 
                 
@@ -111,7 +110,7 @@ class Comment extends Component {
                         </View>
                 }
                 {this.props.data.isParent && <View>
-                     <Text onPress={() => this.props.replyComment(this.props.data)}style={{marginRight:50, fontWeight:'700', fontSize:15, color:'gray'}}> Reply</Text>
+                     <Text onPress={() => this.props.replyComment(this.props.data)}style={{marginRight:50, fontWeight:'700', fontSize:15, color:'black'}}> Reply</Text>
                 </View> }
                 
                 </View>
@@ -134,11 +133,14 @@ class Comment extends Component {
 export default Comment;
 
 const styles = StyleSheet.create({
+    comStyle:{
+        paddingBottom: 10
+    },
     commentContainer :{  
       display:'flex',
-      paddingLeft:20,
-      paddingTop:10,
-      paddingBottom:20,
+      paddingLeft:10,
+      paddingTop:7,
+      paddingBottom:7,
       flexDirection:'row',  
     },
     previewCommentContainer :{  
@@ -149,7 +151,7 @@ const styles = StyleSheet.create({
         flexDirection:'row',  
       },
     titleStyle:{
-        backgroundColor:'white',
+       
         fontWeight:'bold',
         fontSize:15,
         marginLeft: 10,
@@ -162,6 +164,6 @@ const styles = StyleSheet.create({
     },
     commentStyle:{
         marginTop:5,
-        marginBottom:5
+        marginLeft: 10
     }
   });

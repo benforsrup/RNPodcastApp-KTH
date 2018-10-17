@@ -73,7 +73,7 @@ class HomeScreen extends Component {
                     <PodCastPlayer 
                     onTogglePlayback={() => this.togglePlayback()}
                     podcast={this.props.podcast} />
-                    <Comments podcast={this.props.podcast} styling={{marginTop:0, height: SCREEN_HEIGHT - 110}} />
+                    <Comments podcast={this.props.podcast} styling={{height: SCREEN_HEIGHT - 110}} />
                 </View>
         );
     }

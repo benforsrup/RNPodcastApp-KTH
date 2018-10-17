@@ -32,6 +32,6 @@ const styles = StyleSheet.create({
 		borderBottomRightRadius: 0,
 		borderTopLeftRadius: 20,
 		borderTopRightRadius: 20,
-       backgroundColor:'gray'
+      
     }
 });

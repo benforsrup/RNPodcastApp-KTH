@@ -101,6 +101,14 @@ class ProgressBar extends ProgressComponent {
           }
       })
     }
+  compareUpvotes(a,b) {
+    if (a.upvotes < b.upvotes)
+        return -1;
+    if (a.upvotes > b.upvotes)
+      return 1;
+    return 0;
+  }
+    
 
   render() {    
     const {commentList} = this.props
@@ -117,6 +125,8 @@ class ProgressBar extends ProgressComponent {
       }
       return parent_comment
   }).filter((comment) => comment.isParent).filter(comment =>   Math.abs(this.state.position - comment.time)<30)
+  .sort(this.compareUpvotes)
+  .reverse()
     return (
         <View >
             <View style={{justifyContent: 'center', flexDirection:'row', marginBottom:20, marginTop:20}}>

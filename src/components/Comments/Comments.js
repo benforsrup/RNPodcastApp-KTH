@@ -51,6 +51,7 @@ class Comments extends Component {
             isParent: true,
             hasReplies: false,
             showReply: false,
+            upvotes: 0,
             podcastid: this.props.podcast.id
         }
         this.props.actions.requestAddComment(comment)
@@ -86,6 +87,7 @@ class Comments extends Component {
             }, 
             isParent: false,
             parentId: id,
+            upvotes: 0,
             podcastid: this.props.podcast.id
         }
         this.props.actions.requestAddComment(reply)
@@ -118,8 +120,20 @@ class Comments extends Component {
       }
 
     _renderItem = ({item, index}) => { 
+        const customStyling = item.isParent ? 
+            {
+                width: SCREEN_WIDTH-16,
+                marginLeft: 8,
+                marginRight: 8,
+                
+                backgroundColor: "#E6EDF4"
+            } : 
+            {  
+                marginTop:2,
+                width:SCREEN_WIDTH - 30
+            }
         return(
-        <TouchableOpacity onPress={()=> this.goToCommentScreen(item)} activeOpacity={0.9}>
+        <TouchableOpacity onPress={()=> this.goToCommentScreen(item)} activeOpacity={0.9} style={{marginBottom: 8}}>
             <Comment 
                 id={item.id}
                 data={item}
@@ -128,12 +142,18 @@ class Comments extends Component {
                 variant="default"
                 replyComment= {item.isParent ? this._addReply : null}
                 isPreview={false}
-                customStyling={item.isParent ? {width: SCREEN_WIDTH} : {width:SCREEN_WIDTH - 30}}
+                customStyling={customStyling}
                 onReplyClick={this.showReply} />
              {(item.hasReplies && item.showReply) && 
-             <View>
+             <View style={{
+                backgroundColor: "#E6EDF4",
+                width: SCREEN_WIDTH-16,
+                marginLeft: 8,
+                marginRight: 8,
+                 paddingBottom: 7
+             }}>
                 <FlatList 
-                style={{marginLeft:30, backgroundColor:'gray'}}
+                style={{marginLeft:30}}
                 keyExtractor={this._keyExtractor}
                 data={item.replies}
                 extraData={item.replies}
@@ -142,10 +162,12 @@ class Comments extends Component {
             </View>
             } 
             {(this.state.isReplying && item.showReply) &&
-                <View style={{flexDirection:'row', marginLeft:30, backgroundColor:'gray'}}> 
+                <View style={{flexDirection:'row', backgroundColor:'#E6EDF4', width: SCREEN_WIDTH-16,
+                marginLeft: 8,
+                marginRight: 8,}}> 
                 <Avatar
                     containerStyle={{flex:0, marginRight:10}}
-                    medium
+                    small
                     rounded
                     source={{uri:firebase.auth().currentUser.providerData[0] ? firebase.auth().currentUser.providerData[0].photoURL : ""}}
                     onPress={() => console.log("Works!")}
@@ -189,7 +211,7 @@ class Comments extends Component {
                 
                 { topComment.length > 0 ?          
                     <FlatList
-                        contentContainerStyle={{ flexGrow: 1 }}
+                        contentContainerStyle={{ flexGrow: 1}}
                         ref='_commentList'
                         keyExtractor={this._keyExtractor}
                         data={topComment}

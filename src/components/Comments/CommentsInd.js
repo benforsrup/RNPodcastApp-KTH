@@ -53,10 +53,12 @@ class CommentsInd extends Component {
             this.props.actions.toggleReply(item.id)
             this.setState({isReplying:true})
 
-        }
-        
-            
+        }       
     }
+    _upvoteComment = (id, inc) => {
+        this.props.actions.requestUpvote(id, inc)
+    }
+
     addReply = (id) => {
         console.log(id)
         const reply ={
@@ -67,6 +69,7 @@ class CommentsInd extends Component {
             }, 
             isParent: false,
             parentId: id,
+            upvotes: 0,
             podcastid: this.props.podcast.id
         }
         this.props.actions.requestAddComment(reply)
@@ -77,22 +80,40 @@ class CommentsInd extends Component {
 
  
     _renderItems = ({item, index}) => { 
+        const customStyling = item.isParent ? 
+        {
+            width: SCREEN_WIDTH-16,
+            marginLeft: 8,
+            marginRight: 8,
+            backgroundColor: "#E6EDF4"
+        } : 
+        {  
+            marginTop:2,
+            width:SCREEN_WIDTH - 30
+        }
         return(
         <View>
             <Comment 
                 id={item.id}
                 data={item}
                 index={index}
+                onUpvote={this._upvoteComment}
                 variant="default"
                 replyComment= {item.isParent ? this._addReply : null}
                 isPreview={false}
-                customStyling={item.isParent ? {width: SCREEN_WIDTH} : {width:SCREEN_WIDTH - 30}}
+                customStyling={customStyling}
                 onReplyClick={this.showReply}
             />
             {item.hasReplies && 
-             <View>
+             <View style={{
+                backgroundColor: "#E6EDF4",
+                width: SCREEN_WIDTH-16,
+                marginLeft: 8,
+                marginRight: 8,
+                 paddingBottom: 7
+             }}>
                 <FlatList 
-                style={{marginLeft:30, backgroundColor:'gray'}}
+                style={{marginLeft:30}}
                 keyExtractor={this._keyExtractor}
                 data={item.replies}
                 extraData={item.replies}
@@ -101,7 +122,7 @@ class CommentsInd extends Component {
             </View>
             } 
             {(this.state.isReplying && item.showReply) &&
-                <View style={{flexDirection:'row', marginLeft:30, backgroundColor:'gray'}}> 
+                <View style={{flexDirection:'row'}}> 
                 <Avatar
                     containerStyle={{flex:0, marginRight:10}}
                     medium
@@ -158,12 +179,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(CommentsInd);
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      alignItems: 'center',
-      backgroundColor:'rgba(220,220,220, 0.5)'
+      alignItems: 'center'
     },
     commentContainer :{
       width:SCREEN_WIDTH,
-      height:SCREEN_HEIGHT-80,
+      height:SCREEN_HEIGHT,
       zIndex:-1  
     },
     plusButton: {
