@@ -102,7 +102,6 @@ export const fetchStations = async () => {
 
 export const addComment = async (comment) => {
 	let commentRef = firebase.firestore().collection('comments')
-	let res={}
 	try{
 		const response = await commentRef.add(comment)
 		commentRef.doc(response.id).update({id:response.id})
@@ -112,6 +111,28 @@ export const addComment = async (comment) => {
 	} catch(e){
 		console.log(e)
 	}
+}
+
+export const upvote = async(id,inc) => {
+	let commentRef = firebase.firestore().collection('comments').doc(id)
+	let numberOfUpvotes;
+	commentRef.get().then((doc) => {
+		let data = doc.data()
+		//let upvotes = data.hasOwnProperty("upvotes") ? (data.upvotes + inc): 0
+		let upvotes = 0
+		if(data.hasOwnProperty("upvotes")){
+			if(data.upvotes + inc > 0){
+				upvotes = data.upvotes + inc
+			}
+			
+		}
+		numberOfUpvotes = upvotes 
+		commentRef.update({
+			upvotes: numberOfUpvotes
+		})
+	})
+	
+	//console.log(commentRef)
 }
 
 export const fetchPodcasts = async (id) => {

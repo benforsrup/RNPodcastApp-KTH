@@ -113,6 +113,9 @@ class Comments extends Component {
             }
         })
       }
+      _upvoteComment = (id, inc) => {
+          this.props.actions.requestUpvote(id, inc)
+      }
 
     _renderItem = ({item, index}) => { 
         return(
@@ -121,6 +124,7 @@ class Comments extends Component {
                 id={item.id}
                 data={item}
                 index={index}
+                onUpvote={this._upvoteComment}
                 variant="default"
                 replyComment= {item.isParent ? this._addReply : null}
                 isPreview={false}
@@ -238,13 +242,12 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor:'rgba(220,220,220, 0.5)'
+      justifyContent: 'center'
     },
     commentContainer :{
       width:SCREEN_WIDTH,
-      height:SCREEN_HEIGHT-80,
-      zIndex:-1  
+      height:SCREEN_HEIGHT,
+      zIndex:-1 
     },
     plusButton: {
         textAlign:'right',

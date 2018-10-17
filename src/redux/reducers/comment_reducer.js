@@ -1,11 +1,9 @@
 import { ADD_COMMENT,
    DELETE_COMMENT, 
-   GET_COMMENTS, 
-   GET_TOP_COMMENT, 
-   TOGGLE_HAS_REPLIES,
    RECEIVED_COMMENTS_BY_PODCAST,
    RECEIVED_NEW_COMMENT,
-   TOGGLE_REPLY} from '../constants/ActionTypes'
+   TOGGLE_REPLY,
+   RECEIVED_UPVOTE} from '../constants/ActionTypes'
 
 const initialState = [
     {
@@ -47,6 +45,17 @@ export default function comments(state =[], action) {
       return state.filter(comment =>
         comment.id !== comment.id
       )
+    case RECEIVED_UPVOTE:
+      return state.map(comment => {
+        if (comment.id !== action.id) {
+          return comment;
+        }
+        return {
+          ...comment,
+          upvotes: comment.upvotes + action.inc
+        };
+      })
+     
     case TOGGLE_REPLY:
       return state.map(comment => {
         if (comment.id !== action.id) {

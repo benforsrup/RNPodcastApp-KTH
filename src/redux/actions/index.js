@@ -12,13 +12,16 @@ export const setCurrentTime = time => ({type:types.SET_CURRENT_TIME, time})
 //* ------- REQUEST ACTIONS --------*//
 export const requestCommentByPodcast = podcastid => ({type: types.REQUEST_COMMENTS_BY_PODCAST, podcastid})
 export const requestAddComment = (comment) => ({type:types.REQUEST_ADD_COMMENT, comment})
-
+export const requestUpvote = (id, inc) => ({type:types.REQUEST_UPVOTE, payload:{
+    id,
+    inc
+}})
 
 //* ------- RECEIVED ACTIONS --------*//
 export const receivedCommentsByPodcast = (comments) => ({type:types.RECEIVED_COMMENTS_BY_PODCAST, comments})
 export const receivedCommentsByPodcastError = (error) => ({type:types.RECEIVED_COMMENTS_BY_PODCAST_ERROR, error})
 export const receivedNewComment = (comment) => ({type:types.RECEIVED_NEW_COMMENT, comment})
-
+export const receivedUpvote = (id, inc) => ({type:types.RECEIVED_UPVOTE, id, inc})
 
 
 

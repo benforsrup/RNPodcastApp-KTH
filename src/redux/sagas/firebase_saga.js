@@ -30,10 +30,22 @@ function* addCommentToPodcast(data){
   }
 }
 
+function* addUpvote(data){
+  console.log(data)
+  let id = data.payload.id
+  let inc = data.payload.inc
+  yield call(api.upvote, id, inc)
+  yield put(actions.receivedUpvote(id, inc))
+}
+
 export function* watchPodcastSaga() {
   yield takeLatest(types.REQUEST_COMMENTS_BY_PODCAST, getCommentsByPodcast);
 }
 export function* watchAddCommentSaga() {
   yield takeLatest(types.REQUEST_ADD_COMMENT, addCommentToPodcast);
+}
+
+export function* watchAddUpvote() {
+  yield takeLatest(types.REQUEST_UPVOTE, addUpvote);
 }
 

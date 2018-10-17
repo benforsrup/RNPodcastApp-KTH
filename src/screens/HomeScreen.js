@@ -5,7 +5,8 @@ import {
     StyleSheet,
     Button, 
     Dimensions,
-    SafeAreaView
+    SafeAreaView,
+    StatusBar,
 } from "react-native";
 
 import Comments from '../components/Comments/Comments'
@@ -30,7 +31,7 @@ class HomeScreen extends Component {
         }
     }
 
-    componentDidMount(){
+    async componentDidMount(){
         Navigation.mergeOptions(this.props.componentId,{
             statusBar:{
                 visible:false
@@ -38,6 +39,17 @@ class HomeScreen extends Component {
         })
         this.props.actions.requestCommentByPodcast(this.props.podcast.id)
         
+        const state = await TrackPlayer.getState()
+        const currentTrack = await TrackPlayer.getCurrentTrack()
+        console.log(currentTrack, this.props.podcast.id, state)
+        if(state == 'playing' && currentTrack != this.props.podcast.id && currentTrack != undefined)
+        {
+            console.log("should reset")
+            //TrackPlayer.reset()
+        }
+        // if( currentTrack && (currentTrack != this.props.podcast.id)){
+        //     TrackPlayer.reset()
+        // }
         // TrackPlayer.setupPlayer().then(async () => {
         //     TrackPlayer.add(this.track).then(() => {
         //     });
@@ -57,10 +69,11 @@ class HomeScreen extends Component {
     render() {
         return (
                 <View >
+                    <StatusBar hidden />
                     <PodCastPlayer 
                     onTogglePlayback={() => this.togglePlayback()}
                     podcast={this.props.podcast} />
-                    <Comments podcast={this.props.podcast} styling={{marginTop:25, height: SCREEN_HEIGHT - 126, marginBottom:30}} />
+                    <Comments podcast={this.props.podcast} styling={{marginTop:0, height: SCREEN_HEIGHT - 110}} />
                 </View>
         );
     }

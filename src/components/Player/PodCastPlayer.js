@@ -56,7 +56,7 @@ class PodCastPlayer extends Component {
     this.setState({hasLoaded:true})
 
     this.scrollOffset = 0
-    this.animation = new Animated.ValueXY({ x: 0, y:  30 })
+    this.animation = new Animated.ValueXY({ x: 0, y:  5 })
   }
 
   _onPaus(){
@@ -106,7 +106,7 @@ class PodCastPlayer extends Component {
     console.log("hey")
     if(this.state.canScrollUp){
       Animated.spring(this.animation.y, {
-        toValue:30,
+        toValue:5,
         tension:1
       }).start()
       this.setState({canScrollUp:false})
@@ -129,38 +129,38 @@ class PodCastPlayer extends Component {
     }
 
     animatedImageHeight = this.animation.y.interpolate({
-      inputRange: [0, SCREEN_HEIGHT - 30],
+      inputRange: [0, SCREEN_HEIGHT - 5],
       outputRange: [135, 37],
       extrapolate: "clamp"
     })
     animatedSongTitleOpacity = this.animation.y.interpolate({
-      inputRange: [0, SCREEN_HEIGHT - 500, SCREEN_HEIGHT - 30],
+      inputRange: [0, SCREEN_HEIGHT - 500, SCREEN_HEIGHT - 5],
       outputRange: [0, 0, 1],
       extrapolate: "clamp"
     })
     animatedImageMarginLeft = this.animation.y.interpolate({
-      inputRange: [0, SCREEN_HEIGHT - 30],
+      inputRange: [0, SCREEN_HEIGHT - 5],
       outputRange: [0, 10],
       extrapolate: "clamp"
     })
     animatedHeaderHeight = this.animation.y.interpolate({
-      inputRange: [0, SCREEN_HEIGHT - 30],
+      inputRange: [0, SCREEN_HEIGHT - 5],
       outputRange: [150, 90],
       extrapolate: "clamp"
     })
     animatedSongDetailsOpacity = this.animation.y.interpolate({
-      inputRange: [0, SCREEN_HEIGHT-220, SCREEN_HEIGHT - 30],
+      inputRange: [0, SCREEN_HEIGHT-220, SCREEN_HEIGHT - 5],
       outputRange: [1, 0, 0],
       extrapolate: "clamp"
     })
     animatedBackgroundColor = this.animation.y.interpolate({
-      inputRange: [0, SCREEN_HEIGHT - 30],
+      inputRange: [0, SCREEN_HEIGHT - 5],
       outputRange: ['white', 'gray'],
       extrapolate: "clamp"
     })
     animatedImageWidth = this.animation.y.interpolate({
       inputRange:[0, SCREEN_HEIGHT ],
-      outputRange:[SCREEN_WIDTH+16, 20],
+      outputRange:[SCREEN_WIDTH+2, 20],
       extrapolate:"clamp"
     })
     animatedBottomTimelineHeight = this.animation.y.interpolate({
@@ -175,7 +175,7 @@ class PodCastPlayer extends Component {
       extrapolate:"clamp"
     })
     animatedBlurRadius = this.animation.y.interpolate({
-      inputRange:[0, SCREEN_HEIGHT-30],
+      inputRange:[0, SCREEN_HEIGHT-5],
       outputRange:[10, 0],
       extrapolate:"clamp"
     })

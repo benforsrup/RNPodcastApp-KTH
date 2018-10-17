@@ -12,16 +12,32 @@ import { Avatar, Badge, Icon } from 'react-native-elements'
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
 
-class Comments extends Component {
+class Comment extends Component {
 
-
+    constructor(props){
+        super(props)
+        this.state={
+            hasUpvoted:false
+        }
+    }
     getFormattedTime(seconds){
         return moment("2015-01-01").startOf('day').seconds(seconds).format('H:mm:ss');
       }
 
-      showReply = () => {
-          this.props.onReplyClick(this.props.data.id)
-      }
+    showReply = () => {
+        this.props.onReplyClick(this.props.data.id)
+    }
+
+    _upvote = () => {
+        if(this.state.hasUpvoted){
+            this.props.onUpvote(this.props.data.id, -1)
+            this.setState({hasUpvoted: false})
+        }
+        else{
+            this.props.onUpvote(this.props.data.id, 1)
+            this.setState({hasUpvoted: true})
+        }
+    }
 
     renderPreviewVariant = () => {
 
@@ -59,7 +75,7 @@ class Comments extends Component {
         const numberOfReplies = (this.props.data.replies && this.props.data.replies.length > 0) ? this.props.data.replies.length: ""
 
         return (
-            <View style={[this.props.customStyling, {paddingTop: 10, paddingBottom: 10}]}>
+            <View style={[this.props.customStyling, {paddingTop: 2, paddingBottom: 10}]}>
                 <View style={styles.commentContainer}>
                     <Avatar
                     containerStyle={{flex:0, marginRight:10}}
@@ -83,9 +99,8 @@ class Comments extends Component {
 
                <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', display:'flex'}}>
                     <View style={{flexDirection:'row', marginLeft:15}}>
-                        <Icon name="thumb-up" type="materialicon" iconStyle={{fontSize:20}} /> 
-                        <Text style={{marginRight:20}}> 10 </Text>
-                        <Icon name="thumb-down" type="materialicon" iconStyle={{fontSize:20}} /> 
+                        <Icon name="thumb-up" type="materialicon" iconStyle={{fontSize:20, color: !this.state.hasUpvoted ? "black": 'green' }} onPress={() => this._upvote()}/> 
+                        <Text style={{marginRight:20}}> {this.props.data.upvotes > 0 ? this.props.data.upvotes: ""} </Text>
                     </View>
 
                 
@@ -116,7 +131,7 @@ class Comments extends Component {
         );
     }
 }
-export default Comments;
+export default Comment;
 
 const styles = StyleSheet.create({
     commentContainer :{  
