@@ -17,11 +17,20 @@ class PodcastChooseView extends Component {
     }
 
     async componentDidMount(){
-        const { episodes } = this.props.podcast
         let ref = firebase.firestore().collection('podcasts').doc(this.props.podcast.id)
         // ref.update({
         //     episodes: episodes
         // })
+        
+        TrackPlayer.setupPlayer()
+        TrackPlayer.updateOptions({
+            capabilities: [TrackPlayer.CAPABILITY_PLAY,TrackPlayer.CAPABILITY_PAUSE]
+        });  
+        this.addTracks()      
+    }
+
+    addTracks = () =>{
+        const { episodes } = this.props.podcast
         let tracks = []
         for(let i in episodes){
             let episode = episodes[i]
@@ -33,23 +42,18 @@ class PodcastChooseView extends Component {
             }     
             tracks.push(track)
         }
-        TrackPlayer.setupPlayer().then(async () => {
-            TrackPlayer.add(tracks).then(() => {
-            });
-        });
-
-        TrackPlayer.updateOptions({
-            capabilities: [TrackPlayer.CAPABILITY_PLAY,TrackPlayer.CAPABILITY_PAUSE]
-        });        
+        TrackPlayer.add(tracks)
     }
-
    
 
     _gotoPodcast = async(podcast) => {
         podcast.image = this.props.podcast.image
         const state = await TrackPlayer.getState()
         const currentTrack = await TrackPlayer.getCurrentTrack()
-       
+        if(state == 'playing' && currentTrack != this.props.podcast.id && currentTrack != undefined){
+            TrackPlayer.reset()
+            this.addTracks()
+        }
 
        await Navigation.push(this.props.componentId, {
             component:{
