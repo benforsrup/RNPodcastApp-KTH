@@ -14,9 +14,11 @@ import firebase from 'react-native-firebase'
 class PodcastChooseView extends Component {
     constructor(props){
         super(props)
+        Navigation.events().bindComponent(this);
+
     }
 
-    async componentDidMount(){
+    componentDidMount(){
         let ref = firebase.firestore().collection('podcasts').doc(this.props.podcast.id)
         // ref.update({
         //     episodes: episodes
@@ -29,9 +31,28 @@ class PodcastChooseView extends Component {
         this.addTracks()      
     }
 
+    async componentDidAppear() {
+        const currentTrack = await TrackPlayer.getCurrentTrack()
+        const { episodes } = this.props.podcast
+        let exists = false
+        for(let i in episodes){
+            let episode = episodes[i]
+            if (currentTrack == episode.id){
+                console.log("already exists in track")
+                exists = true
+            }
+            
+        }
+        if(!exists){
+            this.addTracks()
+        }
+    }
+
+ 
+
     addTracks = () =>{
         const { episodes } = this.props.podcast
-        let tracks = []
+        this.tracks = []
         for(let i in episodes){
             let episode = episodes[i]
             let track = {
@@ -40,9 +61,9 @@ class PodcastChooseView extends Component {
                 title: episode.name,
                 artist: this.props.podcast.name
             }     
-            tracks.push(track)
+            this.tracks.push(track)
         }
-        TrackPlayer.add(tracks)
+        TrackPlayer.add(this.tracks)
     }
    
 
@@ -50,9 +71,13 @@ class PodcastChooseView extends Component {
         podcast.image = this.props.podcast.image
         const state = await TrackPlayer.getState()
         const currentTrack = await TrackPlayer.getCurrentTrack()
-        if(state == 'playing' && currentTrack != this.props.podcast.id && currentTrack != undefined){
-            TrackPlayer.reset()
-            this.addTracks()
+        // if(state == 'playing' || state=='paused' && currentTrack != this.props.podcast.id && currentTrack != undefined){
+            
+        //     TrackPlayer.skip(podcast.id)
+        //     TrackPlayer.stop()
+        // }
+        if(currentTrack != podcast.id){
+            TrackPlayer.skip(podcast.id)
         }
 
        await Navigation.push(this.props.componentId, {
