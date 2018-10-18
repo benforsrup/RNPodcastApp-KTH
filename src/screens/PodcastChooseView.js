@@ -78,6 +78,7 @@ class PodcastChooseView extends Component {
         // }
         if(currentTrack != podcast.id){
             TrackPlayer.skip(podcast.id)
+            TrackPlayer.stop()
         }
 
        await Navigation.push(this.props.componentId, {
