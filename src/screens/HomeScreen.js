@@ -22,15 +22,8 @@ import {Navigation} from 'react-native-navigation'
 class HomeScreen extends Component {
     constructor(props){
         super(props)
-
-        this.track ={
-            id:(this.props.podcast.id).toString(),
-            url: this.props.podcast.mp3,
-            title: this.props.podcast.name,
-            artist: this.props.podcast.name
-        }
     }
-
+    
     async componentDidMount(){
         Navigation.mergeOptions(this.props.componentId,{
             statusBar:{
@@ -47,34 +40,22 @@ class HomeScreen extends Component {
             console.log("should reset")
             //TrackPlayer.reset()
         }
-        // if( currentTrack && (currentTrack != this.props.podcast.id)){
-        //     TrackPlayer.reset()
-        // }
-        // TrackPlayer.setupPlayer().then(async () => {
-        //     TrackPlayer.add(this.track).then(() => {
-        //     });
-        // });
-    
-        // TrackPlayer.updateOptions({
-        //     capabilities: [TrackPlayer.CAPABILITY_PLAY,TrackPlayer.CAPABILITY_PAUSE]
-        // });
-        
-
     
     }
+    
 
  
 
 
     render() {
         return (
-                <View >
+                <SafeAreaView >
                     <StatusBar hidden />
-                    <PodCastPlayer 
+                    <PodCastPlayer
                     onTogglePlayback={() => this.togglePlayback()}
                     podcast={this.props.podcast} />
-                    <Comments podcast={this.props.podcast} styling={{height: SCREEN_HEIGHT - 110}} />
-                </View>
+                    <Comments podcast={this.props.podcast} styling={{height: SCREEN_HEIGHT - 160}} />
+                </SafeAreaView>
         );
     }
 }

@@ -6,6 +6,8 @@ import {
   StyleSheet,
   TouchableOpacity
 } from "react-native";
+import DeviceInfo from 'react-native-device-info';
+
 import { ListItem, List, Flatlist, Icon } from "react-native-elements";
 import { Screen, NavigationBar, Image, Title, ListView,ScrollView } from '@shoutem/ui'
 import { Navigation } from 'react-native-navigation'
@@ -15,6 +17,7 @@ class PodcastChooseView extends Component {
     constructor(props){
         super(props)
         Navigation.events().bindComponent(this);
+        this.device = DeviceInfo.getDeviceId()
 
     }
 
@@ -44,6 +47,7 @@ class PodcastChooseView extends Component {
             
         }
         if(!exists){
+            TrackPlayer.reset()
             this.addTracks()
         }
     }
@@ -124,9 +128,19 @@ class PodcastChooseView extends Component {
 
     render() {
         const episodes = this.props.podcast.episodes
+        const isIphoneX = this.device == 'iPhone10,6'
+
         return (
             <Screen>     
                 <NavigationBar
+                style={{container:{
+                         
+                    height:isIphoneX ? 90 : 70
+                },
+                componentsContainer:{
+                    paddingTop:isIphoneX ? 20 : 0
+                }
+              }}
                   styleName="inline no-border"
                 leftComponent={<Icon onPress={this.pushBack} iconStyle={{marginLeft:10}} name='keyboard-backspace' type='materialicons' />}
                 centerComponent={<Title>Podcasts</Title>}

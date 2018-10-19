@@ -4,7 +4,7 @@ export default podcasts =
     {
         "name": "Framgångspodden",
         "id": "3m8Mh2c9ZYnSBBar0qDL",
-        "image": { "url": "/Users/benforsrup/Documents/Webdev/ReactNative/RNPodcastApp/src/assets/framgang.png" },
+        "image": { "url": "https://brapodcast.se/cache/img/985517492.png" },
         "mp3":"https://ads-e-bauerse-pods.sharp-stream.com/499/titti_schultz_original_0026b3ac_normal.mp3",
         "episodes":[
             {
@@ -22,7 +22,7 @@ export default podcasts =
     {
         "name": "Bank & Frändén",
         "id": "L8HQJg6hc2aMbQqBCiIc",
-        "image": { "url": "/Users/benforsrup/Documents/Webdev/ReactNative/RNPodcastApp/src/assets/bank.png" },
+        "image": { "url": "https://brapodcast.se/cache/img/1437126715.png" },
         "mp3": "https://media.acast.com/bankochfranden/-1-hornyteenspornfootballpod/media.mp3",
         'episodes':[
             {
@@ -45,7 +45,7 @@ export default podcasts =
     {
         "name": "P3 Dokumentär",
         "id": "ZKoH8HcoYGCDWxXFwy30",
-        "image": { "url": "/Users/benforsrup/Documents/Webdev/ReactNative/RNPodcastApp/src/assets/p3.png" },
+        "image": { "url": "https://brapodcast.se/cache/img/308339623.png" },
         "mp3": "https://sverigesradio.se/topsy/ljudfil/itunes/6650863.mp3",
         'episodes':[
             {
@@ -58,7 +58,7 @@ export default podcasts =
     {
         "name": "Mordpodden",
         "id": "9882l8rBy1t8Yx4oWb7i",
-        "image": { "url": "/Users/benforsrup/Documents/Webdev/ReactNative/RNPodcastApp/src/assets/mordpodden.png" },
+        "image": { "url": "https://brapodcast.se/cache/img/1107993389.png" },
         "mp3": "https://ads-e-bauerse-pods.sharp-stream.com/441/s07e03_dodsskjutningen_3f21a015_normal.mp3",
         'episodes':[
             {

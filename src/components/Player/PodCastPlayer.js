@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import { Icon, Slider } from 'react-native-elements'
 import moment from 'moment'
-import Comment from '../Comments/Comment'
 import * as actions from "../../redux/actions";
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
@@ -19,19 +18,8 @@ import { Spinner } from '@shoutem/ui'
 import TrackPlayer from 'react-native-track-player';
 import CircularPlayer from './ProgressPlayer/CircularPlayer'
 import BottomPlayer from './ProgressPlayer/BottomPlayer'
-
-import firebase from 'react-native-firebase'
-
-
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
-
- function getFormattedTime(seconds){
-  return moment("2015-01-01").startOf('day').seconds(seconds).format('H:mm:ss');
-}
-function geFormattedDuration(duration){
-  return moment("2015-01-01").startOf('day').seconds(duration).format('H:mm:ss');
-}
 
 
 class PodCastPlayer extends Component {
@@ -49,14 +37,22 @@ class PodCastPlayer extends Component {
     }
   }
 
-  
+ 
 
   componentWillMount() {
-   
+  //  if(currentState==="playing"){
+  //     this.setState({isPlaying:true})
+  //  }
     this.setState({hasLoaded:true})
-
     this.scrollOffset = 0
     this.animation = new Animated.ValueXY({ x: 0, y:  5 })
+  }
+  async componentDidMount(){
+    const currentState = await TrackPlayer.getState()
+    console.log(currentState)
+    if(currentState === 'playing'){
+      this.setState({isPlaying: true})
+    }
   }
 
   _onPaus(){
@@ -106,14 +102,14 @@ class PodCastPlayer extends Component {
     console.log("hey")
     if(this.state.canScrollUp){
       Animated.spring(this.animation.y, {
-        toValue:5,
+        toValue:0,
         tension:1
       }).start()
       this.setState({canScrollUp:false})
     }
     else{
       Animated.spring(this.animation.y, {
-        toValue:SCREEN_HEIGHT-100,
+        toValue:SCREEN_HEIGHT-160,
         tension:1
       }).start()
       this.setState({canScrollUp:true})

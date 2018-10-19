@@ -65,16 +65,19 @@ class Comments extends Component {
         this.props.actions.toggleReply(index)
     }
     _addReply = (item) => {
-        console.log(item)
         //if already open
-        if(item.showReply){
+        if(item.showReply && !item.hasReplies){
+            this.setState({isReplying:false})
+        }
+        else if(item.showReply && item.hasReplies){
             this.setState({isReplying:true})
         }
         else{
-            this.props.actions.toggleReply(item.id)
             this.setState({isReplying:true})
 
-        }      
+        }
+        this.props.actions.toggleReply(item.id)
+   
             
     }
     addReply = (id) => {
@@ -207,7 +210,23 @@ class Comments extends Component {
 
         return (
             <View style={[styles.commentContainer, this.props.styling]}>
+            <View style={styles.inputStyle}>
+                    <Avatar
+                        containerStyle={{flex:0, marginRight:10, marginLeft: 20}}
+                        small
+                        rounded
+                        source={{uri: userProfile}}
+                        
+                        activeOpacity={0.7} />
+                    <TextInput placeholder={'Add a comment'} value={this.state.comment} 
+                    ref='_textInput'
+                    autoCorrect={false}
+                    style={{flex:1}}
+                    onSubmitEditing={this.addComment}
+                    onChangeText={(comment) => this.setState({comment})} />
+                </View>
                 <View style={styles.container}>
+                    
                 
                 { topComment.length > 0 ?          
                     <FlatList
@@ -224,21 +243,7 @@ class Comments extends Component {
                   </View>
               }
                 </View> 
-                <View style={{flexDirection:'row', marginLeft:20}}>
-            <Avatar
-                containerStyle={{flex:0, marginRight:10}}
-                medium
-                rounded
-                source={{uri: userProfile}}
-                onPress={() => console.log("Works!")}
-                activeOpacity={0.7} />
-            <TextInput placeholder={'Add a comment'} value={this.state.comment} 
-            ref='_textInput'
-            autoCorrect={false}
-            style={{flex:1}}
-            onSubmitEditing={this.addComment}
-            onChangeText={(comment) => this.setState({comment})} />
-            </View>
+            
             
                 
             </View> 
@@ -275,5 +280,23 @@ const styles = StyleSheet.create({
         textAlign:'right',
         marginRight:10,
         marginBottom:10
+    },
+    inputStyle:{
+        flexDirection:'row', 
+        borderWidth: 0.5,
+        borderColor: "#B9D8E5", 
+        marginBottom: 10, 
+        paddingTop: 15, 
+        backgroundColor:"#F4F6F7",
+        paddingBottom: 15,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.20,
+        shadowRadius: 1.41,
+
+        elevation: 2,
     }
   });
