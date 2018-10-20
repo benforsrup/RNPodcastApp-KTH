@@ -47,7 +47,7 @@ class CircularSlider extends Component {
         <Circle cx={cx} cy={cy} r={r} stroke='#eee' strokeWidth={5} fill='none'/>
 
         <Path stroke={meterColor} strokeWidth={5} fill='none'
-          d={`M${startCoord.x} ${startCoord.y} A ${r} ${r} 0 ${value>180?1:0} 1 ${endCoord.x} ${endCoord.y}`}/>
+          d={`M${startCoord.x} ${startCoord.y} A ${r} ${r} 0 ${value>360?1:0} 1 ${endCoord.x} ${endCoord.y}`}/>
         <G x={endCoord.x-7.5} y={endCoord.y-7.5}>
           <Circle cx={7.5} cy={7.5} r={10} fill={meterColor} {...this._panResponder.panHandlers}/>
         </G>

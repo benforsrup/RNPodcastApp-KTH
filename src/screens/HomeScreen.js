@@ -53,7 +53,9 @@ class HomeScreen extends Component {
                     <StatusBar hidden />
                     <PodCastPlayer
                     onTogglePlayback={() => this.togglePlayback()}
-                    podcast={this.props.podcast} />
+                    podcast={this.props.podcast}
+                    player={this.props.player} />
+                    
                     <Comments podcast={this.props.podcast} styling={{height: SCREEN_HEIGHT - 160}} />
                 </SafeAreaView>
         );

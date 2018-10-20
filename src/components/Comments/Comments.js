@@ -206,7 +206,7 @@ class Comments extends Component {
                 return parent_comment
             }
             return parent_comment
-        }).filter((comment) => comment.isParent).filter(comment =>   Math.abs(player.currentTime - comment.time)<30)
+        }).filter((comment) => comment.isParent).filter(comment =>   Math.abs(player.currentTime - comment.time)<120)
 
         return (
             <View style={[styles.commentContainer, this.props.styling]}>

@@ -101,32 +101,12 @@ class ProgressBar extends ProgressComponent {
           }
       })
     }
-  compareUpvotes(a,b) {
-    if (a.upvotes < b.upvotes)
-        return -1;
-    if (a.upvotes > b.upvotes)
-      return 1;
-    return 0;
-  }
+  
     
 
   render() {    
-    const {commentList} = this.props
-    const starredComment = commentList.map((parent_comment) => {
-      if(parent_comment.isParent){
-          let replies = commentList.filter((comment)=>{
-              return (!comment.isParent && (comment.parentId == parent_comment.id ))
-          }) 
-          if(replies.length > 0){
-              parent_comment.hasReplies = true
-          } 
-          parent_comment.replies = replies
-          return parent_comment
-      }
-      return parent_comment
-  }).filter((comment) => comment.isParent).filter(comment =>   Math.abs(this.state.position - comment.time)<30)
-  .sort(this.compareUpvotes)
-  .reverse()
+    const starredComment = this.props.comment
+    console.log(starredComment)
     return (
         <View >
             <View style={{justifyContent: 'center', flexDirection:'row', marginBottom:20, marginTop:20}}>
@@ -235,9 +215,7 @@ class CircularPlayer extends Component {
   }
 }
 
-const mapStateToProps = state => ({ 
-  commentList: state.comments,
-});
+
 
 const mapDispatchToProps = dispatch =>({
     actions: bindActionCreators( actions , dispatch)
@@ -245,7 +223,7 @@ const mapDispatchToProps = dispatch =>({
 })
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(CircularPlayer);
+export default connect(null, mapDispatchToProps)(CircularPlayer);
 
 
 

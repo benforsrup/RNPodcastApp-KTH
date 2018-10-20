@@ -116,10 +116,20 @@ class PodCastPlayer extends Component {
     }
     
   }
+  compareUpvotes(a,b) {
+    if (a.upvotes < b.upvotes)
+        return -1;
+    if (a.upvotes > b.upvotes)
+      return 1;
+    return 0;
+  }
 
 
  
   render() {
+
+    
+
     const animatedHeight = {
       transform: this.animation.getTranslateTransform()
     }
@@ -177,6 +187,22 @@ class PodCastPlayer extends Component {
     })
 
 
+    const {commentList} = this.props
+    const starredComment = commentList.map((parent_comment) => {
+      if(parent_comment.isParent){
+          let replies = commentList.filter((comment)=>{
+              return (!comment.isParent && (comment.parentId == parent_comment.id ))
+          }) 
+          if(replies.length > 0){
+              parent_comment.hasReplies = true
+          } 
+          parent_comment.replies = replies
+          return parent_comment
+      }
+      return parent_comment
+  }).filter((comment) => comment.isParent).filter(comment =>   Math.abs(this.props.player.currentTime - comment.time)<120)
+  .sort(this.compareUpvotes)
+  .reverse()
     const { podcast } = this.props
     return (
       
@@ -224,6 +250,7 @@ class PodCastPlayer extends Component {
                 <View style={{paddingBottom: 30}}>
 
               <CircularPlayer 
+                  comment={starredComment}
                   podcast={this.props.podcast}
                   shouldSetTime={!this.state.canScrollUp} 
                   onMinimize={() => this.onTouchPlayer()}
