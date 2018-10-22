@@ -86,7 +86,7 @@ class Comment extends Component {
                     <View style={{flex:1, flexDirection:'column'}}>
                         <View style={{flexDirection:'row', paddingBottom: 0, alignItems:'center'}}>
                             <Text style={styles.titleStyle}> {this.props.data.user.name} </Text>
-                            {/* { this.props.data.time && <Badge style={styles.timeStyle}value={this.getFormattedTime(this.props.data.time)} textStyle={{fontWeight:'bold'}} /> } */}
+                            { this.props.data.time && <Badge style={styles.timeStyle}value={this.getFormattedTime(this.props.data.time)} textStyle={{fontWeight:'bold'}} /> }
 
                         </View>
                     
@@ -109,7 +109,7 @@ class Comment extends Component {
                           <Icon onPress={() => this.showReply()} name="chevron-down" type="entypo" /> 
                         </View>
                 }
-                {this.props.data.isParent && <View>
+                {(this.props.data.isParent && !this.props.isInCommentScreen) && <View>
                      <Text onPress={() => this.props.replyComment(this.props.data)}style={{marginRight:50, fontWeight:'700', fontSize:15, color:'black'}}> Reply</Text>
                 </View> }
                 

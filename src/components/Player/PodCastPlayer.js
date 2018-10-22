@@ -200,7 +200,7 @@ class PodCastPlayer extends Component {
           return parent_comment
       }
       return parent_comment
-  }).filter((comment) => comment.isParent).filter(comment =>   Math.abs(this.props.player.currentTime - comment.time)<120)
+  }).filter((comment) => comment.isParent).filter(comment =>   Math.abs(this.props.player.currentTime  - comment.time)<120)
   .sort(this.compareUpvotes)
   .reverse()
     const { podcast } = this.props

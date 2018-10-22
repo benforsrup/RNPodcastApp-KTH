@@ -80,12 +80,13 @@ class CommentsInd extends Component {
             marginTop:2,
             width:SCREEN_WIDTH - 30
         }
-        item.isParent = false
+        
         return(
         <View>
             <Comment 
                 id={item.id}
                 data={item}
+                isInCommentScreen={true}
                 index={index}
                 onUpvote={this._upvoteComment}
                 variant="default"

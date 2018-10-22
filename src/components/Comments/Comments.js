@@ -196,6 +196,7 @@ class Comments extends Component {
         const userProfile = firebase.auth().currentUser.providerData[0] ? firebase.auth().currentUser.providerData[0].photoURL : ""
         const topComment = commentList.map((parent_comment) => {
             if(parent_comment.isParent){
+                console.log(parent_comment)
                 let replies = commentList.filter((comment)=>{
                     return (!comment.isParent && (comment.parentId == parent_comment.id ))
                 }) 
@@ -203,10 +204,12 @@ class Comments extends Component {
                     parent_comment.hasReplies = true
                 }
                 parent_comment.replies = replies
-                return parent_comment
+                
             }
             return parent_comment
-        }).filter((comment) => comment.isParent).filter(comment =>   Math.abs(player.currentTime - comment.time)<120)
+        }).filter((comment => comment.isParent))
+        console.log(topComment.length)
+        // }).filter((comment) => comment.isParent).filter(comment =>   Math.abs(player.currentTime - comment.time)<120)
 
         return (
             <View style={[styles.commentContainer, this.props.styling]}>
@@ -223,7 +226,7 @@ class Comments extends Component {
                     autoCorrect={false}
                     style={{flex:1}}
                     onSubmitEditing={this.addComment}
-                    onChangeText={(comment) => this.setState({comment})} />
+                    onChangeText={(text) => this.setState({comment:text})} />
                 </View>
                 <View style={styles.container}>
                     

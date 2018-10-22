@@ -101,12 +101,17 @@ class ProgressBar extends ProgressComponent {
           }
       })
     }
-  
+  compareUpvotes(a,b) {
+    if (a.upvotes < b.upvotes)
+        return -1;
+    if (a.upvotes > b.upvotes)
+      return 1;
+    return 0;
+  }
     
 
   render() {    
     const starredComment = this.props.comment
-    console.log(starredComment)
     return (
         <View >
             <View style={{justifyContent: 'center', flexDirection:'row', marginBottom:20, marginTop:20}}>

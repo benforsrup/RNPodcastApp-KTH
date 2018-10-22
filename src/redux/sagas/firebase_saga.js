@@ -21,10 +21,12 @@ function* addCommentToPodcast(data){
   let comment = data.comment
   try{
     const data = yield call(api.addComment, comment)
-    yield put(actions.receivedNewComment(data))
+    
     if(!comment.isParent){
       yield put(actions.toggleHasReply(comment.parentid))
+      
     }
+    yield put(actions.receivedNewComment(data))
   }catch(e){
     console.log(e)
   }
