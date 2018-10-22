@@ -40,6 +40,6 @@ if you have issues runnit it.
 
 If you have issues with Pod (which is unlikely but still), you need to download CocoaPod. See here: https://guides.cocoapods.org/using/getting-started.html#getting-started
 Then navigate to ios and run pod install.
-react-native run-ios
+Then finally, react-native run-ios --simulator="iPhone X"
 
 
