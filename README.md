@@ -7,6 +7,7 @@ Theme for the course was podcasts, audio books and video services.
 
 .readme Podcast app
 
+Navigate to the **development** branch for the latest stable version!
 
 ### Installation
 #### You need to have Xcode installed
