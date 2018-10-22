@@ -86,7 +86,8 @@ class Comment extends Component {
                     <View style={{flex:1, flexDirection:'column'}}>
                         <View style={{flexDirection:'row', paddingBottom: 0, alignItems:'center'}}>
                             <Text style={styles.titleStyle}> {this.props.data.user.name} </Text>
-                            { this.props.data.time && <Badge style={styles.timeStyle}value={this.getFormattedTime(this.props.data.time)} textStyle={{fontWeight:'bold'}} /> }
+                            {this.props.data.time != undefined && <Text> {this.getFormattedTime(this.props.data.time)}</Text>}
+                            {/* { this.props.data.time && <Badge style={styles.timeStyle}value={this.getFormattedTime(this.props.data.time)} textStyle={{fontWeight:'bold'}} /> } */}
 
                         </View>
                     
