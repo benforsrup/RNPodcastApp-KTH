@@ -9,7 +9,7 @@ Theme for the course was podcasts, audio books and video services.
 
 
 ### Installation
-#### You need to have either Android Studio or Xcode installed
+#### You need to have Xcode installed
 Currently there is a bug where some have problems running
 react native applications with v.057. See (the lengthy and troublesome) instructions below to fix this 
 if you have issues runnit it.
@@ -37,7 +37,8 @@ if you have issues runnit it.
 #import "AppDelegate.h"
 #import <React/RCTBundleURLProvider.h> #import <React/RCTRootView.h> #import <ReactNativeNavigation/ReactNativeNavigation.h> @implementation AppDelegate - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions { NSURL *jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil]; [ReactNativeNavigation bootstrap:jsCodeLocation launchOptions:launchOptions]; return YES; } @end
 
-Right click on RNPodcastApp (the blue one) and add the sound file you want to play (this is temporary)
+If you have issues with Pod (which is unlikely but still), you need to download CocoaPod. See here: https://guides.cocoapods.org/using/getting-started.html#getting-started
+Then navigate to ios and run pod install.
 react-native run-ios
 
 
