@@ -32,6 +32,8 @@ if you have issues runnit it.
     ~ $ react-native upgrade, 
         y to all options.
     ~ $ react-native link
+	~ $ cd ios
+	 ~ $ pod install
     ~ $ npm i
 
 	Open Xcode and replace everything in Appdelegate.m to 	

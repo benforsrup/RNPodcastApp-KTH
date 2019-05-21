@@ -1,5 +1,5 @@
 
-
+import firebase from 'react-native-firebase'
 const BASE_URL = "http://api.sl.se/api2/typeahead.json"
 
 //hardcoded for testing
@@ -76,6 +76,8 @@ const ResponseData=[
 	}
 ]
 
+
+
 export const fetchStations = async () => {
 	const url_params = BASE_URL + "?key=" + "3a8ee3ceaa10415ab72d0909968f7f1f" +  "&searchstring=" + "tek"
 	const headers = new Headers();
@@ -96,4 +98,55 @@ export const fetchStations = async () => {
 		console.log(e)
 	}
 
+}
+
+export const addComment = async (comment) => {
+	let commentRef = firebase.firestore().collection('comments')
+	try{
+		const response = await commentRef.add(comment)
+		commentRef.doc(response.id).update({id:response.id})
+		let data = await response.get()
+		return data.data()
+		
+	} catch(e){
+		console.log(e)
+	}
+}
+
+export const upvote = async(id,inc) => {
+	let commentRef = firebase.firestore().collection('comments').doc(id)
+	let numberOfUpvotes;
+	commentRef.get().then((doc) => {
+		let data = doc.data()
+		//let upvotes = data.hasOwnProperty("upvotes") ? (data.upvotes + inc): 0
+		let upvotes = 0
+		if(data.hasOwnProperty("upvotes")){
+			if(data.upvotes + inc > 0){
+				upvotes = data.upvotes + inc
+			}
+			
+		}
+		numberOfUpvotes = upvotes 
+		commentRef.update({
+			upvotes: numberOfUpvotes
+		})
+	})
+	
+	//console.log(commentRef)
+}
+
+export const fetchPodcasts = async (id) => {
+	let comments =[]
+	try{
+		const response = await firebase.firestore().collection('comments').where("podcastid", "==" , id).get()
+		let data = await response.forEach(doc => {
+				comments.push(doc.data())
+				return doc.data()
+			});
+		
+		return comments
+		
+	} catch(e){
+		console.log(e)
+	}
 }

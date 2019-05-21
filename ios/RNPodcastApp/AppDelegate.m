@@ -5,8 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+#import <Firebase.h>
 #import "AppDelegate.h"
-
+#import "RNGoogleSignin.h"
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import <ReactNativeNavigation/ReactNativeNavigation.h>
@@ -15,10 +16,17 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [FIRApp configure];
   NSURL *jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
   [ReactNativeNavigation bootstrap:jsCodeLocation launchOptions:launchOptions];
   
   return YES;
 }
 
+- (BOOL)application:(UIApplication *)application openURL:(nonnull NSURL *)url options:(nonnull NSDictionary<NSString *,id> *)options {
+  return [RNGoogleSignin application:application
+                             openURL:url
+                   sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
+                          annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
+}
 @end

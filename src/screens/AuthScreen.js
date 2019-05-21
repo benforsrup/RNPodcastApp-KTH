@@ -7,17 +7,40 @@ import {
 } from "react-native";
 import { Spinner, TextInput, NavigationBar, Title } from '@shoutem/ui'
 import { SocialIcon } from 'react-native-elements'
-
+import firebase from 'react-native-firebase'
 import { initHome } from '../navigation/navigation'
+import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
 
 
 class AuthScreen extends Component {
-    componentDidMount(){
-        //setTimeout(() => initHome(), 1000)
-    }
+  
 
-    onPressGoogle = () => {
-        initHome()
+    // Calling this function will open Google for login.
+  googleLogin = async () => {
+  try {
+    // Add any configuration settings here:
+    await GoogleSignin.configure();
+
+    const data = await GoogleSignin.signIn();
+
+    const credential = firebase.auth.GoogleAuthProvider.credential(data.idToken, data.accessToken)
+    const currentUser = await firebase.auth().signInWithCredential(credential);
+
+    //console.info(JSON.stringify(currentUser.user.toJSON()));
+    this.onSuccessFullLogin()
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+    onSuccessFullLogin = () => {
+        if(firebase.auth().currentUser){
+          console.log(firebase.auth().currentUser)
+          initHome()
+        }
+        else{
+          console.log("failed login")
+        }      
     }
 
     render() {
@@ -25,18 +48,15 @@ class AuthScreen extends Component {
         <View style={styles.container}>    
         
           <View style={styles.input}>
-            <SocialIcon 
-              title='Sign in with Google'
-              button
-              onPress={this.onPressGoogle}
-              type="google-plus-official"
-            />
-            <SocialIcon
+          
+
+           <SocialIcon
               iconSize={20}
-              title='Sign In With Facebook'
+              onPress={this.googleLogin}
+              title='Sign In With Google'
               button
-              type='facebook'
-            />
+              type='google-plus-official' />
+        
           </View>
         </View>
     );

@@ -79,8 +79,23 @@ export const goHome = () => Navigation.setRoot({
                             },
                         },
                         component:{
+                            name:"CommentScreen",
+                            id:"CommentScreen",
+                            options:{
+                                
+                                sideMenu:{
+                                    left:{
+                                        enabled:false,
+                                        visible:false
+                                    }
+                                }
+                            },
+                            
+                        },
+                        component:{
                             name:"HomeScreen",
                             id:"HomeScreen",
+                            
                             options:{
                                 sideMenu:{
                                     left:{
@@ -91,10 +106,15 @@ export const goHome = () => Navigation.setRoot({
                             },
                             
                         },
+                        component:{
+                            name:"PodcastChooseView",
+                            id:"PodcastChooseView",
+                        },
                         component: {
                             id:"PodcastListView",
                             name: 'PodcastListView',
                             options:{
+                               
                                 sideMenu:{
                                     left:{
                                         width:200,
@@ -103,15 +123,12 @@ export const goHome = () => Navigation.setRoot({
                                     }
                                 },
                                 topBar:{
-                                    barStyle: 'default',
-                                    blur:true,
+                                    noBorder: true,
+                                    visible:false,
                                     title:{
                                         text:"Podcasts"
                                     },
-                                    largeTitle: {
-                                        visible: false,
-                                        
-                                     },
+                                    
                                     leftButtons:{
                                         id:"menuButton",
                                         icon:menuIcon

@@ -2,23 +2,43 @@ import React, { Component } from "react";
 import {
   View,
   StyleSheet,
+  Image
 } from "react-native";
 import { Spinner } from '@shoutem/ui'
-
 import { initAuth, initHome } from '../navigation/navigation'
+import firebase from 'react-native-firebase'
 
 
 class LoadingScreen extends Component {
-    componentDidMount(){
-        setTimeout(() => initAuth(), 0)
-    }
+  constructor() {
+    super();
+    this.state = {
+      loading: true,
+      authenticated: false,
+    };
+  }
+  componentDidMount(){
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        console.log(user)
+        setTimeout(() => initHome(), 1000) 
+        this.setState({ loading: false, authenticated: true });
+      } else {
+        initAuth()
+        this.setState({ loading: false, authenticated: false });
+      }
+    });
+      
+  }
+
 
 
 
     render() {
     return (
-        <View style={styles.container}>      
-          <Spinner />
+        <View style={styles.container}>    
+        <Image source={require('../assets/logo.png')} style={{width: 250, height: 60}} />
+          {/* <Spinner /> */}
         </View>
     );
     }

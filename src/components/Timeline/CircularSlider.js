@@ -25,14 +25,14 @@ class CircularSlider extends Component {
   }
   polarToCartesian(angle){
     const {cx,cy,r} = this.state
-        , a = (angle-270) * Math.PI / 180.0
+        , a = (angle-90) * Math.PI / 180.0
         , x = cx + (r * Math.cos(a))  
         , y = cy + (r * Math.sin(a))
     return {x,y}
   }
   cartesianToPolar(x,y){
     const {cx,cy} = this.state
-    return Math.round((Math.atan((y-cy)/(x-cx)))/(Math.PI/180)+((x>cx) ? 270 : 90))
+    return Math.round((Math.atan((y-cy)/(x-cx)))/(Math.PI/180)+((x>cx) ? 90 : 90))
   }
   handlePanResponderMove({nativeEvent:{locationX,locationY}}){
     this.props.onValueChange(this.cartesianToPolar(locationX,locationY))
@@ -47,7 +47,7 @@ class CircularSlider extends Component {
         <Circle cx={cx} cy={cy} r={r} stroke='#eee' strokeWidth={5} fill='none'/>
 
         <Path stroke={meterColor} strokeWidth={5} fill='none'
-          d={`M${startCoord.x} ${startCoord.y} A ${r} ${r} 0 ${value>180?1:0} 1 ${endCoord.x} ${endCoord.y}`}/>
+          d={`M${startCoord.x} ${startCoord.y} A ${r} ${r} 0 ${value>360?1:0} 1 ${endCoord.x} ${endCoord.y}`}/>
         <G x={endCoord.x-7.5} y={endCoord.y-7.5}>
           <Circle cx={7.5} cy={7.5} r={10} fill={meterColor} {...this._panResponder.panHandlers}/>
         </G>

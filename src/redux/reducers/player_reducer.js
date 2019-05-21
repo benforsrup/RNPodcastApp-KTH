@@ -1,9 +1,12 @@
-import { SET_CURRENT_TIME, TOGGLE_MINIMIZED} from '../constants/ActionTypes'
-
+import { SET_CURRENT_TIME, TOGGLE_MINIMIZED, SET_CURRENT_PLAYBACK_MODE} from '../constants/ActionTypes'
+import TrackPlayer from 'react-native-track-player';
+ 
 const initialState = {
   title:"",
+  playbackState:TrackPlayer.STATE_PAUSED,
   currentTime:0,
-  isMinimized:""
+  isMinimized:"",
+  currentPodcast:""
 }
 
 export default function player(state = initialState, action) {
@@ -15,6 +18,11 @@ export default function player(state = initialState, action) {
     case TOGGLE_MINIMIZED:
       return {
         ...state, isMinimized: action.color
+      }
+    case SET_CURRENT_PLAYBACK_MODE:
+      return {
+        ...state,
+        playbackState:action.payload
       }
 
     default:

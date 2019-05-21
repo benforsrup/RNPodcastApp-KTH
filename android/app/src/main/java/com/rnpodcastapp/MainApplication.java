@@ -3,6 +3,8 @@ package com.rnpodcastapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import co.apptailor.googlesignin.RNGoogleSigninPackage;
+import io.invertase.firebase.RNFirebasePackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import guichaguri.trackplayer.TrackPlayer;
 import com.reactnative.photoview.PhotoViewPackage;
@@ -30,6 +32,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNGoogleSigninPackage(),
+            new RNFirebasePackage(),
             new RNDeviceInfo(),
             new TrackPlayer(),
             new PhotoViewPackage(),
